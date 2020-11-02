@@ -1,0 +1,30 @@
+PODS:
+  - Alamofire (4.9.1)
+  - IQKeyboardManager (6.5.6)
+  - JTSImageViewController (1.5.1)
+  - SDWebImage (5.9.1):
+    - SDWebImage/Core (= 5.9.1)
+  - SDWebImage/Core (5.9.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - IQKeyboardManager
+  - JTSImageViewController
+  - SDWebImage
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - IQKeyboardManager
+    - JTSImageViewController
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
+  JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
+  SDWebImage: a990c053fff71e388a10f3357edb0be17929c9c5
+
+PODFILE CHECKSUM: cc6749d47f0081a84f03f0ee8d0a16db577e7d96
+
+COCOAPODS: 1.7.5
