@@ -54,6 +54,18 @@
 		8149DAC825483CF700023212 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8149DAC725483CF700023212 /* Main.storyboard */; };
 		8149DAD625484F0C00023212 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149DAD525484F0C00023212 /* LoginVC.swift */; };
 		8149DADB2548533100023212 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149DADA2548533100023212 /* SplashVC.swift */; };
+		8150D2F825512998000D12B8 /* AddProductVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D2F725512998000D12B8 /* AddProductVC.swift */; };
+		8150D30525517E6D000D12B8 /* AddProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D2FA25517E6A000D12B8 /* AddProductModel.swift */; };
+		8150D30625517E6D000D12B8 /* AddProductCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D2FB25517E6B000D12B8 /* AddProductCategory.swift */; };
+		8150D30725517E6D000D12B8 /* AddProductSeller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D2FC25517E6B000D12B8 /* AddProductSeller.swift */; };
+		8150D30825517E6D000D12B8 /* AddProductSubcategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D2FD25517E6B000D12B8 /* AddProductSubcategory.swift */; };
+		8150D30925517E6D000D12B8 /* AddProductCategoryId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D2FE25517E6B000D12B8 /* AddProductCategoryId.swift */; };
+		8150D30A25517E6D000D12B8 /* AddProductPickupLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D2FF25517E6B000D12B8 /* AddProductPickupLocation.swift */; };
+		8150D30B25517E6D000D12B8 /* AddProductKeyText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D30025517E6B000D12B8 /* AddProductKeyText.swift */; };
+		8150D30C25517E6D000D12B8 /* AddProductSelectId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D30125517E6C000D12B8 /* AddProductSelectId.swift */; };
+		8150D30D25517E6D000D12B8 /* AddProductAge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D30225517E6C000D12B8 /* AddProductAge.swift */; };
+		8150D30E25517E6D000D12B8 /* AddProductData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D30325517E6D000D12B8 /* AddProductData.swift */; };
+		8150D30F25517E6D000D12B8 /* AddProductCreatedAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150D30425517E6D000D12B8 /* AddProductCreatedAt.swift */; };
 		C8BD4DBC79A832FA35928C68 /* Pods_TLV_WORKFLOW.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B03F7D6286C4FF68B6EBCC /* Pods_TLV_WORKFLOW.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +119,18 @@
 		8149DAC725483CF700023212 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8149DAD525484F0C00023212 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		8149DADA2548533100023212 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
+		8150D2F725512998000D12B8 /* AddProductVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductVC.swift; sourceTree = "<group>"; };
+		8150D2FA25517E6A000D12B8 /* AddProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductModel.swift; sourceTree = "<group>"; };
+		8150D2FB25517E6B000D12B8 /* AddProductCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductCategory.swift; sourceTree = "<group>"; };
+		8150D2FC25517E6B000D12B8 /* AddProductSeller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductSeller.swift; sourceTree = "<group>"; };
+		8150D2FD25517E6B000D12B8 /* AddProductSubcategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductSubcategory.swift; sourceTree = "<group>"; };
+		8150D2FE25517E6B000D12B8 /* AddProductCategoryId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductCategoryId.swift; sourceTree = "<group>"; };
+		8150D2FF25517E6B000D12B8 /* AddProductPickupLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductPickupLocation.swift; sourceTree = "<group>"; };
+		8150D30025517E6B000D12B8 /* AddProductKeyText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductKeyText.swift; sourceTree = "<group>"; };
+		8150D30125517E6C000D12B8 /* AddProductSelectId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductSelectId.swift; sourceTree = "<group>"; };
+		8150D30225517E6C000D12B8 /* AddProductAge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductAge.swift; sourceTree = "<group>"; };
+		8150D30325517E6D000D12B8 /* AddProductData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductData.swift; sourceTree = "<group>"; };
+		8150D30425517E6D000D12B8 /* AddProductCreatedAt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductCreatedAt.swift; sourceTree = "<group>"; };
 		A1389410F8F6FBCE80521BB4 /* Pods-TLV_WORKFLOW.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLV_WORKFLOW.debug.xcconfig"; path = "Target Support Files/Pods-TLV_WORKFLOW/Pods-TLV_WORKFLOW.debug.xcconfig"; sourceTree = "<group>"; };
 		A6B03F7D6286C4FF68B6EBCC /* Pods_TLV_WORKFLOW.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TLV_WORKFLOW.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1D460412BFD46CF259FC2DB /* Pods-TLV_WORKFLOW.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLV_WORKFLOW.release.xcconfig"; path = "Target Support Files/Pods-TLV_WORKFLOW/Pods-TLV_WORKFLOW.release.xcconfig"; sourceTree = "<group>"; };
@@ -365,6 +389,7 @@
 				1F65267E25496DA500BB7421 /* ProductListVC.swift */,
 				1FE450C6254B013600920110 /* ProfileVC.swift */,
 				1FC34535254C33770050A99A /* AddNewSellerVC.swift */,
+				8150D2F725512998000D12B8 /* AddProductVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -387,9 +412,28 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		8150D2F925517E10000D12B8 /* AddProduct */ = {
+			isa = PBXGroup;
+			children = (
+				8150D30225517E6C000D12B8 /* AddProductAge.swift */,
+				8150D2FB25517E6B000D12B8 /* AddProductCategory.swift */,
+				8150D2FE25517E6B000D12B8 /* AddProductCategoryId.swift */,
+				8150D30425517E6D000D12B8 /* AddProductCreatedAt.swift */,
+				8150D30325517E6D000D12B8 /* AddProductData.swift */,
+				8150D30025517E6B000D12B8 /* AddProductKeyText.swift */,
+				8150D2FA25517E6A000D12B8 /* AddProductModel.swift */,
+				8150D2FF25517E6B000D12B8 /* AddProductPickupLocation.swift */,
+				8150D30125517E6C000D12B8 /* AddProductSelectId.swift */,
+				8150D2FC25517E6B000D12B8 /* AddProductSeller.swift */,
+				8150D2FD25517E6B000D12B8 /* AddProductSubcategory.swift */,
+			);
+			path = AddProduct;
+			sourceTree = "<group>";
+		};
 		81B4B11D254934B60082FE67 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8150D2F925517E10000D12B8 /* AddProduct */,
 				1F297F42254FE240007190FF /* EditUser */,
 				1FE450B92549938D00920110 /* SellerList */,
 				1F297F4A25501DB1007190FF /* LoginDetailModel */,
@@ -520,40 +564,52 @@
 				1F297FA625502590007190FF /* ProgressView.swift in Sources */,
 				1FC34536254C33770050A99A /* AddNewSellerVC.swift in Sources */,
 				1FE450C12549A52200920110 /* SellerListData.swift in Sources */,
+				8150D30E25517E6D000D12B8 /* AddProductData.swift in Sources */,
 				1F297F5E25501DF8007190FF /* ProductDetailVC.swift in Sources */,
 				1F297FC225502644007190FF /* FT+Extension.swift in Sources */,
 				1F65267F25496DA500BB7421 /* ProductListVC.swift in Sources */,
 				1F297FCF2550266D007190FF /* UIView+Utils.swift in Sources */,
 				1FE450C52549AAC200920110 /* SellerListCell.swift in Sources */,
+				8150D30625517E6D000D12B8 /* AddProductCategory.swift in Sources */,
 				1F297F5B25501DE1007190FF /* PictureCell.swift in Sources */,
 				1FE450C02549A52200920110 /* SellerListModel.swift in Sources */,
 				1F297FC525502644007190FF /* FTPopOverMenuModel.swift in Sources */,
+				8150D30C25517E6D000D12B8 /* AddProductSelectId.swift in Sources */,
 				1F297F9B255024F6007190FF /* Message.swift in Sources */,
+				8150D30F25517E6D000D12B8 /* AddProductCreatedAt.swift in Sources */,
 				1F297FA32550257C007190FF /* VisualEffectView.swift in Sources */,
+				8150D30825517E6D000D12B8 /* AddProductSubcategory.swift in Sources */,
+				8150D30A25517E6D000D12B8 /* AddProductPickupLocation.swift in Sources */,
+				8150D30725517E6D000D12B8 /* AddProductSeller.swift in Sources */,
 				1F297F5325501DB1007190FF /* LoginModel.swift in Sources */,
 				1F297FC825502644007190FF /* FTConstants.swift in Sources */,
 				1F297F5525501DB1007190FF /* LoginData.swift in Sources */,
 				1F297FA22550257C007190FF /* UIViewController+PopUp.swift in Sources */,
 				1F297FC425502644007190FF /* UIControl+Point.swift in Sources */,
 				1F297F46254FE26A007190FF /* EditUserData.swift in Sources */,
+				8150D30525517E6D000D12B8 /* AddProductModel.swift in Sources */,
 				1F297FC925502644007190FF /* FTPopOverMenuCell.swift in Sources */,
 				1F297FC725502644007190FF /* UIScreen+Frame.swift in Sources */,
 				1FE450C7254B013700920110 /* ProfileVC.swift in Sources */,
 				1F297FCD25502660007190FF /* TypeCastExt.swift in Sources */,
 				1F297F9F25502560007190FF /* ACFloatingTextfield.swift in Sources */,
 				8149DADB2548533100023212 /* SplashVC.swift in Sources */,
+				8150D30D25517E6D000D12B8 /* AddProductAge.swift in Sources */,
 				1F297F9D2550254E007190FF /* GlobalFunction.swift in Sources */,
 				1F297F6125501E09007190FF /* ProductDetailCell.swift in Sources */,
 				1F297F5725501DB1007190FF /* ProductData.swift in Sources */,
 				8149DAB425483C2B00023212 /* AppDelegate.swift in Sources */,
 				1F297F9A255024F6007190FF /* Constant.swift in Sources */,
 				1F297F5425501DB1007190FF /* LoginRole.swift in Sources */,
+				8150D2F825512998000D12B8 /* AddProductVC.swift in Sources */,
 				1F297FA92550259D007190FF /* CameraHandler.swift in Sources */,
+				8150D30B25517E6D000D12B8 /* AddProductKeyText.swift in Sources */,
 				1F297FA725502590007190FF /* ProgressHUD.swift in Sources */,
 				1F297FC625502644007190FF /* FTPopOverMenu.swift in Sources */,
 				1F297F5825501DB1007190FF /* ProductForProductionCreatedAt.swift in Sources */,
 				8149DAB625483C2B00023212 /* SceneDelegate.swift in Sources */,
 				1F297FCB25502657007190FF /* Toast.swift in Sources */,
+				8150D30925517E6D000D12B8 /* AddProductCategoryId.swift in Sources */,
 				1F297FD125502679007190FF /* WebAPIManager.swift in Sources */,
 				8149DAD625484F0C00023212 /* LoginVC.swift in Sources */,
 				1F297F45254FE26A007190FF /* EditUserModel.swift in Sources */,

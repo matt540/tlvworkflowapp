@@ -127,7 +127,6 @@ extension ProductDetailVC {
                 for product in productArray{
                     arrayArchiveIds.append(product.id)
                 }
-                print(arrayArchiveIds)
                 tblProductDetail.reloadData()
             }
             break
@@ -197,9 +196,11 @@ extension ProductDetailVC {
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func btnAddProductAction(_ sender: UIButton) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoVC") as! PhotoVC
-        popUpEffectType = .flipUp
-        self.presentPopUpViewController(vc)
+//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoVC") as! PhotoVC
+//        popUpEffectType = .flipUp
+//        self.presentPopUpViewController(vc)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddProductVC") as! AddProductVC
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func btnNextAction(_ sender: UIButton) {
         pageCount += 1
@@ -263,40 +264,14 @@ extension ProductDetailVC: UITableViewDelegate, UITableViewDataSource{
         detailCell.lblDate.text = GlobalFunction.formattedDateFromString(dateString: data.forProductionCreatedAt.date!, withFormat: "MM-dd-yyyy")
         
         if arrayDeleteIds.contains(data.id){
-            detailCell.btnRadioDelete.isSelected = true
-            detailCell.btnRadioSubmit.isSelected = false
-            detailCell.btnRadioArchive.isSelected = false
+            checkboxAction(cell: detailCell, toSelect: detailCell.btnRadioDelete)
         }else if arraySubmitIds.contains(data.id){
-            detailCell.btnRadioSubmit.isSelected = true
-            detailCell.btnRadioDelete.isSelected = false
-            detailCell.btnRadioArchive.isSelected = false
+            checkboxAction(cell: detailCell, toSelect: detailCell.btnRadioSubmit)
         }else if arrayArchiveIds.contains(data.id){
-            detailCell.btnRadioArchive.isSelected = true
-            detailCell.btnRadioDelete.isSelected = false
-            detailCell.btnRadioSubmit.isSelected = false
+            checkboxAction(cell: detailCell, toSelect: detailCell.btnRadioArchive)
         } else {
-            detailCell.btnRadioDelete.isSelected = false
-            detailCell.btnRadioSubmit.isSelected = false
-            detailCell.btnRadioArchive.isSelected = false
+            checkboxAction(cell: detailCell, toSelect: UIButton())
         }
-        
-//        if data.isArchive {
-//            detailCell.btnRadioArchive.isSelected = true
-//            detailCell.btnRadioSubmit.isSelected = false
-//            detailCell.btnRadioDelete.isSelected = false
-//        }else if data.isSubmit{
-//            detailCell.btnRadioSubmit.isSelected = true
-//            detailCell.btnRadioArchive.isSelected = false
-//            detailCell.btnRadioDelete.isSelected = false
-//        }else if data.isDelete{
-//            detailCell.btnRadioDelete.isSelected = true
-//            detailCell.btnRadioArchive.isSelected = false
-//            detailCell.btnRadioSubmit.isSelected = false
-//        }else {
-//            detailCell.btnRadioArchive.isSelected = false
-//            detailCell.btnRadioSubmit.isSelected = false
-//            detailCell.btnRadioDelete.isSelected = false
-//        }
         
         detailCell.archiveClosure = {
             data.isArchive = data.isArchive ? false : true
@@ -352,6 +327,7 @@ extension ProductDetailVC: UITableViewDelegate, UITableViewDataSource{
                 self.callSubmitForPricing(params: dictParam)
             }
         }
+        detailCell.selectionStyle = UITableViewCell.SelectionStyle.none
         return detailCell
     }
     
@@ -472,5 +448,12 @@ extension ProductDetailVC {
          sellerDetailsParams[Constant.ParameterNames.seller_id] = sellerId
         sellerDetailsParams[Constant.ParameterNames.user_id] = userId
         return sellerDetailsParams
+    }
+    
+    //for select all cells radio from checkbox selection
+    func checkboxAction(cell: ProductDetailCell, toSelect: UIButton){
+        cell.btnRadioArchive.isSelected = toSelect == cell.btnRadioArchive ?  true :  false
+        cell.btnRadioDelete.isSelected = toSelect == cell.btnRadioDelete ?  true :  false
+        cell.btnRadioSubmit.isSelected = toSelect == cell.btnRadioSubmit ?  true :  false
     }
 }

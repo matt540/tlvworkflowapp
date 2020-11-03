@@ -59,7 +59,7 @@ class Constant: NSObject {
         static let archive_product_qoutation = "product_quotation/archive_product_quotation"
         static let delete_product_qoutation = "product_quotation/delete_product_quotation"
         static let submit_multiple_product_for_pricing = "product_quotation/submit_multiple_products_to_pricing_stage"
-
+        static let add_seller_product_for_production_stage = "add_seller_product_for_production_stage"
     }
     
     struct segueId {
