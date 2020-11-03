@@ -27,6 +27,7 @@ class ProfileVC: UIViewController {
     var profileImage = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        txtEmail.isUserInteractionEnabled = false
         self.profileValueSet()
     }
     
