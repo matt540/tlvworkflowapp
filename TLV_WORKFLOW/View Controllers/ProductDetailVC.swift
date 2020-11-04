@@ -199,8 +199,8 @@ extension ProductDetailVC {
 //        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoVC") as! PhotoVC
 //        popUpEffectType = .flipUp
 //        self.presentPopUpViewController(vc)
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddProductVC") as! AddProductVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: "AddProductVC") as! AddProductVC
+        self.navigationController?.pushViewController(addProductVC, animated: true)
     }
     @IBAction func btnNextAction(_ sender: UIButton) {
         pageCount += 1
@@ -329,6 +329,14 @@ extension ProductDetailVC: UITableViewDelegate, UITableViewDataSource{
         }
         detailCell.selectionStyle = UITableViewCell.SelectionStyle.none
         return detailCell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let productDict = productArray[indexPath.row]
+        let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: "AddProductVC") as! AddProductVC
+        addProductVC.isEditView = true
+        addProductVC.sellerId = sellerDetail?.id
+        addProductVC.productId = productDict.id!
+        self.navigationController?.pushViewController(addProductVC, animated: true)
     }
     
     

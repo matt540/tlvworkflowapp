@@ -745,6 +745,7 @@
                                             <outlet property="btnRadioDelete" destination="cKU-hg-K0W" id="zfy-h8-wkf"/>
                                             <outlet property="btnRadioSubmit" destination="6xa-7h-q39" id="4gm-AC-vTb"/>
                                             <outlet property="btnSubmitForPrice" destination="Plb-i4-Ofu" id="yrS-4K-bbm"/>
+                                            <outlet property="btnViewProduct" destination="G8O-Rh-5YS" id="TzU-vd-58z"/>
                                             <outlet property="imgProductImage" destination="oyJ-UJ-DKB" id="eNI-YH-0Yf"/>
                                             <outlet property="lblDate" destination="vee-TE-w2B" id="VsM-f2-fTx"/>
                                             <outlet property="lblProductDepth" destination="HbI-FL-MiK" id="mCc-t2-L3s"/>
@@ -752,7 +753,6 @@
                                             <outlet property="lblProductName" destination="tt3-kv-Lm1" id="89W-G1-rbG"/>
                                             <outlet property="lblProductWidth" destination="CHQ-Sm-MFG" id="XSB-J4-mAX"/>
                                             <outlet property="lblSKU" destination="DyF-1W-8NV" id="JQs-ir-2E2"/>
-                                            <outlet property="lblViewProduct" destination="G8O-Rh-5YS" id="TzU-vd-58z"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1904,7 +1904,7 @@
                                                     <outlet property="delegate" destination="qZJ-36-Z4E" id="xAf-Pz-ahE"/>
                                                 </connections>
                                             </textField>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ful-dy-Nge">
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ful-dy-Nge">
                                                 <rect key="frame" x="0.0" y="306" width="375" height="149"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -1917,7 +1917,7 @@
                                                     <inset key="sectionInset" minX="8" minY="7" maxX="8" maxY="7"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddProductCollectionCell" id="6xv-dZ-0u4" customClass="AddProductCollectionCell">
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="AddProductDetailCell" reuseIdentifier="AddProductDetailCell" id="6xv-dZ-0u4" customClass="AddProductDetailCell" customModule="TLV_WORKFLOW" customModuleProvider="target">
                                                         <rect key="frame" x="8" y="7" width="175" height="30"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -1968,14 +1968,17 @@
                                                         </constraints>
                                                         <size key="customSize" width="175" height="30"/>
                                                         <connections>
-                                                            <outlet property="imgDropDown" destination="3wC-hV-ZYS" id="U9h-WJ-SfX"/>
-                                                            <outlet property="lblFieldName" destination="vby-OW-p2O" id="Qdg-gE-Zjf"/>
-                                                            <outlet property="lblWarning" destination="dUD-cE-bZE" id="a9X-NG-m6Y"/>
-                                                            <outlet property="topConstraintOfLabel" destination="dcv-Wq-Z47" id="Wa4-VV-8wD"/>
-                                                            <outlet property="viewWork" destination="1ym-4q-Fpb" id="prx-4z-owg"/>
+                                                            <outlet property="imgDropDown" destination="3wC-hV-ZYS" id="YOn-oi-Pb5"/>
+                                                            <outlet property="lblFieldName" destination="vby-OW-p2O" id="IBr-x1-kpQ"/>
+                                                            <outlet property="lblFieldTitle" destination="dUD-cE-bZE" id="TMf-XA-w0d"/>
+                                                            <outlet property="uvCellView" destination="1ym-4q-Fpb" id="Srg-eg-kX3"/>
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="qZJ-36-Z4E" id="yMb-F8-1Kl"/>
+                                                    <outlet property="delegate" destination="qZJ-36-Z4E" id="iCk-Db-ly2"/>
+                                                </connections>
                                             </collectionView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y9e-UV-38H">
                                                 <rect key="frame" x="156" y="465" width="211" height="0.0"/>
@@ -2781,6 +2784,7 @@
                     <size key="freeformSize" width="375" height="1800"/>
                     <connections>
                         <outlet property="ageView" destination="xpX-GT-fk1" id="3nv-HE-BSq"/>
+                        <outlet property="ageViewHeightConstraint" destination="zAI-VK-kKH" id="mnF-Kk-Sbe"/>
                         <outlet property="btnBack" destination="FD2-xe-pTd" id="KKr-Kn-X9U"/>
                         <outlet property="btnMaterial" destination="0Uz-lH-lFy" id="t3B-cc-K9k"/>
                         <outlet property="btnPetNo" destination="RNR-fZ-8Ia" id="xQX-8x-PAn"/>

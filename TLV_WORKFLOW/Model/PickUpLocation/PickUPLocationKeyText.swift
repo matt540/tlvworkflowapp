@@ -1,11 +1,11 @@
 //
-//	AddProductKeyText.swift
+//	PickUPLocationKeyText.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class AddProductKeyText : NSObject, NSCoding{
+class PickUPLocationKeyText : NSObject, NSCoding{
 
 	var city : String!
 	var state : String!

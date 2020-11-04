@@ -1,19 +1,17 @@
 //
-//	AddProductPickupLocation.swift
+//	SizeData.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class AddProductPickupLocation : NSObject, NSCoding{
+class SizeData : NSObject, NSCoding{
 
-	var createdAt : AddProductCreatedAt!
+	var createdAt : SizeCreatedAt!
 	var deletedAt : AnyObject!
 	var id : Int!
-	var keyText : AnyObject!
-	var selectId : AddProductSelectId!
-	var sellerId : AnyObject!
-	var updatedAt : AddProductCreatedAt!
+	var keyText : String!
+	var updatedAt : SizeCreatedAt!
 	var valueText : String!
 
 
@@ -22,17 +20,13 @@ class AddProductPickupLocation : NSObject, NSCoding{
 	 */
 	init(fromDictionary dictionary: [String:Any]){
 		if let createdAtData = dictionary["created_at"] as? [String:Any]{
-			createdAt = AddProductCreatedAt(fromDictionary: createdAtData)
+			createdAt = SizeCreatedAt(fromDictionary: createdAtData)
 		}
 		deletedAt = dictionary["deletedAt"] as? AnyObject
 		id = dictionary["id"] as? Int
-		keyText = dictionary["key_text"] as? AnyObject
-		if let selectIdData = dictionary["select_id"] as? [String:Any]{
-			selectId = AddProductSelectId(fromDictionary: selectIdData)
-		}
-		sellerId = dictionary["seller_id"] as? AnyObject
+		keyText = dictionary["key_text"] as? String
 		if let updatedAtData = dictionary["updated_at"] as? [String:Any]{
-			updatedAt = AddProductCreatedAt(fromDictionary: updatedAtData)
+			updatedAt = SizeCreatedAt(fromDictionary: updatedAtData)
 		}
 		valueText = dictionary["value_text"] as? String
 	}
@@ -55,12 +49,6 @@ class AddProductPickupLocation : NSObject, NSCoding{
 		if keyText != nil{
 			dictionary["key_text"] = keyText
 		}
-		if selectId != nil{
-			dictionary["select_id"] = selectId.toDictionary()
-		}
-		if sellerId != nil{
-			dictionary["seller_id"] = sellerId
-		}
 		if updatedAt != nil{
 			dictionary["updated_at"] = updatedAt.toDictionary()
 		}
@@ -76,13 +64,11 @@ class AddProductPickupLocation : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         createdAt = aDecoder.decodeObject(forKey: "created_at") as? AddProductCreatedAt
+         createdAt = aDecoder.decodeObject(forKey: "created_at") as? SizeCreatedAt
          deletedAt = aDecoder.decodeObject(forKey: "deletedAt") as? AnyObject
          id = aDecoder.decodeObject(forKey: "id") as? Int
-         keyText = aDecoder.decodeObject(forKey: "key_text") as? AnyObject
-         selectId = aDecoder.decodeObject(forKey: "select_id") as? AddProductSelectId
-         sellerId = aDecoder.decodeObject(forKey: "seller_id") as? AnyObject
-         updatedAt = aDecoder.decodeObject(forKey: "updated_at") as? AddProductCreatedAt
+         keyText = aDecoder.decodeObject(forKey: "key_text") as? String
+         updatedAt = aDecoder.decodeObject(forKey: "updated_at") as? SizeCreatedAt
          valueText = aDecoder.decodeObject(forKey: "value_text") as? String
 
 	}
@@ -104,12 +90,6 @@ class AddProductPickupLocation : NSObject, NSCoding{
 		}
 		if keyText != nil{
 			aCoder.encode(keyText, forKey: "key_text")
-		}
-		if selectId != nil{
-			aCoder.encode(selectId, forKey: "select_id")
-		}
-		if sellerId != nil{
-			aCoder.encode(sellerId, forKey: "seller_id")
 		}
 		if updatedAt != nil{
 			aCoder.encode(updatedAt, forKey: "updated_at")

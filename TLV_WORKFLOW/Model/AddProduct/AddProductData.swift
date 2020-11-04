@@ -10,7 +10,8 @@ class AddProductData : NSObject, NSCoding{
 	var age : [AddProductAge]!
 	var categories : [AddProductCategory]!
 	var pickupLocations : [AddProductPickupLocation]!
-	var sellers : [AddProductSeller]!
+	var product : [AddProductProduct]!
+	var sellers : [AddProductSellerid]!
 
 
 	/**
@@ -38,10 +39,17 @@ class AddProductData : NSObject, NSCoding{
 				pickupLocations.append(value)
 			}
 		}
-		sellers = [AddProductSeller]()
+		product = [AddProductProduct]()
+		if let productArray = dictionary["product"] as? [[String:Any]]{
+			for dic in productArray{
+				let value = AddProductProduct(fromDictionary: dic)
+				product.append(value)
+			}
+		}
+		sellers = [AddProductSellerid]()
 		if let sellersArray = dictionary["sellers"] as? [[String:Any]]{
 			for dic in sellersArray{
-				let value = AddProductSeller(fromDictionary: dic)
+				let value = AddProductSellerid(fromDictionary: dic)
 				sellers.append(value)
 			}
 		}
@@ -74,6 +82,13 @@ class AddProductData : NSObject, NSCoding{
 			}
 			dictionary["pickup_locations"] = dictionaryElements
 		}
+		if product != nil{
+			var dictionaryElements = [[String:Any]]()
+			for productElement in product {
+				dictionaryElements.append(productElement.toDictionary())
+			}
+			dictionary["product"] = dictionaryElements
+		}
 		if sellers != nil{
 			var dictionaryElements = [[String:Any]]()
 			for sellersElement in sellers {
@@ -93,7 +108,8 @@ class AddProductData : NSObject, NSCoding{
          age = aDecoder.decodeObject(forKey :"age") as? [AddProductAge]
          categories = aDecoder.decodeObject(forKey :"categories") as? [AddProductCategory]
          pickupLocations = aDecoder.decodeObject(forKey :"pickup_locations") as? [AddProductPickupLocation]
-         sellers = aDecoder.decodeObject(forKey :"sellers") as? [AddProductSeller]
+         product = aDecoder.decodeObject(forKey :"product") as? [AddProductProduct]
+         sellers = aDecoder.decodeObject(forKey :"sellers") as? [AddProductSellerid]
 
 	}
 
@@ -111,6 +127,9 @@ class AddProductData : NSObject, NSCoding{
 		}
 		if pickupLocations != nil{
 			aCoder.encode(pickupLocations, forKey: "pickup_locations")
+		}
+		if product != nil{
+			aCoder.encode(product, forKey: "product")
 		}
 		if sellers != nil{
 			aCoder.encode(sellers, forKey: "sellers")

@@ -1,40 +1,40 @@
 //
-//	AddProductPickupLocation.swift
+//	AddProductBrand.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class AddProductPickupLocation : NSObject, NSCoding{
+class AddProductBrand : NSObject, NSCoding{
 
+	var categoryStoragePrice : AnyObject!
 	var createdAt : AddProductCreatedAt!
 	var deletedAt : AnyObject!
 	var id : Int!
-	var keyText : AnyObject!
-	var selectId : AddProductSelectId!
-	var sellerId : AnyObject!
+	var isEnable : Int!
+	var orderValue : Int!
+	var subCategoryName : String!
 	var updatedAt : AddProductCreatedAt!
-	var valueText : String!
+	var wpTermId : String!
 
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: [String:Any]){
+		categoryStoragePrice = dictionary["category_storage_price"] as? AnyObject
 		if let createdAtData = dictionary["created_at"] as? [String:Any]{
 			createdAt = AddProductCreatedAt(fromDictionary: createdAtData)
 		}
 		deletedAt = dictionary["deletedAt"] as? AnyObject
 		id = dictionary["id"] as? Int
-		keyText = dictionary["key_text"] as? AnyObject
-		if let selectIdData = dictionary["select_id"] as? [String:Any]{
-			selectId = AddProductSelectId(fromDictionary: selectIdData)
-		}
-		sellerId = dictionary["seller_id"] as? AnyObject
+		isEnable = dictionary["is_enable"] as? Int
+		orderValue = dictionary["order_value"] as? Int
+		subCategoryName = dictionary["sub_category_name"] as? String
 		if let updatedAtData = dictionary["updated_at"] as? [String:Any]{
 			updatedAt = AddProductCreatedAt(fromDictionary: updatedAtData)
 		}
-		valueText = dictionary["value_text"] as? String
+		wpTermId = dictionary["wp_term_id"] as? String
 	}
 
 	/**
@@ -43,6 +43,9 @@ class AddProductPickupLocation : NSObject, NSCoding{
 	func toDictionary() -> [String:Any]
 	{
 		var dictionary = [String:Any]()
+		if categoryStoragePrice != nil{
+			dictionary["category_storage_price"] = categoryStoragePrice
+		}
 		if createdAt != nil{
 			dictionary["created_at"] = createdAt.toDictionary()
 		}
@@ -52,20 +55,20 @@ class AddProductPickupLocation : NSObject, NSCoding{
 		if id != nil{
 			dictionary["id"] = id
 		}
-		if keyText != nil{
-			dictionary["key_text"] = keyText
+		if isEnable != nil{
+			dictionary["is_enable"] = isEnable
 		}
-		if selectId != nil{
-			dictionary["select_id"] = selectId.toDictionary()
+		if orderValue != nil{
+			dictionary["order_value"] = orderValue
 		}
-		if sellerId != nil{
-			dictionary["seller_id"] = sellerId
+		if subCategoryName != nil{
+			dictionary["sub_category_name"] = subCategoryName
 		}
 		if updatedAt != nil{
 			dictionary["updated_at"] = updatedAt.toDictionary()
 		}
-		if valueText != nil{
-			dictionary["value_text"] = valueText
+		if wpTermId != nil{
+			dictionary["wp_term_id"] = wpTermId
 		}
 		return dictionary
 	}
@@ -76,14 +79,15 @@ class AddProductPickupLocation : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
+         categoryStoragePrice = aDecoder.decodeObject(forKey: "category_storage_price") as? AnyObject
          createdAt = aDecoder.decodeObject(forKey: "created_at") as? AddProductCreatedAt
          deletedAt = aDecoder.decodeObject(forKey: "deletedAt") as? AnyObject
          id = aDecoder.decodeObject(forKey: "id") as? Int
-         keyText = aDecoder.decodeObject(forKey: "key_text") as? AnyObject
-         selectId = aDecoder.decodeObject(forKey: "select_id") as? AddProductSelectId
-         sellerId = aDecoder.decodeObject(forKey: "seller_id") as? AnyObject
+         isEnable = aDecoder.decodeObject(forKey: "is_enable") as? Int
+         orderValue = aDecoder.decodeObject(forKey: "order_value") as? Int
+         subCategoryName = aDecoder.decodeObject(forKey: "sub_category_name") as? String
          updatedAt = aDecoder.decodeObject(forKey: "updated_at") as? AddProductCreatedAt
-         valueText = aDecoder.decodeObject(forKey: "value_text") as? String
+         wpTermId = aDecoder.decodeObject(forKey: "wp_term_id") as? String
 
 	}
 
@@ -93,6 +97,9 @@ class AddProductPickupLocation : NSObject, NSCoding{
     */
     @objc func encode(with aCoder: NSCoder)
 	{
+		if categoryStoragePrice != nil{
+			aCoder.encode(categoryStoragePrice, forKey: "category_storage_price")
+		}
 		if createdAt != nil{
 			aCoder.encode(createdAt, forKey: "created_at")
 		}
@@ -102,20 +109,20 @@ class AddProductPickupLocation : NSObject, NSCoding{
 		if id != nil{
 			aCoder.encode(id, forKey: "id")
 		}
-		if keyText != nil{
-			aCoder.encode(keyText, forKey: "key_text")
+		if isEnable != nil{
+			aCoder.encode(isEnable, forKey: "is_enable")
 		}
-		if selectId != nil{
-			aCoder.encode(selectId, forKey: "select_id")
+		if orderValue != nil{
+			aCoder.encode(orderValue, forKey: "order_value")
 		}
-		if sellerId != nil{
-			aCoder.encode(sellerId, forKey: "seller_id")
+		if subCategoryName != nil{
+			aCoder.encode(subCategoryName, forKey: "sub_category_name")
 		}
 		if updatedAt != nil{
 			aCoder.encode(updatedAt, forKey: "updated_at")
 		}
-		if valueText != nil{
-			aCoder.encode(valueText, forKey: "value_text")
+		if wpTermId != nil{
+			aCoder.encode(wpTermId, forKey: "wp_term_id")
 		}
 
 	}

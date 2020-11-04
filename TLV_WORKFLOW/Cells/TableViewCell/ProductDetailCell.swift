@@ -19,7 +19,7 @@ class ProductDetailCell: UITableViewCell {
     @IBOutlet weak var btnRadioArchive: UIButton!
     @IBOutlet weak var btnRadioDelete: UIButton!
     @IBOutlet weak var btnRadioSubmit: UIButton!
-    @IBOutlet weak var lblViewProduct: UILabel!
+    @IBOutlet weak var btnViewProduct: UILabel!
     @IBOutlet weak var btnSubmitForPrice: UIButton!
     @IBOutlet weak var lblDate: UILabel!
     

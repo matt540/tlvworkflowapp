@@ -60,6 +60,8 @@ class Constant: NSObject {
         static let delete_product_qoutation = "product_quotation/delete_product_quotation"
         static let submit_multiple_product_for_pricing = "product_quotation/submit_multiple_products_to_pricing_stage"
         static let add_seller_product_for_production_stage = "add_seller_product_for_production_stage"
+        static let get_size = "getOptionsBySelectId/9"
+        static let get_pickup_location = "get_pickup_location"
     }
     
     struct segueId {

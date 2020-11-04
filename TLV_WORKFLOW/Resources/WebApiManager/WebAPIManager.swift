@@ -48,9 +48,16 @@ class WebAPIManager: NSObject {
                             } else if let successValue = jsonResponse["code"] as? NSString {
                                 
                                 completion(jsonResponse, successValue.integerValue)
+                            }else {
+                                
+                                print("if last else")
                             }
                         }
                     }
+                }else {
+                    var dic : [String:Any] = [:]
+                    dic["data"] = response.result.value
+                    completion(dic,1)
                 }
                 break
                 
