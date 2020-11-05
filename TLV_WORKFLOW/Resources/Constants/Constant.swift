@@ -60,6 +60,7 @@ class Constant: NSObject {
         static let delete_product_qoutation = "product_quotation/delete_product_quotation"
         static let submit_multiple_product_for_pricing = "product_quotation/submit_multiple_products_to_pricing_stage"
         static let add_seller_product_for_production_stage = "add_seller_product_for_production_stage"
+        static let edit_seller_product_for_production_stage = "edit_seller_product_for_production_stage"
         static let get_size = "getOptionsBySelectId/9"
         static let get_pickup_location = "get_pickup_location"
     }
@@ -92,13 +93,17 @@ class Constant: NSObject {
         static let productDetailVC = "ProductDetailVC"
         static let profileVC = "ProfileVC"
         static let addNewSellerVC = "AddNewSellerVC"
+        static let addProductDetailCell = "AddProductDetailCell"
     }
     
     struct CellIdentifier {
         static let productDetailCell = "ProductDetailCell"
+        static let addProductDetailCell = "AddProductDetailCell"
+        static let pictureCell = "PictureCell"
     }
     
     struct ParameterNames {
+        static let data = "data"
         static let id = "id"
         static let email = "email"
         static let password = "password"
@@ -114,6 +119,17 @@ class Constant: NSObject {
         static let phoneNo = "phone"
         static let folder = "folder"
         static let production_quotation_ids = "production_quotation_ids"
+    }
+    
+    struct PlaceholderText{
+        static let condition_notes = "Condition Notes"
+        static let diamention_product_detail = "Diamension/Product Details"
+        static let internal_notes = "Internal Notes"
+    }
+    
+    struct LableText {
+        static let lbl_title_add_product = "Edit Product"
+        static let lbl_title_edit_product = "Add Product"
     }
     
     struct FolderNames {

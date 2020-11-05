@@ -200,6 +200,7 @@ extension ProductDetailVC {
 //        popUpEffectType = .flipUp
 //        self.presentPopUpViewController(vc)
         let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: "AddProductVC") as! AddProductVC
+        addProductVC.isEditView = false
         self.navigationController?.pushViewController(addProductVC, animated: true)
     }
     @IBAction func btnNextAction(_ sender: UIButton) {

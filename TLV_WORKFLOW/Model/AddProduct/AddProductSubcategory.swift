@@ -7,7 +7,7 @@ import Foundation
 
 class AddProductSubcategory : NSObject, NSCoding{
 
-	var categoryStoragePrice : String!
+	var categoryStoragePrice : AnyObject!
 	var createdAt : AddProductCreatedAt!
 	var deletedAt : AnyObject!
 	var id : Int!
@@ -22,7 +22,7 @@ class AddProductSubcategory : NSObject, NSCoding{
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: [String:Any]){
-		categoryStoragePrice = dictionary["category_storage_price"] as? String
+		categoryStoragePrice = dictionary["category_storage_price"] as? AnyObject
 		if let createdAtData = dictionary["created_at"] as? [String:Any]{
 			createdAt = AddProductCreatedAt(fromDictionary: createdAtData)
 		}
@@ -79,7 +79,7 @@ class AddProductSubcategory : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         categoryStoragePrice = aDecoder.decodeObject(forKey: "category_storage_price") as? String
+         categoryStoragePrice = aDecoder.decodeObject(forKey: "category_storage_price") as? AnyObject
          createdAt = aDecoder.decodeObject(forKey: "created_at") as? AddProductCreatedAt
          deletedAt = aDecoder.decodeObject(forKey: "deletedAt") as? AnyObject
          id = aDecoder.decodeObject(forKey: "id") as? Int

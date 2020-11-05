@@ -1,11 +1,11 @@
 //
-//	AddProductSellerid.swift
+//	AddProductSeller.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class AddProductSellerid : NSObject, NSCoding{
+class AddProductSeller : NSObject, NSCoding{
 
 	var address : String!
 	var createdAt : AddProductCreatedAt!
@@ -22,14 +22,14 @@ class AddProductSellerid : NSObject, NSCoding{
 	var lastProposalFileNameBase : String!
 	var lastSku : Int!
 	var lastname : String!
-	var password : AnyObject!
+	var password : String!
 	var phone : String!
-	var sellerAgreementJson : String!
-	var sellerAgreementPdf : String!
-	var sellerAgreementSignature : String!
+	var sellerAgreementJson : AnyObject!
+	var sellerAgreementPdf : AnyObject!
+	var sellerAgreementSignature : AnyObject!
 	var shopname : String!
 	var shopurl : String!
-	var stripeCustomerId : String!
+	var stripeCustomerId : AnyObject!
 	var updatedAt : AddProductCreatedAt!
 	var wpSellerId : Int!
 
@@ -55,14 +55,14 @@ class AddProductSellerid : NSObject, NSCoding{
 		lastProposalFileNameBase = dictionary["last_proposal_file_name_base"] as? String
 		lastSku = dictionary["last_sku"] as? Int
 		lastname = dictionary["lastname"] as? String
-		password = dictionary["password"] as? AnyObject
+		password = dictionary["password"] as? String
 		phone = dictionary["phone"] as? String
-		sellerAgreementJson = dictionary["seller_agreement_json"] as? String
-		sellerAgreementPdf = dictionary["seller_agreement_pdf"] as? String
-		sellerAgreementSignature = dictionary["seller_agreement_signature"] as? String
+		sellerAgreementJson = dictionary["seller_agreement_json"] as? AnyObject
+		sellerAgreementPdf = dictionary["seller_agreement_pdf"] as? AnyObject
+		sellerAgreementSignature = dictionary["seller_agreement_signature"] as? AnyObject
 		shopname = dictionary["shopname"] as? String
 		shopurl = dictionary["shopurl"] as? String
-		stripeCustomerId = dictionary["stripe_customer_id"] as? String
+		stripeCustomerId = dictionary["stripe_customer_id"] as? AnyObject
 		if let updatedAtData = dictionary["updated_at"] as? [String:Any]{
 			updatedAt = AddProductCreatedAt(fromDictionary: updatedAtData)
 		}
@@ -174,14 +174,14 @@ class AddProductSellerid : NSObject, NSCoding{
          lastProposalFileNameBase = aDecoder.decodeObject(forKey: "last_proposal_file_name_base") as? String
          lastSku = aDecoder.decodeObject(forKey: "last_sku") as? Int
          lastname = aDecoder.decodeObject(forKey: "lastname") as? String
-         password = aDecoder.decodeObject(forKey: "password") as? AnyObject
+         password = aDecoder.decodeObject(forKey: "password") as? String
          phone = aDecoder.decodeObject(forKey: "phone") as? String
-         sellerAgreementJson = aDecoder.decodeObject(forKey: "seller_agreement_json") as? String
-         sellerAgreementPdf = aDecoder.decodeObject(forKey: "seller_agreement_pdf") as? String
-         sellerAgreementSignature = aDecoder.decodeObject(forKey: "seller_agreement_signature") as? String
+         sellerAgreementJson = aDecoder.decodeObject(forKey: "seller_agreement_json") as? AnyObject
+         sellerAgreementPdf = aDecoder.decodeObject(forKey: "seller_agreement_pdf") as? AnyObject
+         sellerAgreementSignature = aDecoder.decodeObject(forKey: "seller_agreement_signature") as? AnyObject
          shopname = aDecoder.decodeObject(forKey: "shopname") as? String
          shopurl = aDecoder.decodeObject(forKey: "shopurl") as? String
-         stripeCustomerId = aDecoder.decodeObject(forKey: "stripe_customer_id") as? String
+         stripeCustomerId = aDecoder.decodeObject(forKey: "stripe_customer_id") as? AnyObject
          updatedAt = aDecoder.decodeObject(forKey: "updated_at") as? AddProductCreatedAt
          wpSellerId = aDecoder.decodeObject(forKey: "wp_seller_id") as? Int
 

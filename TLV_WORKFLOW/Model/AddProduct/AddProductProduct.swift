@@ -21,7 +21,7 @@ class AddProductProduct : NSObject, NSCoding{
 	var depth : String!
 	var dimensionDescription : String!
 	var dimensions : String!
-	var forAwaitingContractCreatedAt : AddProductCreatedAt!
+	var forAwaitingContractCreatedAt : AnyObject!
 	var forPricingCreatedAt : AnyObject!
 	var forProductionCreatedAt : AnyObject!
 	var forProposalForProductionCreatedAt : AnyObject!
@@ -87,9 +87,7 @@ class AddProductProduct : NSObject, NSCoding{
 		depth = dictionary["depth"] as? String
 		dimensionDescription = dictionary["dimension_description"] as? String
 		dimensions = dictionary["dimensions"] as? String
-		if let forAwaitingContractCreatedAtData = dictionary["for_awaiting_contract_created_at"] as? [String:Any]{
-			forAwaitingContractCreatedAt = AddProductCreatedAt(fromDictionary: forAwaitingContractCreatedAtData)
-		}
+		forAwaitingContractCreatedAt = dictionary["for_awaiting_contract_created_at"] as? AnyObject
 		forPricingCreatedAt = dictionary["for_pricing_created_at"] as? AnyObject
 		forProductionCreatedAt = dictionary["for_production_created_at"] as? AnyObject
 		forProposalForProductionCreatedAt = dictionary["for_proposal_for_production_created_at"] as? AnyObject
@@ -188,7 +186,7 @@ class AddProductProduct : NSObject, NSCoding{
 			dictionary["dimensions"] = dimensions
 		}
 		if forAwaitingContractCreatedAt != nil{
-			dictionary["for_awaiting_contract_created_at"] = forAwaitingContractCreatedAt.toDictionary()
+			dictionary["for_awaiting_contract_created_at"] = forAwaitingContractCreatedAt
 		}
 		if forPricingCreatedAt != nil{
 			dictionary["for_pricing_created_at"] = forPricingCreatedAt
@@ -342,7 +340,7 @@ class AddProductProduct : NSObject, NSCoding{
          depth = aDecoder.decodeObject(forKey: "depth") as? String
          dimensionDescription = aDecoder.decodeObject(forKey: "dimension_description") as? String
          dimensions = aDecoder.decodeObject(forKey: "dimensions") as? String
-         forAwaitingContractCreatedAt = aDecoder.decodeObject(forKey: "for_awaiting_contract_created_at") as? AddProductCreatedAt
+         forAwaitingContractCreatedAt = aDecoder.decodeObject(forKey: "for_awaiting_contract_created_at") as? AnyObject
          forPricingCreatedAt = aDecoder.decodeObject(forKey: "for_pricing_created_at") as? AnyObject
          forProductionCreatedAt = aDecoder.decodeObject(forKey: "for_production_created_at") as? AnyObject
          forProposalForProductionCreatedAt = aDecoder.decodeObject(forKey: "for_proposal_for_production_created_at") as? AnyObject

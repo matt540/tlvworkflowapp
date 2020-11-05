@@ -10,8 +10,8 @@ class AddProductData : NSObject, NSCoding{
 	var age : [AddProductAge]!
 	var categories : [AddProductCategory]!
 	var pickupLocations : [AddProductPickupLocation]!
-	var product : [AddProductProduct]!
-	var sellers : [AddProductSellerid]!
+	var product : AddProductProduct!
+	var sellers : [AddProductSeller]!
 
 
 	/**
@@ -39,17 +39,13 @@ class AddProductData : NSObject, NSCoding{
 				pickupLocations.append(value)
 			}
 		}
-		product = [AddProductProduct]()
-		if let productArray = dictionary["product"] as? [[String:Any]]{
-			for dic in productArray{
-				let value = AddProductProduct(fromDictionary: dic)
-				product.append(value)
-			}
+		if let productData = dictionary["product"] as? [String:Any]{
+			product = AddProductProduct(fromDictionary: productData)
 		}
-		sellers = [AddProductSellerid]()
+		sellers = [AddProductSeller]()
 		if let sellersArray = dictionary["sellers"] as? [[String:Any]]{
 			for dic in sellersArray{
-				let value = AddProductSellerid(fromDictionary: dic)
+				let value = AddProductSeller(fromDictionary: dic)
 				sellers.append(value)
 			}
 		}
@@ -83,11 +79,7 @@ class AddProductData : NSObject, NSCoding{
 			dictionary["pickup_locations"] = dictionaryElements
 		}
 		if product != nil{
-			var dictionaryElements = [[String:Any]]()
-			for productElement in product {
-				dictionaryElements.append(productElement.toDictionary())
-			}
-			dictionary["product"] = dictionaryElements
+			dictionary["product"] = product.toDictionary()
 		}
 		if sellers != nil{
 			var dictionaryElements = [[String:Any]]()
@@ -108,8 +100,8 @@ class AddProductData : NSObject, NSCoding{
          age = aDecoder.decodeObject(forKey :"age") as? [AddProductAge]
          categories = aDecoder.decodeObject(forKey :"categories") as? [AddProductCategory]
          pickupLocations = aDecoder.decodeObject(forKey :"pickup_locations") as? [AddProductPickupLocation]
-         product = aDecoder.decodeObject(forKey :"product") as? [AddProductProduct]
-         sellers = aDecoder.decodeObject(forKey :"sellers") as? [AddProductSellerid]
+         product = aDecoder.decodeObject(forKey: "product") as? AddProductProduct
+         sellers = aDecoder.decodeObject(forKey :"sellers") as? [AddProductSeller]
 
 	}
 
