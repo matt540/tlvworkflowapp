@@ -2154,7 +2154,7 @@
                                                     <inset key="sectionInset" minX="8" minY="8" maxX="8" maxY="8"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="PictureCell" reuseIdentifier="PictureCell" id="Qzi-Bc-Vgl" customClass="PictureCell" customModule="TLV_WORKFLOW" customModuleProvider="target">
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="AddDataPictureCell" reuseIdentifier="AddDataPictureCell" id="Qzi-Bc-Vgl" customClass="AddDataPictureCell" customModule="TLV_WORKFLOW" customModuleProvider="target">
                                                         <rect key="frame" x="8" y="8" width="80" height="80"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -2171,6 +2171,9 @@
                                                                         <constraint firstAttribute="height" constant="25" id="q2J-s0-Psn"/>
                                                                     </constraints>
                                                                     <state key="normal" image="minus_red"/>
+                                                                    <connections>
+                                                                        <action selector="btnDeleteAction:" destination="Qzi-Bc-Vgl" eventType="touchUpInside" id="Qyd-i2-Gd1"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                         </view>
@@ -2183,10 +2186,23 @@
                                                             <constraint firstItem="Ryl-et-qvt" firstAttribute="top" secondItem="Qzi-Bc-Vgl" secondAttribute="top" constant="3" id="u4g-TQ-HK6"/>
                                                         </constraints>
                                                         <connections>
-                                                            <outlet property="imageView" destination="zRj-qk-40j" id="Khm-et-iyw"/>
+                                                            <outlet property="btnDeleteImage" destination="Ryl-et-qvt" id="91j-AT-2Ma"/>
+                                                            <outlet property="imageView" destination="zRj-qk-40j" id="UCQ-70-cpA"/>
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundCorner" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <outlet property="dataSource" destination="qZJ-36-Z4E" id="oFf-G8-Y5s"/>
                                                     <outlet property="delegate" destination="qZJ-36-Z4E" id="qX4-FX-cLM"/>

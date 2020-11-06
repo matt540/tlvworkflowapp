@@ -75,7 +75,6 @@ class AddProductVC: UIViewController {
     var pickupLocationData: PickUPLocationModel?
     
     let shippingCategory: [String] = ["SEATING","LIGHTING","STORAGE","RUGS","ART","ACCESSORIES","TABLES"]
-    var imageArrayForCollection:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,6 +148,11 @@ extension AddProductVC{
     @IBAction func btnPetAction(_ sender: UIButton) {
     }
     @IBAction func btnUploadImageAction(_ sender: UIButton) {
+        CameraHandler.shared.imagePickedBlock = { (image) in
+            GlobalFunction.showLoadingIndicator()
+            self.imageUpload(image: image)
+        }
+        CameraHandler.shared.showActionSheet(vc: self)
     }
     @IBAction func btnSaveAction(_ sender: UIButton) {
     }
@@ -252,6 +256,36 @@ extension AddProductVC{
             self.pickupLocationData = PickUPLocationModel(fromDictionary: parentDict)
         }
     }
+    func callDeleteImage(params: [String : Any], id : Int) {
+        WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.delete_product_image, params: params) { (responseDict, status) in
+            if status == 200{
+                self.multiOptionAlertBox(title: Messages.success, message: Messages.imageRemoved, action1: "Ok") { (_ ) in
+                    //model of pending images is filtered for refresh collection locally
+                    self.data?.data.product.productId?.productPendingImages = self.data?.data.product.productId?.productPendingImages.filter{ $0.id != id }
+                    self.photoCollectionView.reloadData()
+                }
+            }else {
+                self.alertbox(title: responseDict[ Constant.ParameterNames.status ] as! String, message: Messages.errorOccur )
+            }
+        }
+    }
+    func imageUpload(image: UIImage) {
+        let image = image
+        let imagesData = ["photo": [GlobalFunction.resizeImage(image: image)]]
+        var params:[String:String] = [:]
+        params[Constant.ParameterNames.key] = serviceKey
+        params[Constant.ParameterNames.folder] = Constant.FolderNames.product
+        WebAPIManager.makeMultipartRequestToUploadImages(isFormDataRequest: true, isContainXAPIToken: true, isContainContentType: true, path: Constant.Api.upload_product_image, parameters: params, imagesData: [imagesData]) { (responseDict, status) in
+            if responseDict["code"] as! Int == 200{
+                let imgResponse = responseDict[ Constant.ParameterNames.data ] as? [String:Any]
+                let img = AddProductProductPendingImage(fromDictionary: imgResponse ?? [:])
+                self.data?.data.product.productId?.productPendingImages.append(img)
+                self.photoCollectionView.reloadData()
+            }else{
+                self.alertbox(title: Messages.error, message: responseDict["message"] as? String ?? "Error Ave Chhhe")
+            }
+        }
+    }
 }
 
 //MARK: Set data when load
@@ -298,14 +332,11 @@ extension AddProductVC{
         txtInternalNotes.textColor = UIColor.lightGray
     }
     txtPackagingFee.text = productData?.productId.flatRatePackagingFee
-    txtPickupLocation.text = productData?.productId.pickUpLocation.valueText
+    txtPickupLocation.text = productData?.productId.pickUpLocation?.valueText
     txtDelivery.text = productData?.deliveryOption
     btnMaterial.isSelected = productData?.productId.shipMaterial ?? false
     btnPetYes.isSelected = productData?.productId.petFree == "yes" ?  true : false
     btnPetNo.isSelected = productData?.productId.petFree != "yes" ? true : false
-    for image in productData?.productId!.productPendingImages ?? []{
-        imageArrayForCollection.append(image.name)
-        }
     photoCollectionView.reloadData()
     }
 }
@@ -317,7 +348,7 @@ extension AddProductVC: UICollectionViewDelegate, UICollectionViewDataSource{
             let numberOfCell = data?.data.categories.count
             return numberOfCell ?? 0
         }else {
-            return imageArrayForCollection.count
+            return self.data?.data.product.productId?.productPendingImages.count ?? 0
         }
         
     }
@@ -337,20 +368,42 @@ extension AddProductVC: UICollectionViewDelegate, UICollectionViewDataSource{
             cell.layer.masksToBounds = false
             return cell
         }else {
-            let pictureCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.CellIdentifier.pictureCell, for: indexPath as IndexPath) as! PictureCell
-            let imgUrl = image_base_url + imageArrayForCollection[indexPath.row]
+            let images = data?.data.product.productId.productPendingImages
+            let pictureCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.CellIdentifier.addDataPictureCell, for: indexPath as IndexPath) as! AddDataPictureCell
+            let imgUrl = image_base_url + (images?[indexPath.row].name)!
             pictureCell.imageView!.sd_setImage(with: URL(string: imgUrl), completed: nil)
             uvNoImageAvailable.backgroundColor = .clear
+            uvNoImageAvailable.isHidden = true
             lblNoImageAvailable.isHidden = true
+            pictureCell.deleteClosure = {
+                self.multiOptionAlertBox(title: Messages.tlv, message: Messages.confirmDeleteImage, action1: "Yes",action2: "No") { (actionStatus) in
+                    if actionStatus == 0{
+                        var paramDict: [String : Any] = [:]
+                        paramDict[ Constant.ParameterNames.key ] = serviceKey
+                        paramDict[ Constant.ParameterNames.folder ] = Constant.FolderNames.product
+                        paramDict[ Constant.ParameterNames.name ] = images?[indexPath.row].name
+                        paramDict[ Constant.ParameterNames.id ] = images?[indexPath.row].id
+                        GlobalFunction.showLoadingIndicator()
+                        self.callDeleteImage(params: paramDict, id: (images?[indexPath.row].id)! )
+                    }
+                }
+            }
             return pictureCell
         }
         
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let category = data?.data.categories[indexPath.row]
-//        category?.subcategories.count
-//        category?.subcategories[0].subCategoryName
-        print(category!)
+        if collectionView == productDetailCollectionView{
+            let category = data?.data.categories[indexPath.row]
+            //        category?.subcategories.count
+            //        category?.subcategories[0].subCategoryName
+                    print(category!)
+        }else {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.photoVc) as! PhotoVC
+            popUpEffectType = .flipUp
+            vc.imgUrls = data?.data.product.productId.productPendingImages
+            self.presentPopUpViewController(vc)
+        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == productDetailCollectionView {

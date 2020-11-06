@@ -15,17 +15,11 @@ class PhotoVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var lblPageCount: UILabel!
     
-    var imgUrls: [String] = []
+    var imgUrls: [AddProductProductPendingImage]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imgUrls.append("https://homepages.cae.wisc.edu/~ece533/images/airplane.png")
-        imgUrls.append("https://homepages.cae.wisc.edu/~ece533/images/arctichare.png")
-        imgUrls.append("https://homepages.cae.wisc.edu/~ece533/images/baboon.png")
-        imgUrls.append("https://homepages.cae.wisc.edu/~ece533/images/frymire.png")
-        imgUrls.append("https://homepages.cae.wisc.edu/~ece533/images/serrano.png")
-        
-        lblPageCount.text = String(format: "%i/%li", 1 , imgUrls.count)
+        lblPageCount.text = String(format: "%i/%li", 1 , imgUrls?.count ?? 0)
     }
 }
 
@@ -40,12 +34,13 @@ extension PhotoVC{
 extension PhotoVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imgUrls.count
+        return imgUrls?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let imgCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PictureCell", for: indexPath) as! PictureCell
-        imgCell.imageView.sd_setImage(with: URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQfSk2gzoEhClkwk9lx9a9a8q9EC9PGzSV3Tg&usqp=CAU"), completed: nil)
+        let imgUrl = image_base_url + (imgUrls?[indexPath.row].name)!
+        imgCell.imageView.sd_setImage(with: URL(string: imgUrl), completed: nil)
         return imgCell
     }
     
@@ -75,7 +70,7 @@ extension PhotoVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollec
         let pageWidth = UIScreen.main.bounds.size.width - 64
         let fractionalPage = Float((collectionView.contentOffset.x / pageWidth))
         let page = Int(roundf(fractionalPage))
-        lblPageCount.text = String(format: "%i/%li", page + 1, imgUrls.count)
+        lblPageCount.text = String(format: "%i/%li", page + 1, imgUrls?.count ?? 0)
     }
     
 }

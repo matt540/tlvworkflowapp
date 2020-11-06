@@ -196,9 +196,6 @@ extension ProductDetailVC {
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func btnAddProductAction(_ sender: UIButton) {
-//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoVC") as! PhotoVC
-//        popUpEffectType = .flipUp
-//        self.presentPopUpViewController(vc)
         let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: "AddProductVC") as! AddProductVC
         addProductVC.isEditView = false
         self.navigationController?.pushViewController(addProductVC, animated: true)

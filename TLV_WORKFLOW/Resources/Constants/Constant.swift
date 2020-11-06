@@ -63,6 +63,8 @@ class Constant: NSObject {
         static let edit_seller_product_for_production_stage = "edit_seller_product_for_production_stage"
         static let get_size = "getOptionsBySelectId/9"
         static let get_pickup_location = "get_pickup_location"
+        static let delete_product_image = "delete_product_image"
+        static let upload_product_image = "upload_product_image"
     }
     
     struct segueId {
@@ -93,16 +95,18 @@ class Constant: NSObject {
         static let productDetailVC = "ProductDetailVC"
         static let profileVC = "ProfileVC"
         static let addNewSellerVC = "AddNewSellerVC"
-        static let addProductDetailCell = "AddProductDetailCell"
+        static let photoVc = "PhotoVC"
     }
     
     struct CellIdentifier {
         static let productDetailCell = "ProductDetailCell"
         static let addProductDetailCell = "AddProductDetailCell"
         static let pictureCell = "PictureCell"
+        static let addDataPictureCell = "AddDataPictureCell"
     }
     
     struct ParameterNames {
+        static let name = "name"
         static let data = "data"
         static let id = "id"
         static let email = "email"
@@ -119,6 +123,7 @@ class Constant: NSObject {
         static let phoneNo = "phone"
         static let folder = "folder"
         static let production_quotation_ids = "production_quotation_ids"
+        static let status = "status"
     }
     
     struct PlaceholderText{
@@ -134,6 +139,7 @@ class Constant: NSObject {
     
     struct FolderNames {
         static let profile = "profile"
+        static let product = "product"
     }
     
 }
