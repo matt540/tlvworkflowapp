@@ -7,9 +7,9 @@ import Foundation
 
 class AddProductProductId : NSObject, NSCoding{
 
-	var age : AnyObject!
+	var age : AddProductAge!
 	var approvedDate : AddProductCreatedAt!
-	var brand : AddProductBrand!
+	var brand : AddProductSubcategory!
 	var brandLocal : String!
 	var category : AnyObject!
 	var categoryLocal : String!
@@ -29,15 +29,15 @@ class AddProductProductId : NSObject, NSCoding{
 	var name : String!
 	var note : String!
 	var petFree : String!
-	var pickUpLocation : AnyObject!
+	var pickUpLocation : AddProductPickupLocation!
 	var price : String!
-	var productCategory : [AnyObject]!
+	var productCategory : [AddProductSubcategory]!
 	var productCollection : [AnyObject]!
-	var productColor : [AnyObject]!
-	var productCon : [AnyObject]!
+	var productColor : [AddProductSubcategory]!
+	var productCon : [AddProductSubcategory]!
 	var productLook : [AnyObject]!
-	var productMaterials : [AnyObject]!
-	var productPendingImages : [AnyObject]!
+	var productMaterials : [AddProductSubcategory]!
+	var productPendingImages : [AddProductProductPendingImage]!
 	var productRoom : [AnyObject]!
 	var quantity : String!
 	var sellerFirstname : String!
@@ -60,12 +60,14 @@ class AddProductProductId : NSObject, NSCoding{
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: [String:Any]){
-		age = dictionary["age"] as? AnyObject
+		if let ageData = dictionary["age"] as? [String:Any]{
+			age = AddProductAge(fromDictionary: ageData)
+		}
 		if let approvedDateData = dictionary["approved_date"] as? [String:Any]{
 			approvedDate = AddProductCreatedAt(fromDictionary: approvedDateData)
 		}
 		if let brandData = dictionary["brand"] as? [String:Any]{
-			brand = AddProductBrand(fromDictionary: brandData)
+			brand = AddProductSubcategory(fromDictionary: brandData)
 		}
 		brandLocal = dictionary["brand_local"] as? String
 		category = dictionary["category"] as? AnyObject
@@ -88,15 +90,47 @@ class AddProductProductId : NSObject, NSCoding{
 		name = dictionary["name"] as? String
 		note = dictionary["note"] as? String
 		petFree = dictionary["pet_free"] as? String
-		pickUpLocation = dictionary["pick_up_location"] as? AnyObject
+		if let pickUpLocationData = dictionary["pick_up_location"] as? [String:Any]{
+			pickUpLocation = AddProductPickupLocation(fromDictionary: pickUpLocationData)
+		}
 		price = dictionary["price"] as? String
-		productCategory = dictionary["product_category"] as? [AnyObject]
+		productCategory = [AddProductSubcategory]()
+		if let productCategoryArray = dictionary["product_category"] as? [[String:Any]]{
+			for dic in productCategoryArray{
+				let value = AddProductSubcategory(fromDictionary: dic)
+				productCategory.append(value)
+			}
+		}
 		productCollection = dictionary["product_collection"] as? [AnyObject]
-		productColor = dictionary["product_color"] as? [AnyObject]
-		productCon = dictionary["product_con"] as? [AnyObject]
+		productColor = [AddProductSubcategory]()
+		if let productColorArray = dictionary["product_color"] as? [[String:Any]]{
+			for dic in productColorArray{
+				let value = AddProductSubcategory(fromDictionary: dic)
+				productColor.append(value)
+			}
+		}
+		productCon = [AddProductSubcategory]()
+		if let productConArray = dictionary["product_con"] as? [[String:Any]]{
+			for dic in productConArray{
+				let value = AddProductSubcategory(fromDictionary: dic)
+				productCon.append(value)
+			}
+		}
 		productLook = dictionary["product_look"] as? [AnyObject]
-		productMaterials = dictionary["product_materials"] as? [AnyObject]
-		productPendingImages = dictionary["product_pending_images"] as? [AnyObject]
+		productMaterials = [AddProductSubcategory]()
+		if let productMaterialsArray = dictionary["product_materials"] as? [[String:Any]]{
+			for dic in productMaterialsArray{
+				let value = AddProductSubcategory(fromDictionary: dic)
+				productMaterials.append(value)
+			}
+		}
+		productPendingImages = [AddProductProductPendingImage]()
+		if let productPendingImagesArray = dictionary["product_pending_images"] as? [[String:Any]]{
+			for dic in productPendingImagesArray{
+				let value = AddProductProductPendingImage(fromDictionary: dic)
+				productPendingImages.append(value)
+			}
+		}
 		productRoom = dictionary["product_room"] as? [AnyObject]
 		quantity = dictionary["quantity"] as? String
 		sellerFirstname = dictionary["seller_firstname"] as? String
@@ -126,7 +160,7 @@ class AddProductProductId : NSObject, NSCoding{
 	{
 		var dictionary = [String:Any]()
 		if age != nil{
-			dictionary["age"] = age
+			dictionary["age"] = age.toDictionary()
 		}
 		if approvedDate != nil{
 			dictionary["approved_date"] = approvedDate.toDictionary()
@@ -192,31 +226,51 @@ class AddProductProductId : NSObject, NSCoding{
 			dictionary["pet_free"] = petFree
 		}
 		if pickUpLocation != nil{
-			dictionary["pick_up_location"] = pickUpLocation
+			dictionary["pick_up_location"] = pickUpLocation.toDictionary()
 		}
 		if price != nil{
 			dictionary["price"] = price
 		}
 		if productCategory != nil{
-			dictionary["product_category"] = productCategory
+			var dictionaryElements = [[String:Any]]()
+			for productCategoryElement in productCategory {
+				dictionaryElements.append(productCategoryElement.toDictionary())
+			}
+			dictionary["product_category"] = dictionaryElements
 		}
 		if productCollection != nil{
 			dictionary["product_collection"] = productCollection
 		}
 		if productColor != nil{
-			dictionary["product_color"] = productColor
+			var dictionaryElements = [[String:Any]]()
+			for productColorElement in productColor {
+				dictionaryElements.append(productColorElement.toDictionary())
+			}
+			dictionary["product_color"] = dictionaryElements
 		}
 		if productCon != nil{
-			dictionary["product_con"] = productCon
+			var dictionaryElements = [[String:Any]]()
+			for productConElement in productCon {
+				dictionaryElements.append(productConElement.toDictionary())
+			}
+			dictionary["product_con"] = dictionaryElements
 		}
 		if productLook != nil{
 			dictionary["product_look"] = productLook
 		}
 		if productMaterials != nil{
-			dictionary["product_materials"] = productMaterials
+			var dictionaryElements = [[String:Any]]()
+			for productMaterialsElement in productMaterials {
+				dictionaryElements.append(productMaterialsElement.toDictionary())
+			}
+			dictionary["product_materials"] = dictionaryElements
 		}
 		if productPendingImages != nil{
-			dictionary["product_pending_images"] = productPendingImages
+			var dictionaryElements = [[String:Any]]()
+			for productPendingImagesElement in productPendingImages {
+				dictionaryElements.append(productPendingImagesElement.toDictionary())
+			}
+			dictionary["product_pending_images"] = dictionaryElements
 		}
 		if productRoom != nil{
 			dictionary["product_room"] = productRoom
@@ -275,9 +329,9 @@ class AddProductProductId : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         age = aDecoder.decodeObject(forKey: "age") as? AnyObject
+         age = aDecoder.decodeObject(forKey: "age") as? AddProductAge
          approvedDate = aDecoder.decodeObject(forKey: "approved_date") as? AddProductCreatedAt
-         brand = aDecoder.decodeObject(forKey: "brand") as? AddProductBrand
+         brand = aDecoder.decodeObject(forKey: "brand") as? AddProductSubcategory
          brandLocal = aDecoder.decodeObject(forKey: "brand_local") as? String
          category = aDecoder.decodeObject(forKey: "category") as? AnyObject
          categoryLocal = aDecoder.decodeObject(forKey: "category_local") as? String
@@ -297,15 +351,15 @@ class AddProductProductId : NSObject, NSCoding{
          name = aDecoder.decodeObject(forKey: "name") as? String
          note = aDecoder.decodeObject(forKey: "note") as? String
          petFree = aDecoder.decodeObject(forKey: "pet_free") as? String
-         pickUpLocation = aDecoder.decodeObject(forKey: "pick_up_location") as? AnyObject
+         pickUpLocation = aDecoder.decodeObject(forKey: "pick_up_location") as? AddProductPickupLocation
          price = aDecoder.decodeObject(forKey: "price") as? String
-         productCategory = aDecoder.decodeObject(forKey: "product_category") as? [AnyObject]
+         productCategory = aDecoder.decodeObject(forKey :"product_category") as? [AddProductSubcategory]
          productCollection = aDecoder.decodeObject(forKey: "product_collection") as? [AnyObject]
-         productColor = aDecoder.decodeObject(forKey: "product_color") as? [AnyObject]
-         productCon = aDecoder.decodeObject(forKey: "product_con") as? [AnyObject]
+         productColor = aDecoder.decodeObject(forKey :"product_color") as? [AddProductSubcategory]
+         productCon = aDecoder.decodeObject(forKey :"product_con") as? [AddProductSubcategory]
          productLook = aDecoder.decodeObject(forKey: "product_look") as? [AnyObject]
-         productMaterials = aDecoder.decodeObject(forKey: "product_materials") as? [AnyObject]
-         productPendingImages = aDecoder.decodeObject(forKey: "product_pending_images") as? [AnyObject]
+         productMaterials = aDecoder.decodeObject(forKey :"product_materials") as? [AddProductSubcategory]
+         productPendingImages = aDecoder.decodeObject(forKey :"product_pending_images") as? [AddProductProductPendingImage]
          productRoom = aDecoder.decodeObject(forKey: "product_room") as? [AnyObject]
          quantity = aDecoder.decodeObject(forKey: "quantity") as? String
          sellerFirstname = aDecoder.decodeObject(forKey: "seller_firstname") as? String

@@ -62,6 +62,10 @@ class Constant: NSObject {
         static let check_seller_email_exists = "check_seller_email_exists"
         static let save_new_seller = "save_new_seller"
         static let get_sellerById = "seller/get_sellerById"
+        static let add_seller_product_for_production_stage = "add_seller_product_for_production_stage"
+        static let edit_seller_product_for_production_stage = "edit_seller_product_for_production_stage"
+        static let get_size = "getOptionsBySelectId/9"
+        static let get_pickup_location = "get_pickup_location"
     }
     
     struct segueId {
@@ -94,10 +98,14 @@ class Constant: NSObject {
         static let profileVC = "ProfileVC"
         static let addNewSellerVC = "AddNewSellerVC"
         static let addProductVC = "AddProductVC"
+        static let collectionViewDropDownVC = "CollectionViewDropDownVC"
     }
     
     struct CellIdentifier {
         static let productDetailCell = "ProductDetailCell"
+        static let addProductDetailCell = "AddProductDetailCell"
+        static let pictureCell = "PictureCell"
+        static let dropDownCell = "DropDownCell"
     }
     
     struct ParameterNames {
@@ -119,6 +127,18 @@ class Constant: NSObject {
         static let userEmail = "useremail"
         static let address = "address"
         static let wp_seller_id = "wp_seller_id"
+        static let data = "data"
+    }
+    
+    struct PlaceholderText{
+        static let condition_notes = "Condition Notes"
+        static let diamention_product_detail = "Diamension/Product Details"
+        static let internal_notes = "Internal Notes"
+    }
+    
+    struct LableText {
+        static let lbl_title_add_product = "Edit Product"
+        static let lbl_title_edit_product = "Add Product"
     }
     
     struct FolderNames {
