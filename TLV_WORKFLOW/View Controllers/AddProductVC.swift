@@ -18,6 +18,7 @@ class AddProductVC: UIViewController {
     var isEditView: Bool = false
     var sellerId: Int?
     var productId: Int?
+    
     //MARK: button outlets
     @IBOutlet weak var btnProfile: UIButton!
     @IBOutlet weak var btnBack: UIButton!
@@ -74,6 +75,8 @@ class AddProductVC: UIViewController {
     var sizeData : SizeModel?
     var pickupLocationData: PickUPLocationModel?
     
+    var addImage: [AddProductProductPendingImage] = []
+    var imgArray = [#imageLiteral(resourceName: "user_icon"),#imageLiteral(resourceName: "logout")]
     let shippingCategory: [String] = ["SEATING","LIGHTING","STORAGE","RUGS","ART","ACCESSORIES","TABLES"]
     
     override func viewDidLoad() {
@@ -139,6 +142,17 @@ class AddProductVC: UIViewController {
 //MARK: Button Actions
 extension AddProductVC{
     @IBAction func btnProfileAction(_ sender: UIButton) {
+        FTPopOverMenu.showForSender(sender: sender as UIView, with: ["My Profile","Logout"], menuImageArray: imgArray, done: { (selectedIndex) -> () in
+                if selectedIndex == 0{
+                    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.profileVC) as! ProfileVC
+                    vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 80 )
+                    self.popUpEffectType = .flipUp
+                    self.presentPopUpViewController(vc)
+                }else{
+                    
+                }
+        }) {
+        }
     }
     @IBAction func btnBackAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
@@ -279,7 +293,12 @@ extension AddProductVC{
             if responseDict["code"] as! Int == 200{
                 let imgResponse = responseDict[ Constant.ParameterNames.data ] as? [String:Any]
                 let img = AddProductProductPendingImage(fromDictionary: imgResponse ?? [:])
-                self.data?.data.product.productId?.productPendingImages.append(img)
+                if self.isEditView{
+                    self.data?.data.product.productId?.productPendingImages.append(img)
+                }else {
+                    self.addImage.append(img)
+                }
+                
                 self.photoCollectionView.reloadData()
             }else{
                 self.alertbox(title: Messages.error, message: responseDict["message"] as? String ?? "Error Ave Chhhe")
@@ -348,7 +367,12 @@ extension AddProductVC: UICollectionViewDelegate, UICollectionViewDataSource{
             let numberOfCell = data?.data.categories.count
             return numberOfCell ?? 0
         }else {
-            return self.data?.data.product.productId?.productPendingImages.count ?? 0
+            if self.isEditView{
+                return self.data?.data.product.productId?.productPendingImages.count ?? 0
+            }else {
+                return self.addImage.count
+            }
+            
         }
         
     }
@@ -368,9 +392,14 @@ extension AddProductVC: UICollectionViewDelegate, UICollectionViewDataSource{
             cell.layer.masksToBounds = false
             return cell
         }else {
-            let images = data?.data.product.productId.productPendingImages
+            var images: [AddProductProductPendingImage] = []
+            if self.isEditView {
+                images = data?.data.product.productId.productPendingImages ?? []
+            }else {
+                images = self.addImage
+            }
             let pictureCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.CellIdentifier.addDataPictureCell, for: indexPath as IndexPath) as! AddDataPictureCell
-            let imgUrl = image_base_url + (images?[indexPath.row].name)!
+            let imgUrl = image_base_url + (images[indexPath.row].name)!
             pictureCell.imageView!.sd_setImage(with: URL(string: imgUrl), completed: nil)
             uvNoImageAvailable.backgroundColor = .clear
             uvNoImageAvailable.isHidden = true
@@ -381,10 +410,10 @@ extension AddProductVC: UICollectionViewDelegate, UICollectionViewDataSource{
                         var paramDict: [String : Any] = [:]
                         paramDict[ Constant.ParameterNames.key ] = serviceKey
                         paramDict[ Constant.ParameterNames.folder ] = Constant.FolderNames.product
-                        paramDict[ Constant.ParameterNames.name ] = images?[indexPath.row].name
-                        paramDict[ Constant.ParameterNames.id ] = images?[indexPath.row].id
+                        paramDict[ Constant.ParameterNames.name ] = images[indexPath.row].name
+                        paramDict[ Constant.ParameterNames.id ] = images[indexPath.row].id
                         GlobalFunction.showLoadingIndicator()
-                        self.callDeleteImage(params: paramDict, id: (images?[indexPath.row].id)! )
+                        self.callDeleteImage(params: paramDict, id: (images[indexPath.row].id)! )
                     }
                 }
             }

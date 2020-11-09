@@ -173,22 +173,16 @@ extension ProductDetailVC {
         }
     }
     @IBAction func btnProfileAction(_ sender: UIButton) {
-        FTPopOverMenu.showForSender(sender: sender as UIView,
-                                    with: ["My Profile","Logout"],
-                                    menuImageArray: imgArray,
-                                    done: { (selectedIndex) -> () in
-                                        if selectedIndex == 0{
-                                            
-                                            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.profileVC) as! ProfileVC
-                                            vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 80 )
-                                            self.popUpEffectType = .flipUp
-                                            self.presentPopUpViewController(vc)
-                                            
-                                        }else{
-                                            
-                                        }
+        FTPopOverMenu.showForSender(sender: sender as UIView, with: ["My Profile","Logout"], menuImageArray: imgArray, done: { (selectedIndex) -> () in
+                if selectedIndex == 0{
+                    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.profileVC) as! ProfileVC
+                    vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 80 )
+                    self.popUpEffectType = .flipUp
+                    self.presentPopUpViewController(vc)
+                }else{
+                    
+                }
         }) {
-            
         }
     }
     
