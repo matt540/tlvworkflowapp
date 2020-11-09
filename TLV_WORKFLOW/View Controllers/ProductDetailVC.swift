@@ -190,7 +190,7 @@ extension ProductDetailVC {
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func btnAddProductAction(_ sender: UIButton) {
-        let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: "AddProductVC") as! AddProductVC
+        let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.addProductVC) as! AddProductVC
         addProductVC.isEditView = false
         self.navigationController?.pushViewController(addProductVC, animated: true)
     }
@@ -322,15 +322,15 @@ extension ProductDetailVC: UITableViewDelegate, UITableViewDataSource{
         detailCell.selectionStyle = UITableViewCell.SelectionStyle.none
         return detailCell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let productDict = productArray[indexPath.row]
-        let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: "AddProductVC") as! AddProductVC
+        let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.addProductVC) as! AddProductVC
         addProductVC.isEditView = true
         addProductVC.sellerId = sellerDetail?.id
         addProductVC.productId = productDict.id!
         self.navigationController?.pushViewController(addProductVC, animated: true)
     }
-    
     
 }
 

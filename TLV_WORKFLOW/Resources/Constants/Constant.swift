@@ -59,6 +59,9 @@ class Constant: NSObject {
         static let archive_product_qoutation = "product_quotation/archive_product_quotation"
         static let delete_product_qoutation = "product_quotation/delete_product_quotation"
         static let submit_multiple_product_for_pricing = "product_quotation/submit_multiple_products_to_pricing_stage"
+        static let check_seller_email_exists = "check_seller_email_exists"
+        static let save_new_seller = "save_new_seller"
+        static let get_sellerById = "seller/get_sellerById"
         static let add_seller_product_for_production_stage = "add_seller_product_for_production_stage"
         static let edit_seller_product_for_production_stage = "edit_seller_product_for_production_stage"
         static let get_size = "getOptionsBySelectId/9"
@@ -81,6 +84,7 @@ class Constant: NSObject {
         static let emptyLastNameMSG = "Please Enter LastName"
         static let emptyPhoneNoMSG = "Please Enter PhoneNumber"
         static let passwordValidation = "Password Must Be Greater Then Six Character"
+        static let emailExist = "Email already exist."
     }
     
     struct Color {
@@ -95,6 +99,9 @@ class Constant: NSObject {
         static let productDetailVC = "ProductDetailVC"
         static let profileVC = "ProfileVC"
         static let addNewSellerVC = "AddNewSellerVC"
+        static let addProductVC = "AddProductVC"
+        static let collectionViewDropDownVC = "CollectionViewDropDownVC"
+        static let subCategoryVC = "SubCategoryVC"
         static let photoVc = "PhotoVC"
     }
     
@@ -102,6 +109,8 @@ class Constant: NSObject {
         static let productDetailCell = "ProductDetailCell"
         static let addProductDetailCell = "AddProductDetailCell"
         static let pictureCell = "PictureCell"
+        static let dropDownCell = "DropDownCell"
+        static let subCategoryCell = "SubCategoryCell"
         static let addDataPictureCell = "AddDataPictureCell"
     }
     
@@ -123,6 +132,9 @@ class Constant: NSObject {
         static let phoneNo = "phone"
         static let folder = "folder"
         static let production_quotation_ids = "production_quotation_ids"
+        static let userEmail = "useremail"
+        static let address = "address"
+        static let wp_seller_id = "wp_seller_id"
         static let status = "status"
     }
     
@@ -135,6 +147,7 @@ class Constant: NSObject {
     struct LableText {
         static let lbl_title_add_product = "Edit Product"
         static let lbl_title_edit_product = "Add Product"
+        static let status = "status"
     }
     
     struct FolderNames {

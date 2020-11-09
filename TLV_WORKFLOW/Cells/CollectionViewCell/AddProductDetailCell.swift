@@ -14,4 +14,5 @@ class AddProductDetailCell: UICollectionViewCell {
     @IBOutlet weak var lblFieldTitle: UILabel!
     @IBOutlet weak var lblFieldName: UILabel!
     @IBOutlet weak var imgDropDown: UIImageView!
+    @IBOutlet weak var txtFieldName: ACFloatingTextfield!
 }

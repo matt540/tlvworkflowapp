@@ -13,7 +13,6 @@ class AddProductData : NSObject, NSCoding{
 	var product : AddProductProduct!
 	var sellers : [AddProductSeller]!
 
-
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */

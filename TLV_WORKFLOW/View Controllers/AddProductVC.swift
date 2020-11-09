@@ -74,11 +74,16 @@ class AddProductVC: UIViewController {
     var data: AddProductModel?
     var sizeData : SizeModel?
     var pickupLocationData: PickUPLocationModel?
+    var selectedData: [[AddProductSubcategory]] = [[],[],[],[],[],[],[]]
+    var selectedDataSubCategory:[[AddProductChildren]] = []
+    var multipleData: [Bool] = [false,true,true,true,true,false,true]
+    var headerData: [String] = ["Add Brand","Add Category","","Add Color","Add Condition","Add Age","Add Material"]
     
     var addImage: [AddProductProductPendingImage] = []
     var imgArray = [#imageLiteral(resourceName: "user_icon"),#imageLiteral(resourceName: "logout")]
     let shippingCategory: [String] = ["SEATING","LIGHTING","STORAGE","RUGS","ART","ACCESSORIES","TABLES"]
-    
+    var imageArrayForCollection:[String] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -90,6 +95,7 @@ class AddProductVC: UIViewController {
                 layout.itemSize = size
         }
         
+    
         ageViewHeightConstraint.constant = 0.0
         dropDownTextfieldArray = [txtProductQuantity, txtPickupLocation, txtSellerName, txtShippingCatagory, txtShippingSize, txtDelivery]
         textFieldArray = [txtSellerName, txtPickupLocation, txtProductName, txtProductQuantity, txtTlvPrice, txtRetailPrice, txtCommision, txtUnits, txtDepth, txtWidth, txtHeight, txtShippingCatagory, txtPackagingFee, txtShippingSize, txtDelivery, txtSeatHeight, txtArmHeight]
@@ -275,7 +281,12 @@ extension AddProductVC{
             if status == 200{
                 self.multiOptionAlertBox(title: Messages.success, message: Messages.imageRemoved, action1: "Ok") { (_ ) in
                     //model of pending images is filtered for refresh collection locally
-                    self.data?.data.product.productId?.productPendingImages = self.data?.data.product.productId?.productPendingImages.filter{ $0.id != id }
+                    if self.isEditView{
+                      self.data?.data.product.productId?.productPendingImages = self.data?.data.product.productId?.productPendingImages.filter{ $0.id != id }
+                    }else {
+                        self.addImage = self.addImage.filter{ $0.id != id }
+                    }
+                    
                     self.photoCollectionView.reloadData()
                 }
             }else {
@@ -381,8 +392,45 @@ extension AddProductVC: UICollectionViewDelegate, UICollectionViewDataSource{
         if collectionView == productDetailCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.CellIdentifier.addProductDetailCell, for: indexPath as IndexPath) as! AddProductDetailCell
             let category = data?.data.categories[indexPath.row]
-            cell.lblFieldName.text = category?.categoryName
-            cell.lblFieldTitle.isHidden = true
+            cell.txtFieldName.placeholder = category?.categoryName
+            
+            if indexPath.row == 2{
+                    if selectedDataSubCategory.count > 1{
+                        var tempArr: [String] = []
+                        for i in 0..<selectedDataSubCategory.count{
+                             let nameArr = selectedDataSubCategory[i].map{$0.subCategoryName}
+                             let name = nameArr.compactMap{$0}.joined(separator: ",")
+                             tempArr.append(name)
+                        }
+                        var finalName = tempArr.compactMap{$0}.joined(separator: ",")
+                        finalName.removeLast()
+                        cell.txtFieldName.text = finalName
+                    }else if selectedDataSubCategory.count == 1{
+                        if selectedDataSubCategory[0].count > 1{
+                            let nameArr = selectedDataSubCategory[0].map{$0.subCategoryName}
+                            let name = nameArr.compactMap{$0}.joined(separator: ",")
+                            cell.txtFieldName.text = name
+                        }else if selectedDataSubCategory[0].count == 1{
+                            cell.txtFieldName.text = selectedDataSubCategory[0][0].subCategoryName
+                        }else{
+                            cell.txtFieldName.text = ""
+                        }
+                    }else{
+                      cell.txtFieldName.text = ""
+                }
+            }else{
+                if (selectedData[indexPath.row].count) > 0{
+                    if (selectedData[indexPath.row].count) > 1{
+                        let nameArr = selectedData[indexPath.row].map{$0.subCategoryName}
+                        let name = nameArr.compactMap{$0}.joined(separator: ",")
+                       cell.txtFieldName.text = name
+                    }else if selectedData[indexPath.row].count == 1{
+                        cell.txtFieldName.text = selectedData[indexPath.row][0].subCategoryName
+                    }else{
+                        cell.txtFieldName.text = ""
+                    }
+                }
+            }
             cell.contentView.layer.cornerRadius = 5.0
             cell.contentView.layer.masksToBounds = true
             cell.layer.shadowColor = UIColor.lightGray.cgColor
@@ -421,19 +469,23 @@ extension AddProductVC: UICollectionViewDelegate, UICollectionViewDataSource{
         }
         
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == productDetailCollectionView{
-            let category = data?.data.categories[indexPath.row]
-            //        category?.subcategories.count
-            //        category?.subcategories[0].subCategoryName
-                    print(category!)
+            if indexPath.row == 2{
+                subCategoryDropDown(collectionView: collectionView, status: indexPath.row)
+            }else{
+                dropdownMenu(header: headerData[indexPath.row],multiple: multipleData[indexPath.row],index: indexPath.row,collectionView: collectionView)
+            }
         }else {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.photoVc) as! PhotoVC
             popUpEffectType = .flipUp
             vc.imgUrls = data?.data.product.productId.productPendingImages
             self.presentPopUpViewController(vc)
         }
+        
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == productDetailCollectionView {
             return CGSize(width: (100), height: 35)
@@ -441,8 +493,106 @@ extension AddProductVC: UICollectionViewDelegate, UICollectionViewDataSource{
             return CGSize(width: 80, height: 80)
         }
     }
+    
 }
 
+//MARK:- CollectionView Dropdown Methods
+extension AddProductVC {
+    func dropdownMenu(header: String, multiple: Bool,index: Int,collectionView: UICollectionView){
+        var subCategory = data?.data.categories[index].subcategories
+        subCategory = subCategory?.filter { $0.isEnable == 1 }
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.collectionViewDropDownVC) as! CollectionViewDropDownVC
+        vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 160 )
+        vc.lblHeader.text = header
+        vc.isMultiple = multiple
+        vc.subCategory = subCategory!
+        vc.category = index
+        vc.brandCompletion = {
+            (list,status) in
+            self.selectedData[index] = list
+            
+            if status == 1 {
+                // if select data in category collection(subcategory) not changed for this use bellow comment function
+                //self.allData(subCategory: subCategory!)
+                self.removeData(collectionView: collectionView, subCategory: subCategory!)
+            }
+            if list.count > 1{
+                let nameArr = list.map{$0.subCategoryName}
+                let name = nameArr.compactMap{$0}.joined(separator: ",")
+                self.dataSetIntoCell(collectionView: collectionView, name: name, status: status)
+            }else if list.count == 1{
+                self.dataSetIntoCell(collectionView: collectionView, name: list[0].subCategoryName, status: status)
+            }else{
+                self.dataSetIntoCell(collectionView: collectionView, name: "", status: status)
+            }
+        }
+        self.popUpEffectType = .flipUp
+        self.presentPopUpViewController(vc)
+    }
+    
+    //MARK:- SubCategory DropDown
+    func subCategoryDropDown(collectionView: UICollectionView, status: Int){
+        let subCategory = selectedData[1]
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.subCategoryVC) as! SubCategoryVC
+        vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 160 )
+        vc.subCategory = subCategory
+        vc.subCategoryCompletion = { (list) in
+            self.selectedDataSubCategory = list
+            if list.count > 1{
+                var tempArr: [String] = []
+                for i in 0..<list.count{
+                     let nameArr = list[i].map{$0.subCategoryName}
+                     let name = nameArr.compactMap{$0}.joined(separator: ",")
+                     tempArr.append(name)
+                }
+                var finalName = tempArr.compactMap{$0}.joined(separator: ",")
+                finalName.removeLast()
+                self.dataSetIntoCell(collectionView: collectionView, name: finalName, status: status)
+            }else if list.count == 1{
+                let nameArr = list[0].map{$0.subCategoryName}
+                let name = nameArr.compactMap{$0}.joined(separator: ",")
+                self.dataSetIntoCell(collectionView: collectionView, name: name, status: status)
+            }else{
+                self.dataSetIntoCell(collectionView: collectionView, name: "", status: status)
+            }
+        }
+        self.popUpEffectType = .flipUp
+        self.presentPopUpViewController(vc)
+    }
+    
+    //MARK:- Data Set into textfield
+    func dataSetIntoCell(collectionView: UICollectionView, name: String, status: Int){
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.CellIdentifier.addProductDetailCell, for: IndexPath(item: status, section: 0)) as! AddProductDetailCell
+        cell.txtFieldName.text = name
+        collectionView.reloadItems(at: [IndexPath(item: status, section: 0)])
+    }
+    
+    //MARK:- function for subcategory all data
+    func allData(subCategory: [AddProductSubcategory]){
+            for i in subCategory{
+                if self.selectedData[1].contains(i){
+                    
+                }else{
+                    for j in i.childrens{
+                        j.isCategorySelected = false
+                    }
+                }
+            }
+    }
+    
+    //MARK:- function for remove all data
+    func removeData(collectionView:UICollectionView, subCategory: [AddProductSubcategory]){
+        for i in subCategory{
+            for j in i.childrens{
+                j.isCategorySelected = false
+            }
+        }
+        selectedDataSubCategory = []
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.CellIdentifier.addProductDetailCell, for: IndexPath(item: 2, section: 0)) as! AddProductDetailCell
+        cell.txtFieldName.text = ""
+        collectionView.reloadItems(at: [IndexPath(item: 2, section: 0)])
+    }
+}
 //MARK: Picker View Delegate methods
 extension AddProductVC: UIPickerViewDataSource, UIPickerViewDelegate{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

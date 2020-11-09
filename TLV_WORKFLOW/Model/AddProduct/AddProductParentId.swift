@@ -1,11 +1,11 @@
 //
-//	AddProductSubcategory.swift
+//	AddProductParentId.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class AddProductSubcategory : NSObject, NSCoding{
+class AddProductParentId : NSObject, NSCoding{
 
 	var categoryStoragePrice : AnyObject!
 	var createdAt : AddProductCreatedAt!
@@ -16,9 +16,7 @@ class AddProductSubcategory : NSObject, NSCoding{
 	var subCategoryName : String!
 	var updatedAt : AddProductCreatedAt!
 	var wpTermId : String!
-    var parentId : AnyObject!
-    var childrens : [AddProductChildren]!
-    var isCategorySelected : Bool = false
+
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
@@ -32,14 +30,6 @@ class AddProductSubcategory : NSObject, NSCoding{
 		id = dictionary["id"] as? Int
 		isEnable = dictionary["is_enable"] as? Int
 		orderValue = dictionary["order_value"] as? Int
-        parentId = dictionary["parent_id"] as? AnyObject
-        childrens = [AddProductChildren]()
-        if let childrensArray = dictionary["childrens"] as? [[String:Any]]{
-            for dic in childrensArray{
-                let value = AddProductChildren(fromDictionary: dic)
-                childrens.append(value)
-            }
-        }
 		subCategoryName = dictionary["sub_category_name"] as? String
 		if let updatedAtData = dictionary["updated_at"] as? [String:Any]{
 			updatedAt = AddProductCreatedAt(fromDictionary: updatedAtData)
@@ -65,16 +55,6 @@ class AddProductSubcategory : NSObject, NSCoding{
 		if id != nil{
 			dictionary["id"] = id
 		}
-        if childrens != nil{
-            var dictionaryElements = [[String:Any]]()
-            for childrensElement in childrens {
-                dictionaryElements.append(childrensElement.toDictionary())
-            }
-            dictionary["childrens"] = dictionaryElements
-        }
-        if parentId != nil{
-            dictionary["parent_id"] = parentId
-        }
 		if isEnable != nil{
 			dictionary["is_enable"] = isEnable
 		}
@@ -102,8 +82,6 @@ class AddProductSubcategory : NSObject, NSCoding{
          categoryStoragePrice = aDecoder.decodeObject(forKey: "category_storage_price") as? AnyObject
          createdAt = aDecoder.decodeObject(forKey: "created_at") as? AddProductCreatedAt
          deletedAt = aDecoder.decodeObject(forKey: "deletedAt") as? AnyObject
-         childrens = aDecoder.decodeObject(forKey :"childrens") as? [AddProductChildren]
-         parentId = aDecoder.decodeObject(forKey: "parent_id") as? AnyObject
          id = aDecoder.decodeObject(forKey: "id") as? Int
          isEnable = aDecoder.decodeObject(forKey: "is_enable") as? Int
          orderValue = aDecoder.decodeObject(forKey: "order_value") as? Int
@@ -146,12 +124,7 @@ class AddProductSubcategory : NSObject, NSCoding{
 		if wpTermId != nil{
 			aCoder.encode(wpTermId, forKey: "wp_term_id")
 		}
-        if childrens != nil{
-            aCoder.encode(childrens, forKey: "childrens")
-        }
-        if parentId != nil{
-            aCoder.encode(parentId, forKey: "parent_id")
-        }
+
 	}
 
 }

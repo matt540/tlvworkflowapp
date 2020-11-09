@@ -21,7 +21,8 @@ class SplashVC: UIViewController {
 
                 let productListVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.productListVC) as! ProductListVC
                 self.navigationController?.pushViewController(productListVC, animated: true)
-
+//                let productListVC = self.storyboard?.instantiateViewController(withIdentifier: "tempVC") as! tempVC
+//                self.navigationController?.pushViewController(productListVC, animated: true)
             }catch {
                 
             }

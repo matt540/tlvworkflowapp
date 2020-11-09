@@ -34,6 +34,7 @@ class Messages : NSObject {
     static let confirmSubmitProduct = "Are you sure you want to submit product?"
     
     static let noResponsefromServer = "No response server"
+    static let sellerAddedSuccessFully = "Seller successfully added."
     
     static let confirmDeleteImage = "Are you sure wants to delete this image?"
 }
