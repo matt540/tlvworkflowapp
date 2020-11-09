@@ -42,6 +42,8 @@
 		1F297FCF2550266D007190FF /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FCE2550266D007190FF /* UIView+Utils.swift */; };
 		1F297FD125502679007190FF /* WebAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FD025502679007190FF /* WebAPIManager.swift */; };
 		1F65267F25496DA500BB7421 /* ProductListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65267E25496DA500BB7421 /* ProductListVC.swift */; };
+		1FA3C23F255900B600D3D13F /* SubCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA3C23E255900B600D3D13F /* SubCategoryVC.swift */; };
+		1FA3C241255902A600D3D13F /* SubCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA3C240255902A600D3D13F /* SubCategoryCell.swift */; };
 		1FC14E8B2553D296007B32A5 /* CollectionViewDropDownVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC14E8A2553D296007B32A5 /* CollectionViewDropDownVC.swift */; };
 		1FC14E8D2553D31E007B32A5 /* DropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC14E8C2553D31E007B32A5 /* DropDownCell.swift */; };
 		1FC14E8F25550AEC007B32A5 /* AddProductVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC14E8E25550AEB007B32A5 /* AddProductVC.swift */; };
@@ -120,6 +122,8 @@
 		1F297FCE2550266D007190FF /* UIView+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
 		1F297FD025502679007190FF /* WebAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAPIManager.swift; sourceTree = "<group>"; };
 		1F65267E25496DA500BB7421 /* ProductListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListVC.swift; sourceTree = "<group>"; };
+		1FA3C23E255900B600D3D13F /* SubCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryVC.swift; sourceTree = "<group>"; };
+		1FA3C240255902A600D3D13F /* SubCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryCell.swift; sourceTree = "<group>"; };
 		1FC14E8A2553D296007B32A5 /* CollectionViewDropDownVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDropDownVC.swift; sourceTree = "<group>"; };
 		1FC14E8C2553D31E007B32A5 /* DropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownCell.swift; sourceTree = "<group>"; };
 		1FC14E8E25550AEB007B32A5 /* AddProductVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductVC.swift; sourceTree = "<group>"; };
@@ -377,6 +381,7 @@
 				1F297F6025501E09007190FF /* ProductDetailCell.swift */,
 				1FE450C42549AAC200920110 /* SellerListCell.swift */,
 				1FC14E8C2553D31E007B32A5 /* DropDownCell.swift */,
+				1FA3C240255902A600D3D13F /* SubCategoryCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -467,6 +472,7 @@
 				1FC34535254C33770050A99A /* AddNewSellerVC.swift */,
 				1FC14E8E25550AEB007B32A5 /* AddProductVC.swift */,
 				1FC14E8A2553D296007B32A5 /* CollectionViewDropDownVC.swift */,
+				1FA3C23E255900B600D3D13F /* SubCategoryVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -649,6 +655,7 @@
 				1F297F5325501DB1007190FF /* LoginModel.swift in Sources */,
 				1F297FC825502644007190FF /* FTConstants.swift in Sources */,
 				1FC14E8F25550AEC007B32A5 /* AddProductVC.swift in Sources */,
+				1FA3C23F255900B600D3D13F /* SubCategoryVC.swift in Sources */,
 				1F297F5525501DB1007190FF /* LoginData.swift in Sources */,
 				1FC14EB425550D8C007B32A5 /* AddProductCreatedAt.swift in Sources */,
 				1F297FA22550257C007190FF /* UIViewController+PopUp.swift in Sources */,
@@ -685,6 +692,7 @@
 				8149DAB625483C2B00023212 /* SceneDelegate.swift in Sources */,
 				1F297FCB25502657007190FF /* Toast.swift in Sources */,
 				1FC14EAE25550D8C007B32A5 /* AddProductProductId.swift in Sources */,
+				1FA3C241255902A600D3D13F /* SubCategoryCell.swift in Sources */,
 				1F297FD125502679007190FF /* WebAPIManager.swift in Sources */,
 				8149DAD625484F0C00023212 /* LoginVC.swift in Sources */,
 				1FC14EB525550D8C007B32A5 /* AddProductSellerid.swift in Sources */,

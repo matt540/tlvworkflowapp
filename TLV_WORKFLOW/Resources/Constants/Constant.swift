@@ -99,6 +99,7 @@ class Constant: NSObject {
         static let addNewSellerVC = "AddNewSellerVC"
         static let addProductVC = "AddProductVC"
         static let collectionViewDropDownVC = "CollectionViewDropDownVC"
+        static let subCategoryVC = "SubCategoryVC"
     }
     
     struct CellIdentifier {
@@ -106,6 +107,7 @@ class Constant: NSObject {
         static let addProductDetailCell = "AddProductDetailCell"
         static let pictureCell = "PictureCell"
         static let dropDownCell = "DropDownCell"
+        static let subCategoryCell = "SubCategoryCell"
     }
     
     struct ParameterNames {

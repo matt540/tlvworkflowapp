@@ -19,7 +19,7 @@ class AddProductChildren : NSObject, NSCoding{
 	var subCategoryName : String!
 	var updatedAt : AddProductCreatedAt!
 	var wpTermId : String!
-
+    var isCategorySelected : Bool = false
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
