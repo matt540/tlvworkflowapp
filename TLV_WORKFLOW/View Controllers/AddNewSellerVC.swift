@@ -30,7 +30,9 @@ class AddNewSellerVC: UIViewController {
 //MARK:- IBActions
 extension AddNewSellerVC{
     @IBAction func btnCloseAction(_ sender: Any) {
-        self.dismissPopUpViewController()
+        self.dismissPopUpViewController {
+        
+        }
     }
     
     @IBAction func btnSaveAction(_ sender: Any) {
@@ -129,10 +131,23 @@ extension AddNewSellerVC{
                 self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }else{
                 let dict = responseDict["data"] as! [String : Any]
-                self.multiOptionAlertBox(title: Messages.tlv, message: Messages.sellerAddedSuccessFully, action1: "OK") { (_ ) in
-                    self.reloadMainScreen(dict: dict)
-                    self.dismissPopUpViewController()
-                }
+                
+                
+                
+                let alertController = UIAlertController(title: Messages.tlv, message: Messages.sellerAddedSuccessFully, preferredStyle: .alert)
+                      alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+                          self.dismissPopUpViewController()
+                            self.reloadMainScreen(dict: dict)
+                      }))
+                      self.present(alertController, animated: true, completion: nil)
+                
+//                self.multiOptionAlertBox(title: Messages.tlv, message: Messages.sellerAddedSuccessFully, action1: "OK") { (_ ) in
+//
+//                    self.dismissPopUpViewController()
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+//                        self.reloadMainScreen(dict: dict)
+//                    }
+//                }
             }
         }
     }
@@ -182,6 +197,8 @@ extension AddNewSellerVC: UITextFieldDelegate{
     //MARK:- Email validation Check
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
          if textField == txtEmail{
+            self.btnSave.isEnabled = true
+            self.btnSave.backgroundColor = UIColor.lightGray
             if txtEmail.text == ""{
                 txtEmail.showErrorWithText(errorText: Constant.validationMessage.emptyEmailMSG)
                 txtEmail.showError()

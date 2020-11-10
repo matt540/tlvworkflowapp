@@ -42,6 +42,8 @@
 		1F297FCF2550266D007190FF /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FCE2550266D007190FF /* UIView+Utils.swift */; };
 		1F297FD125502679007190FF /* WebAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FD025502679007190FF /* WebAPIManager.swift */; };
 		1F65267F25496DA500BB7421 /* ProductListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65267E25496DA500BB7421 /* ProductListVC.swift */; };
+		1FA3C243255A5BBF00D3D13F /* DeliveryOptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA3C242255A5BBF00D3D13F /* DeliveryOptionVC.swift */; };
+		1FA3C245255A90F200D3D13F /* AddPickUpLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA3C244255A90F100D3D13F /* AddPickUpLocationVC.swift */; };
 		1FC34536254C33770050A99A /* AddNewSellerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC34535254C33770050A99A /* AddNewSellerVC.swift */; };
 		1FE450C02549A52200920110 /* SellerListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE450BE2549A52100920110 /* SellerListModel.swift */; };
 		1FE450C12549A52200920110 /* SellerListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE450BF2549A52200920110 /* SellerListData.swift */; };
@@ -125,6 +127,8 @@
 		1F65267E25496DA500BB7421 /* ProductListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListVC.swift; sourceTree = "<group>"; };
 		1FA3C23E255900B600D3D13F /* SubCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryVC.swift; sourceTree = "<group>"; };
 		1FA3C240255902A600D3D13F /* SubCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryCell.swift; sourceTree = "<group>"; };
+		1FA3C242255A5BBF00D3D13F /* DeliveryOptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryOptionVC.swift; sourceTree = "<group>"; };
+		1FA3C244255A90F100D3D13F /* AddPickUpLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPickUpLocationVC.swift; sourceTree = "<group>"; };
 		1FC14E8A2553D296007B32A5 /* CollectionViewDropDownVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDropDownVC.swift; sourceTree = "<group>"; };
 		1FC14E8C2553D31E007B32A5 /* DropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownCell.swift; sourceTree = "<group>"; };
 		1FC14E9125550C7C007B32A5 /* PickUPLocationKeyText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickUPLocationKeyText.swift; sourceTree = "<group>"; };
@@ -479,6 +483,8 @@
 				1FC14E8A2553D296007B32A5 /* CollectionViewDropDownVC.swift */,
 				81A9417525597D2900357D73 /* AddProductVC.swift */,
 				1FA3C23E255900B600D3D13F /* SubCategoryVC.swift */,
+				1FA3C242255A5BBF00D3D13F /* DeliveryOptionVC.swift */,
+				1FA3C244255A90F100D3D13F /* AddPickUpLocationVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -668,9 +674,11 @@
 				81A941622559746900357D73 /* AddProductSubcategory.swift in Sources */,
 				1FE450C02549A52200920110 /* SellerListModel.swift in Sources */,
 				1F297FC525502644007190FF /* FTPopOverMenuModel.swift in Sources */,
+				1FA3C243255A5BBF00D3D13F /* DeliveryOptionVC.swift in Sources */,
 				1F297F9B255024F6007190FF /* Message.swift in Sources */,
 				1F297FA32550257C007190FF /* VisualEffectView.swift in Sources */,
 				1F297F5325501DB1007190FF /* LoginModel.swift in Sources */,
+				1FA3C245255A90F200D3D13F /* AddPickUpLocationVC.swift in Sources */,
 				81A9417B25597E3000357D73 /* PickUPLocationData.swift in Sources */,
 				81A941552559746900357D73 /* AddProductCreatedAt.swift in Sources */,
 				81A9415D2559746900357D73 /* AddProductAge.swift in Sources */,

@@ -68,6 +68,8 @@ class Constant: NSObject {
         static let get_pickup_location = "get_pickup_location"
         static let delete_product_image = "delete_product_image"
         static let upload_product_image = "upload_product_image"
+        static let getState = "state/get_pickup_state"
+        static let saveNewLocation = "save_new_pickup_location"
     }
     
     struct segueId {
@@ -85,6 +87,8 @@ class Constant: NSObject {
         static let emptyPhoneNoMSG = "Please Enter PhoneNumber"
         static let passwordValidation = "Password Must Be Greater Then Six Character"
         static let emailExist = "Email already exist."
+        static let emptyCityMSG = "Please enter city."
+        static let emptyStateMSG = "Please enter state."
     }
     
     struct Color {
@@ -103,6 +107,8 @@ class Constant: NSObject {
         static let collectionViewDropDownVC = "CollectionViewDropDownVC"
         static let subCategoryVC = "SubCategoryVC"
         static let photoVc = "PhotoVC"
+        static let deliveryOptionVC = "DeliveryOptionVC"
+        static let addPickUpLocationVC = "AddPickUpLocationVC"
     }
     
     struct CellIdentifier {
@@ -136,6 +142,8 @@ class Constant: NSObject {
         static let address = "address"
         static let wp_seller_id = "wp_seller_id"
         static let status = "status"
+        static let city = "city"
+        static let state = "state"
     }
     
     struct PlaceholderText{

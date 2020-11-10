@@ -82,8 +82,9 @@ class AddProductVC: UIViewController {
     var addImage: [AddProductProductPendingImage] = []
     var imgArray = [#imageLiteral(resourceName: "user_icon"),#imageLiteral(resourceName: "logout")]
     let shippingCategory: [String] = ["SEATING","LIGHTING","STORAGE","RUGS","ART","ACCESSORIES","TABLES"]
+    let deliveryOptions: [String] = ["Professional Delivery, quote upon request","Free Local Pickup, professional delivery available, quote upon request","Free Local Pickup, shipping available, quote upon request"]
     var imageArrayForCollection:[String] = []
-
+    var selectedDelivery = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -95,7 +96,6 @@ class AddProductVC: UIViewController {
                 layout.itemSize = size
         }
         
-    
         ageViewHeightConstraint.constant = 0.0
         dropDownTextfieldArray = [txtProductQuantity, txtPickupLocation, txtSellerName, txtShippingCatagory, txtShippingSize, txtDelivery]
         textFieldArray = [txtSellerName, txtPickupLocation, txtProductName, txtProductQuantity, txtTlvPrice, txtRetailPrice, txtCommision, txtUnits, txtDepth, txtWidth, txtHeight, txtShippingCatagory, txtPackagingFee, txtShippingSize, txtDelivery, txtSeatHeight, txtArmHeight]
@@ -141,7 +141,7 @@ class AddProductVC: UIViewController {
         setPicker(pickerView: shipingCategoryPicker, field: txtShippingCatagory)
         setPicker(pickerView: pickupLocationPicker, field: txtPickupLocation)
         setPicker(pickerView: deliveryLocationPicker, field: txtDelivery)
-        
+         self.pickupLocationPicker.selectRow(0, inComponent: 0, animated: true)
     }
 }
 
@@ -164,8 +164,16 @@ extension AddProductVC{
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func btnMaterialAction(_ sender: UIButton) {
+        sender.isSelected = sender.isSelected ? false : true
     }
     @IBAction func btnPetAction(_ sender: UIButton) {
+        if sender == btnPetYes{
+            btnPetYes.isSelected = btnPetYes.isSelected ? false : true
+            btnPetNo.isSelected = false
+        }else {
+            btnPetNo.isSelected = btnPetNo.isSelected ? false : true
+            btnPetYes.isSelected = false
+        }
     }
     @IBAction func btnUploadImageAction(_ sender: UIButton) {
         CameraHandler.shared.imagePickedBlock = { (image) in
@@ -202,6 +210,22 @@ extension AddProductVC: UITextViewDelegate{
     }
 }
 
+//MARK:- Textfield delegate methods
+extension AddProductVC: UITextFieldDelegate{
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == txtDelivery{
+            txtDelivery.resignFirstResponder()
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.deliveryOptionVC) as! DeliveryOptionVC
+            vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 160 )
+            vc.deleveryOptions = deliveryOptions
+            vc.deleveryCompletion = { (selectedString) in
+                self.txtDelivery.text = selectedString
+            }
+            self.popUpEffectType = .flipUp
+            self.presentPopUpViewController(vc)
+        }
+    }
+}
 //MARK: WebService Call
 extension AddProductVC{
     func getDataToAddSellerProduct(params: [String : Any]){
@@ -274,6 +298,7 @@ extension AddProductVC{
             }
             let parentDict:[String : Any] = [Constant.ParameterNames.data:dict]
             self.pickupLocationData = PickUPLocationModel(fromDictionary: parentDict)
+            self.pickupLocationPicker.selectRow(0, inComponent: 0, animated: true)
         }
     }
     func callDeleteImage(params: [String : Any], id : Int) {
@@ -536,6 +561,7 @@ extension AddProductVC {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.subCategoryVC) as! SubCategoryVC
         vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 160 )
         vc.subCategory = subCategory
+        vc.lblHeader.text = ""
         vc.subCategoryCompletion = { (list) in
             self.selectedDataSubCategory = list
             if list.count > 1{
@@ -609,7 +635,7 @@ extension AddProductVC: UIPickerViewDataSource, UIPickerViewDelegate{
         }else if pickerView == shipingCategoryPicker {
             return shippingCategory.count
         }else if pickerView == pickupLocationPicker {
-            return (pickupLocationData?.data.count)! + 1
+            return (pickupLocationData?.data.count ?? 0) + 1
         }else if pickerView == deliveryLocationPicker {
             return 0
         }else{
@@ -645,7 +671,7 @@ extension AddProductVC: UIPickerViewDataSource, UIPickerViewDelegate{
         }else if pickerView == shipingCategoryPicker{
             txtShippingCatagory.text = shippingCategory[row]
         }else if pickerView == pickupLocationPicker{
-            txtPickupLocation.text = row == 0 ? "Add Location" : pickupLocationData?.data[row - 1].valueText
+            txtPickupLocation.text = row == 0 ? "" : pickupLocationData?.data[row - 1].valueText
         }else {
             
         }
@@ -680,7 +706,42 @@ extension AddProductVC{
         pickerView.isUserInteractionEnabled = true
         pickerView.delegate = self
         pickerView.dataSource = self
-        field.inputView = pickerView
         field.isEnabled = false
+        
+        let keyboardToolbar = UIToolbar()
+        keyboardToolbar.sizeToFit()
+        let flexBarButton = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: nil,
+            action: nil)
+        let doneBarButton = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(yourTextViewDoneButtonPressed))
+        keyboardToolbar.items = [flexBarButton, doneBarButton]
+        
+        field.inputAccessoryView = keyboardToolbar
+        field.inputView = pickerView
+        
+    }
+    
+    @objc func yourTextViewDoneButtonPressed(){
+        if(txtPickupLocation.isFirstResponder){
+            let selectedValue = pickupLocationPicker.selectedRow(inComponent: 0)
+            self.view.endEditing(true)
+            if selectedValue == 0{
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.addPickUpLocationVC) as! AddPickUpLocationVC
+                vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 375 )
+                vc.sellerId = sellerId
+                vc.AddLocationCompletion = { (pickupId) in
+                    print(pickupId)
+                }
+                self.popUpEffectType = .flipUp
+                self.presentPopUpViewController(vc)
+            }
+        }else{
+            self.view.endEditing(true)
+        }
     }
 }
+

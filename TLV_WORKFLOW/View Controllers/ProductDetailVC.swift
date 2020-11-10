@@ -192,6 +192,7 @@ extension ProductDetailVC {
     @IBAction func btnAddProductAction(_ sender: UIButton) {
         let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.addProductVC) as! AddProductVC
         addProductVC.isEditView = false
+        addProductVC.sellerId = sellerDetail?.id
         self.navigationController?.pushViewController(addProductVC, animated: true)
     }
     @IBAction func btnNextAction(_ sender: UIButton) {

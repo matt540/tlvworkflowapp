@@ -13,7 +13,7 @@ DEPENDENCIES:
   - SDWebImage
 
 SPEC REPOS:
-  trunk:
+  https://github.com/cocoapods/specs.git:
     - Alamofire
     - IQKeyboardManager
     - JTSImageViewController
@@ -27,4 +27,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cc6749d47f0081a84f03f0ee8d0a16db577e7d96
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.7.5

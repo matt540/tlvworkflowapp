@@ -13,22 +13,22 @@ class SplashVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if isKeyPresentInUserDefaults(key: Constant.UserDefaultKeys.currentUserModel){
-            do {
-                let data = UserDefaults.standard.data(forKey: Constant.UserDefaultKeys.currentUserModel)
-                let decodedUserData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data!) as! LoginModel
-                currentLoginUser = decodedUserData
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            if self.isKeyPresentInUserDefaults(key: Constant.UserDefaultKeys.currentUserModel){
+                do {
+                    let data = UserDefaults.standard.data(forKey: Constant.UserDefaultKeys.currentUserModel)
+                    let decodedUserData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data!) as! LoginModel
+                    currentLoginUser = decodedUserData
 
-                let productListVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.productListVC) as! ProductListVC
-                self.navigationController?.pushViewController(productListVC, animated: true)
-//                let productListVC = self.storyboard?.instantiateViewController(withIdentifier: "tempVC") as! tempVC
-//                self.navigationController?.pushViewController(productListVC, animated: true)
-            }catch {
-                
+                    let productListVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.productListVC) as! ProductListVC
+                    self.navigationController?.pushViewController(productListVC, animated: true)
+                }catch {
+                    
+                }
+            }else {
+                let loginVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.loginVC) as! LoginVC
+                self.navigationController?.pushViewController(loginVC, animated: true)
             }
-        }else {
-            let loginVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.loginVC) as! LoginVC
-            self.navigationController?.pushViewController(loginVC, animated: true)
         }
     }
     

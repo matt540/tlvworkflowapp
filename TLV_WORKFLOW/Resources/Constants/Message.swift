@@ -37,5 +37,6 @@ class Messages : NSObject {
     static let sellerAddedSuccessFully = "Seller successfully added."
     
     static let confirmDeleteImage = "Are you sure wants to delete this image?"
+    static let locationAddedSuccessFully = "Pick up location successfully added."
 }
 
