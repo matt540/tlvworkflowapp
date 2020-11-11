@@ -98,6 +98,7 @@ class Constant: NSObject {
     }
     
     struct VCIdentifier {
+        static let splashVC = "SplashVC"
         static let loginVC = "LoginVC"
         static let productListVC = "ProductListVC"
         static let productDetailVC = "ProductDetailVC"

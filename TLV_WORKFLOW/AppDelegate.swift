@@ -20,34 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func checkLogin() {
-        
         var nav : UINavigationController?
-        
-        if isKeyPresentInUserDefaults(key: Constant.UserDefaultKeys.currentUserModel){
-            do {
-                let data = UserDefaults.standard.data(forKey: Constant.UserDefaultKeys.currentUserModel)
-                let decodedUserData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data!) as! LoginModel
-                currentLoginUser = decodedUserData
-                
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.productListVC) as! ProductListVC
-                
-                 nav = UINavigationController(rootViewController: vc)
-            }catch {
-            }
-        }else {
-            
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.loginVC) as! LoginVC
-            
-             nav = UINavigationController(rootViewController: vc)
-        }
-        
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.splashVC) as! SplashVC
+        nav = UINavigationController(rootViewController: vc)
         nav?.isNavigationBarHidden = true
         UIApplication.shared.windows.first?.rootViewController = nav
         
-    }
-    
-    func isKeyPresentInUserDefaults(key: String) -> Bool {
-        return UserDefaults.standard.object(forKey: key) != nil
     }
     
     // MARK: UISceneSession Lifecycle

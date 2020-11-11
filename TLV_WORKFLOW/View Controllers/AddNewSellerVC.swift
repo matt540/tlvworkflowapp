@@ -30,9 +30,7 @@ class AddNewSellerVC: UIViewController {
 //MARK:- IBActions
 extension AddNewSellerVC{
     @IBAction func btnCloseAction(_ sender: Any) {
-        self.dismissPopUpViewController {
-        
-        }
+        self.dismissPopUp()
     }
     
     @IBAction func btnSaveAction(_ sender: Any) {
@@ -136,7 +134,7 @@ extension AddNewSellerVC{
                 
                 let alertController = UIAlertController(title: Messages.tlv, message: Messages.sellerAddedSuccessFully, preferredStyle: .alert)
                       alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
-                          self.dismissPopUpViewController()
+                        self.dismissPopUp()
                             self.reloadMainScreen(dict: dict)
                       }))
                       self.present(alertController, animated: true, completion: nil)

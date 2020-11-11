@@ -152,8 +152,8 @@ extension AddProductVC{
                 if selectedIndex == 0{
                     let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.profileVC) as! ProfileVC
                     vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 80 )
-                    self.popUpEffectType = .flipUp
-                    self.presentPopUpViewController(vc)
+//                    self.popUpEffectType = .flipUp
+                    self.presentPopUp(vc)
                 }else{
                     
                 }
@@ -221,8 +221,9 @@ extension AddProductVC: UITextFieldDelegate{
             vc.deleveryCompletion = { (selectedString) in
                 self.txtDelivery.text = selectedString
             }
-            self.popUpEffectType = .flipUp
-            self.presentPopUpViewController(vc)
+//            self.popUpEffectType = .flipUp
+            self.presentPopUp(self)
+            
         }
     }
 }
@@ -231,76 +232,133 @@ extension AddProductVC{
     func getDataToAddSellerProduct(params: [String : Any]){
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.add_seller_product_for_production_stage, params: params) { (responseDict, status) in
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.getSize()
+            if status == 200{
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    GlobalFunction.showLoadingIndicator()
+                     self.getSize()
+                 }
+                
+                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                     self.data = AddProductModel(fromDictionary: responseDict as! [String : Any])
+                     self.productDetailCollectionView.reloadData()
+                 }
+                 self.txtSellerName.isEnabled = true
+                 self.txtProductQuantity.isEnabled = true
+                 self.txtShippingSize.isEnabled = true
+                 self.txtShippingCatagory.isEnabled = true
+                 self.txtPickupLocation.isEnabled = true
+                 self.txtDelivery.isEnabled = true
+            }else{
+                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }
-           
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.data = AddProductModel(fromDictionary: responseDict as! [String : Any])
-                self.productDetailCollectionView.reloadData()
-            }
-            self.txtSellerName.isEnabled = true
-            self.txtProductQuantity.isEnabled = true
-            self.txtShippingSize.isEnabled = true
-            self.txtShippingCatagory.isEnabled = true
-            self.txtPickupLocation.isEnabled = true
-            self.txtDelivery.isEnabled = true
         }
     }
     func getDataToEditSellerProduct(params: [String : Any]){
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.edit_seller_product_for_production_stage, params: params) { (responseDict, status) in
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.getSize()
+            if status == 200{
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                     GlobalFunction.showLoadingIndicator()
+                     self.getSize()
+                 }
+                
+                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                     self.data = AddProductModel(fromDictionary: responseDict as! [String : Any])
+                     self.productDetailCollectionView.reloadData()
+                     self.setData()
+                 }
+                 self.txtSellerName.isEnabled = false
+                 self.txtSellerName.backgroundColor =  UIColor(red: 222.0 / 255, green: 222.0 / 255, blue: 222.0 / 255, alpha: 1.0)
+                 self.txtProductQuantity.isEnabled = true
+                 self.txtShippingSize.isEnabled = true
+                 self.txtShippingCatagory.isEnabled = true
+                 self.txtPickupLocation.isEnabled = true
+                 self.txtDelivery.isEnabled = true
+            }else{
+                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }
-           
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.data = AddProductModel(fromDictionary: responseDict as! [String : Any])
-                self.productDetailCollectionView.reloadData()
-                self.setData()
-            }
-            self.txtSellerName.isEnabled = false
-            self.txtSellerName.backgroundColor =  UIColor(red: 222.0 / 255, green: 222.0 / 255, blue: 222.0 / 255, alpha: 1.0)
-            self.txtProductQuantity.isEnabled = true
-            self.txtShippingSize.isEnabled = true
-            self.txtShippingCatagory.isEnabled = true
-            self.txtPickupLocation.isEnabled = true
-            self.txtDelivery.isEnabled = true
-            
         }
     }
     func getSize() {
         WebAPIManager.makeAPIRequest(method: .get, isFormDataRequest: true, isContainContentType: true, path: Constant.Api.get_size, params: [:]) { (responseDict, status) in
-            let data = responseDict[ Constant.ParameterNames.data ] as! NSArray
-            var dict:[[String : Any]] = []
-            for size in data {
-                dict.append(size as! [String : Any])
-            }
-            let parentDict:[String : Any] = [Constant.ParameterNames.data:dict]
             
-            self.sizeData = SizeModel(fromDictionary: parentDict)
-            
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                var dictParam: [String : Any] = [:]
-                dictParam[Constant.ParameterNames.key] = serviceKey
-                dictParam[Constant.ParameterNames.seller_id] = self.sellerId
-                self.getPickupLocation(params: dictParam)
+            if status == 200{
+                let data = responseDict[ Constant.ParameterNames.data ] as? NSArray
+                var dict:[[String : Any]] = []
+                for size in data ?? [] {
+                    dict.append(size as! [String : Any])
+                }
+                let parentDict:[String : Any] = [Constant.ParameterNames.data:dict]
+                
+                self.sizeData = SizeModel(fromDictionary: parentDict)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    var dictParam: [String : Any] = [:]
+                    dictParam[Constant.ParameterNames.key] = serviceKey
+                    dictParam[Constant.ParameterNames.seller_id] = self.sellerId
+                    GlobalFunction.showLoadingIndicator()
+                    self.getPickupLocation(params: dictParam)
+                }
+            }else{
+                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }
         }
     }
     func getPickupLocation(params: [String : Any]) {
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.get_pickup_location, params: params) { (responseDict, status) in
-            let data = responseDict[Constant.ParameterNames.data] as! NSArray
-            var dict:[[String : Any]] = []
-            for size in data {
-                dict.append(size as! [String : Any])
+            
+            if status == 200{
+                let data = responseDict[Constant.ParameterNames.data] as! NSArray
+                var dict:[[String : Any]] = []
+                for size in data {
+                    dict.append(size as! [String : Any])
+                }
+                var dictExtra: [String : Any] = [:]
+                dictExtra["value_text"] = "ADD LOCATION"
+                dict.insert(dictExtra, at: 0)
+                self.pickupLocationPicker.reloadAllComponents()
+                
+                let parentDict:[String : Any] = [Constant.ParameterNames.data:dict]
+                self.pickupLocationData = PickUPLocationModel(fromDictionary: parentDict)
+                self.pickupLocationPicker.selectRow(0, inComponent: 0, animated: true)
+            }else{
+                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }
-            let parentDict:[String : Any] = [Constant.ParameterNames.data:dict]
-            self.pickupLocationData = PickUPLocationModel(fromDictionary: parentDict)
-            self.pickupLocationPicker.selectRow(0, inComponent: 0, animated: true)
         }
     }
+    
+    func getPickupLocationWithId(params: [String : Any], pickupId: Int){
+        WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.get_pickup_location, params: params) { (responseDict, status) in
+            if status == 200{
+                let data = responseDict[Constant.ParameterNames.data] as! NSArray
+                var dict:[[String : Any]] = []
+                for size in data {
+                    dict.append(size as! [String : Any])
+                }
+                var dictExtra: [String : Any] = [:]
+                dictExtra["value_text"] = "ADD LOCATION"
+                dict.insert(dictExtra, at: 0)
+                
+                let parentDict:[String : Any] = [Constant.ParameterNames.data:dict]
+                self.pickupLocationData = PickUPLocationModel(fromDictionary: parentDict)
+                self.pickupLocationPicker.reloadAllComponents()
+                
+                for i in 1..<self.pickupLocationData!.data.count{
+                    let strId1 = self.pickupLocationData?.data[i].id
+                    if strId1 == pickupId{
+                        if self.pickupLocationData?.data[i].keyText == []{
+                            self.txtPickupLocation.text = self.pickupLocationData?.data[i].valueText
+                        }else{
+                            self.txtPickupLocation.text = "\(self.pickupLocationData?.data[i].keyText[0].city ?? ""), \(self.pickupLocationData?.data[i].keyText[0].state ?? "")"
+                            self.pickupLocationPicker.selectRow(i, inComponent: 0, animated: true)
+                        }
+                    }
+                }
+            }else{
+                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
+            }
+        }
+    }
+    
     func callDeleteImage(params: [String : Any], id : Int) {
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.delete_product_image, params: params) { (responseDict, status) in
             if status == 200{
@@ -337,7 +395,7 @@ extension AddProductVC{
                 
                 self.photoCollectionView.reloadData()
             }else{
-                self.alertbox(title: Messages.error, message: responseDict["message"] as? String ?? "Error Ave Chhhe")
+                self.alertbox(title: Messages.error, message: responseDict["message"] as? String ?? Messages.error)
             }
         }
     }
@@ -504,9 +562,10 @@ extension AddProductVC: UICollectionViewDelegate, UICollectionViewDataSource{
             }
         }else {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.photoVc) as! PhotoVC
-            popUpEffectType = .flipUp
+//            popUpEffectType = .flipUp
             vc.imgUrls = data?.data.product.productId.productPendingImages
-            self.presentPopUpViewController(vc)
+            self.presentPopUp(self)
+            
         }
         
     }
@@ -551,8 +610,8 @@ extension AddProductVC {
                 self.dataSetIntoCell(collectionView: collectionView, name: "", status: status)
             }
         }
-        self.popUpEffectType = .flipUp
-        self.presentPopUpViewController(vc)
+//        self.popUpEffectType = .flipUp
+        self.presentPopUp(vc)
     }
     
     //MARK:- SubCategory DropDown
@@ -582,8 +641,8 @@ extension AddProductVC {
                 self.dataSetIntoCell(collectionView: collectionView, name: "", status: status)
             }
         }
-        self.popUpEffectType = .flipUp
-        self.presentPopUpViewController(vc)
+//        self.popUpEffectType = .flipUp
+        self.presentPopUp(vc)
     }
     
     //MARK:- Data Set into textfield
@@ -635,7 +694,7 @@ extension AddProductVC: UIPickerViewDataSource, UIPickerViewDelegate{
         }else if pickerView == shipingCategoryPicker {
             return shippingCategory.count
         }else if pickerView == pickupLocationPicker {
-            return (pickupLocationData?.data.count ?? 0) + 1
+            return pickupLocationData?.data.count ?? 0
         }else if pickerView == deliveryLocationPicker {
             return 0
         }else{
@@ -653,7 +712,15 @@ extension AddProductVC: UIPickerViewDataSource, UIPickerViewDelegate{
         }else if pickerView == shipingCategoryPicker {
             return shippingCategory[row]
         }else if pickerView == pickupLocationPicker {
-            return row == 0 ? "Add Location" : pickupLocationData?.data[row - 1].valueText
+            if row == 0 {
+                return pickupLocationData?.data[row].valueText
+            }else{
+                if self.pickupLocationData?.data[row].keyText == []{
+                    return self.pickupLocationData?.data[row].valueText
+                }else{
+                    return "\(self.pickupLocationData?.data[row].keyText[0].city ?? ""), \(self.pickupLocationData?.data[row].keyText[0].state ?? "")"
+                }
+            }
         }else{
             return ""
         }
@@ -671,7 +738,16 @@ extension AddProductVC: UIPickerViewDataSource, UIPickerViewDelegate{
         }else if pickerView == shipingCategoryPicker{
             txtShippingCatagory.text = shippingCategory[row]
         }else if pickerView == pickupLocationPicker{
-            txtPickupLocation.text = row == 0 ? "" : pickupLocationData?.data[row - 1].valueText
+            if row == 0 {
+                 txtPickupLocation.text = ""
+            }else{
+                if self.pickupLocationData?.data[row].keyText == []{
+                     txtPickupLocation.text = self.pickupLocationData?.data[row].valueText
+                }else{
+                     txtPickupLocation.text =  "\(self.pickupLocationData?.data[row].keyText[0].city ?? ""), \(self.pickupLocationData?.data[row].keyText[0].state ?? "")"
+                    self.pickupLocationPicker.selectRow(row, inComponent: 0, animated: true)
+                }
+            }
         }else {
             
         }
@@ -735,9 +811,12 @@ extension AddProductVC{
                 vc.sellerId = sellerId
                 vc.AddLocationCompletion = { (pickupId) in
                     print(pickupId)
-                }
-                self.popUpEffectType = .flipUp
-                self.presentPopUpViewController(vc)
+                    var params:[String:Any] = [:]
+                    params[Constant.ParameterNames.key] = serviceKey
+                    params[Constant.ParameterNames.seller_id] = self.sellerId
+                    self.getPickupLocationWithId(params: params, pickupId: pickupId)                }
+//                self.popUpEffectType = .flipUp
+                self.presentPopUp(vc)
             }
         }else{
             self.view.endEditing(true)

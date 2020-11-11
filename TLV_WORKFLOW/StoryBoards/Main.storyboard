@@ -15,7 +15,7 @@
         <!--SplashVC-->
         <scene sceneID="6D7-8I-PYy">
             <objects>
-                <viewController storyboardIdentifier="SplashViewController" id="aUL-xL-ntX" customClass="SplashVC" customModule="TLV_WORKFLOW" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SplashVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aUL-xL-ntX" customClass="SplashVC" customModule="TLV_WORKFLOW" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KqE-6S-yJd"/>
                         <viewControllerLayoutGuide type="bottom" id="ZAa-a3-ySZ"/>
@@ -2069,7 +2069,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zum-nn-lTW">
-                                                <rect key="frame" x="164" y="1160.5" width="54.5" height="25"/>
+                                                <rect key="frame" x="164" y="1160.5" width="71" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="19X-Qj-5WH"/>
                                                 </constraints>
@@ -2083,7 +2083,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RNR-fZ-8Ia">
-                                                <rect key="frame" x="248.5" y="1160.5" width="48.5" height="25"/>
+                                                <rect key="frame" x="265" y="1160.5" width="65" height="25"/>
                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
                                                 <state key="normal" title=" No" image="btn_Unselected">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

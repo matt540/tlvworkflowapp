@@ -26,7 +26,7 @@ class PhotoVC: UIViewController {
 //MARK:- Button actions
 extension PhotoVC{
     @IBAction func btnCloseAction(_ sender: UIButton) {
-        self.dismissPopUpViewController()
+        self.dismissPopUp()
     }
 }
 

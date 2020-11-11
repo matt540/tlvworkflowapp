@@ -50,7 +50,9 @@ class ProductListVC: UIViewController {
     //MARK:- Seller Service List
     func callGetSellerListService(params: [String : Any]) {
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.getSellerList, params: params) { (responseDict, status) in
-            if responseDict["code"] as! Int == 200{
+            if status == 0{
+                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
+            }else{
                 let sellerData = SellerListModel(fromDictionary: responseDict as! [String : Any])
                 self.sellerList =  sellerData.data!.data
                 if self.sellerList.count == 0 {
@@ -64,8 +66,8 @@ class ProductListVC: UIViewController {
                         if status == 0{
                             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.addNewSellerVC) as! AddNewSellerVC
                             vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 160 )
-                            self.popUpEffectType = .flipUp
-                            self.presentPopUpViewController(vc)
+//                            self.popUpEffectType = .flipUp
+                            self.presentPopUp(vc)
                         }else{
                             let params = self.apiParameter(serviceKeyData: serviceKey, pageCountData: self.pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id)
                             GlobalFunction.showLoadingIndicator()
@@ -85,8 +87,6 @@ class ProductListVC: UIViewController {
                 }
                 
                 self.sellerTableView.reloadData()
-            }else{
-                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }
         }
     }
@@ -137,8 +137,8 @@ class ProductListVC: UIViewController {
                                             
                                             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.profileVC) as! ProfileVC
                                             vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 80 )
-                                            self.popUpEffectType = .flipUp
-                                            self.presentPopUpViewController(vc)
+//                                            self.popUpEffectType = .flipUp
+                                            self.presentPopUp(vc)
                                             
                                         }else{
                                             

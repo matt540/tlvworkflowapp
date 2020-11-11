@@ -21,7 +21,7 @@ class DeliveryOptionVC: UIViewController {
     }
     
     @IBAction func btnCancelAction(_ sender: Any) {
-        self.dismissPopUpViewController()
+        self.dismissPopUp()
     }
     
 }
@@ -39,7 +39,7 @@ extension DeliveryOptionVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         deleveryCompletion?(deleveryOptions[indexPath.row])
-        self.dismissPopUpViewController()
+        self.dismissPopUp()
     }
 }
 

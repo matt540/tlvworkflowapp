@@ -52,7 +52,7 @@ class AddPickUpLocationVC: UIViewController {
     }
     
     @IBAction func btnCloseAction(_ sender: Any) {
-        self.dismissPopUpViewController()
+        self.dismissPopUp()
     }
     @IBAction func btnSaveAction(_ sender: Any) {
         if txtCity.text == ""{
@@ -98,7 +98,7 @@ extension AddPickUpLocationVC {
                 let dict = responseDict["data"] as! [String : Any]
                 self.multiOptionAlertBox(title: Messages.tlv, message: Messages.locationAddedSuccessFully, action1: "OK") { (_ ) in
                     self.AddLocationCompletion?(dict["pickup_id"] as! Int)
-                    self.dismissPopUpViewController()
+                    self.dismissPopUp()
                 }
             }
         }

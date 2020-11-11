@@ -177,8 +177,8 @@ extension ProductDetailVC {
                 if selectedIndex == 0{
                     let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.profileVC) as! ProfileVC
                     vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 80 )
-                    self.popUpEffectType = .flipUp
-                    self.presentPopUpViewController(vc)
+//                    self.popUpEffectType = .flipUp
+                    self.presentPopUp(vc)
                 }else{
                     
                 }

@@ -28,7 +28,7 @@ class SubCategoryVC: UIViewController {
             selectedChildren.append(i.childrens.filter{$0.isCategorySelected == true} )
         }
         subCategoryCompletion?(selectedChildren)
-        self.dismissPopUpViewController()
+        self.dismissPopUp()
     }
 }
 

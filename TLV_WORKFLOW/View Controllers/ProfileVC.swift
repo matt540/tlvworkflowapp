@@ -36,7 +36,7 @@ class ProfileVC: UIViewController {
 extension ProfileVC{
     
     @IBAction func btnCloseAction(_ sender: Any) {
-        self.dismissPopUpViewController()
+        self.dismissPopUp()
     }
     
     @IBAction func btnSaveAction(_ sender: Any) {
@@ -125,7 +125,7 @@ extension ProfileVC{
                     UserDefaults.standard.synchronize()
                     currentLoginUser = userDataLogin
                     self.multiOptionAlertBox(title: Messages.tlv, message: Messages.dataUpdatedSuccessfully, action1: "OK") { (_ ) in
-                        self.dismissPopUpViewController()
+                        self.dismissPopUp()
                     }
                 }catch {
                     

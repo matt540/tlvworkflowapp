@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F02908B255C235500512219 /* JWBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F029089255C235500512219 /* JWBlurView.m */; };
+		1F02908C255C235500512219 /* UIViewController+ENPopUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F02908A255C235500512219 /* UIViewController+ENPopUp.m */; };
 		1F297F45254FE26A007190FF /* EditUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297F43254FE269007190FF /* EditUserModel.swift */; };
 		1F297F46254FE26A007190FF /* EditUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297F44254FE269007190FF /* EditUserData.swift */; };
 		1F297F5325501DB1007190FF /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297F4B25501DB1007190FF /* LoginModel.swift */; };
@@ -24,8 +26,6 @@
 		1F297F9B255024F6007190FF /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297F99255024F6007190FF /* Message.swift */; };
 		1F297F9D2550254E007190FF /* GlobalFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297F9C2550254E007190FF /* GlobalFunction.swift */; };
 		1F297F9F25502560007190FF /* ACFloatingTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297F9E2550255F007190FF /* ACFloatingTextfield.swift */; };
-		1F297FA22550257C007190FF /* UIViewController+PopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FA02550257C007190FF /* UIViewController+PopUp.swift */; };
-		1F297FA32550257C007190FF /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FA12550257C007190FF /* VisualEffectView.swift */; };
 		1F297FA625502590007190FF /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FA425502590007190FF /* ProgressView.swift */; };
 		1F297FA725502590007190FF /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FA525502590007190FF /* ProgressHUD.swift */; };
 		1F297FA92550259D007190FF /* CameraHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FA82550259D007190FF /* CameraHandler.swift */; };
@@ -90,6 +90,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F029086255C235300512219 /* TLV_WORKFLOW-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TLV_WORKFLOW-Bridging-Header.h"; sourceTree = "<group>"; };
+		1F029087255C235400512219 /* UIViewController+ENPopUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ENPopUp.h"; sourceTree = "<group>"; };
+		1F029088255C235400512219 /* JWBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JWBlurView.h; sourceTree = "<group>"; };
+		1F029089255C235500512219 /* JWBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JWBlurView.m; sourceTree = "<group>"; };
+		1F02908A255C235500512219 /* UIViewController+ENPopUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ENPopUp.m"; sourceTree = "<group>"; };
 		1F297F43254FE269007190FF /* EditUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserModel.swift; sourceTree = "<group>"; };
 		1F297F44254FE269007190FF /* EditUserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserData.swift; sourceTree = "<group>"; };
 		1F297F4B25501DB1007190FF /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -107,8 +112,6 @@
 		1F297F99255024F6007190FF /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		1F297F9C2550254E007190FF /* GlobalFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunction.swift; sourceTree = "<group>"; };
 		1F297F9E2550255F007190FF /* ACFloatingTextfield.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACFloatingTextfield.swift; sourceTree = "<group>"; };
-		1F297FA02550257C007190FF /* UIViewController+PopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+PopUp.swift"; sourceTree = "<group>"; };
-		1F297FA12550257C007190FF /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		1F297FA425502590007190FF /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		1F297FA525502590007190FF /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		1F297FA82550259D007190FF /* CameraHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraHandler.swift; sourceTree = "<group>"; };
@@ -283,8 +286,11 @@
 		1F297F7025501E1C007190FF /* UIViewController+Popup */ = {
 			isa = PBXGroup;
 			children = (
-				1F297FA02550257C007190FF /* UIViewController+PopUp.swift */,
-				1F297FA12550257C007190FF /* VisualEffectView.swift */,
+				1F029088255C235400512219 /* JWBlurView.h */,
+				1F029089255C235500512219 /* JWBlurView.m */,
+				1F029087255C235400512219 /* UIViewController+ENPopUp.h */,
+				1F02908A255C235500512219 /* UIViewController+ENPopUp.m */,
+				1F029086255C235300512219 /* TLV_WORKFLOW-Bridging-Header.h */,
 			);
 			path = "UIViewController+Popup";
 			sourceTree = "<group>";
@@ -562,6 +568,7 @@
 				TargetAttributes = {
 					8149DAAF25483C2B00023212 = {
 						CreatedOnToolsVersion = 11.2.1;
+						LastSwiftMigration = 1120;
 					};
 				};
 			};
@@ -673,10 +680,10 @@
 				1F297F5B25501DE1007190FF /* PictureCell.swift in Sources */,
 				81A941622559746900357D73 /* AddProductSubcategory.swift in Sources */,
 				1FE450C02549A52200920110 /* SellerListModel.swift in Sources */,
+				1F02908B255C235500512219 /* JWBlurView.m in Sources */,
 				1F297FC525502644007190FF /* FTPopOverMenuModel.swift in Sources */,
 				1FA3C243255A5BBF00D3D13F /* DeliveryOptionVC.swift in Sources */,
 				1F297F9B255024F6007190FF /* Message.swift in Sources */,
-				1F297FA32550257C007190FF /* VisualEffectView.swift in Sources */,
 				1F297F5325501DB1007190FF /* LoginModel.swift in Sources */,
 				1FA3C245255A90F200D3D13F /* AddPickUpLocationVC.swift in Sources */,
 				81A9417B25597E3000357D73 /* PickUPLocationData.swift in Sources */,
@@ -685,7 +692,6 @@
 				81A941612559746900357D73 /* AddProductChildren.swift in Sources */,
 				1F297FC825502644007190FF /* FTConstants.swift in Sources */,
 				1F297F5525501DB1007190FF /* LoginData.swift in Sources */,
-				1F297FA22550257C007190FF /* UIViewController+PopUp.swift in Sources */,
 				1F297FC425502644007190FF /* UIControl+Point.swift in Sources */,
 				1F297F46254FE26A007190FF /* EditUserData.swift in Sources */,
 				1F297FC925502644007190FF /* FTPopOverMenuCell.swift in Sources */,
@@ -712,6 +718,7 @@
 				1F297F5825501DB1007190FF /* ProductForProductionCreatedAt.swift in Sources */,
 				81A9417D25597E6F00357D73 /* DropDownCell.swift in Sources */,
 				8149DAB625483C2B00023212 /* SceneDelegate.swift in Sources */,
+				1F02908C255C235500512219 /* UIViewController+ENPopUp.m in Sources */,
 				81A9417C25597E3200357D73 /* PickUPLocationKeyText.swift in Sources */,
 				81A9417925597E2700357D73 /* SizeCreatedAt.swift in Sources */,
 				1F297FCB25502657007190FF /* Toast.swift in Sources */,
@@ -857,6 +864,7 @@
 			baseConfigurationReference = A1389410F8F6FBCE80521BB4 /* Pods-TLV_WORKFLOW.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XVE83679MR;
 				INFOPLIST_FILE = "";
@@ -868,6 +876,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.eSpark.TLV-WORKFLOW";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TLV_WORKFLOW/Resources/Library/UIViewController+Popup/TLV_WORKFLOW-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -878,6 +888,7 @@
 			baseConfigurationReference = D1D460412BFD46CF259FC2DB /* Pods-TLV_WORKFLOW.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XVE83679MR;
 				INFOPLIST_FILE = "";
@@ -889,6 +900,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.eSpark.TLV-WORKFLOW";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TLV_WORKFLOW/Resources/Library/UIViewController+Popup/TLV_WORKFLOW-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

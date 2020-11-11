@@ -31,7 +31,7 @@ class CollectionViewDropDownVC: UIViewController {
     
     @IBAction func btnDoneAction(_ sender: Any) {
         brandCompletion?(self.subCategory.filter{$0.isCategorySelected == true},category)
-        self.dismissPopUpViewController()
+        self.dismissPopUp()
     }
 }
 
