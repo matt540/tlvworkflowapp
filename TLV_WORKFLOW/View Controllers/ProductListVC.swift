@@ -137,11 +137,18 @@ class ProductListVC: UIViewController {
                                             
                                             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.profileVC) as! ProfileVC
                                             vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 80 )
-//                                            self.popUpEffectType = .flipUp
                                             self.presentPopUp(vc)
                                             
                                         }else{
-                                            
+                                            self.multiOptionAlertBox(title: Messages.tlv, message: "Are you sure want to logout?", action1: "YES", action2: "NO") { (Status) in
+                                                if Status == 0{
+                                                    UserDefaults.standard.removeObject(forKey: Constant.UserDefaultKeys.currentUserModel)
+                                                    let loginVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.loginVC) as! LoginVC
+                                                    self.navigationController?.pushViewController(loginVC, animated: true)
+                                                }else{
+                                                    
+                                                }
+                                            }
                                         }
         }) {
             
