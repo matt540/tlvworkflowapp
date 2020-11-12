@@ -140,7 +140,7 @@ class ProductListVC: UIViewController {
                                             self.presentPopUp(vc)
                                             
                                         }else{
-                                            self.multiOptionAlertBox(title: Messages.tlv, message: "Are you sure want to logout?", action1: "YES", action2: "NO") { (Status) in
+                                            self.multiOptionAlertBox(title: Messages.tlv, message: Messages.logoutMsg, action1: "YES", action2: "NO") { (Status) in
                                                 if Status == 0{
                                                     UserDefaults.standard.removeObject(forKey: Constant.UserDefaultKeys.currentUserModel)
                                                     let loginVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.loginVC) as! LoginVC

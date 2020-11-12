@@ -38,5 +38,6 @@ class Messages : NSObject {
     
     static let confirmDeleteImage = "Are you sure wants to delete this image?"
     static let locationAddedSuccessFully = "Pick up location successfully added."
+    static let logoutMsg = "Are you sure want to logout?"
 }
 

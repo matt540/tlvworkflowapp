@@ -179,7 +179,7 @@ extension ProductDetailVC {
                     vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 80 )
                     self.presentPopUp(vc)
                 }else{
-                    self.multiOptionAlertBox(title: Messages.tlv, message: "Are you sure want to logout?", action1: "YES", action2: "NO") { (Status) in
+                    self.multiOptionAlertBox(title: Messages.tlv, message: Messages.logoutMsg, action1: "YES", action2: "NO") { (Status) in
                         if Status == 0{
                             UserDefaults.standard.removeObject(forKey: Constant.UserDefaultKeys.currentUserModel)
                             let loginVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.loginVC) as! LoginVC
