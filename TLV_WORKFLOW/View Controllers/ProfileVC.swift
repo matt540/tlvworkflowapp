@@ -111,8 +111,10 @@ extension ProfileVC{
     func callUpdateUserService(params: [String : Any]) {
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.editUserProfile, params: params) { (responseDict, status) in
             if status == 0{
+                GlobalFunction.hideLoadingIndicator()
                 self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }else{
+                GlobalFunction.hideLoadingIndicator()
                 let userDataProfile = EditUserModel(fromDictionary: responseDict as! [String : Any])
                 userDataProfile.data.roles = currentLoginUser.data.roles
                 let userDataProfileDict = userDataProfile.toDictionary()

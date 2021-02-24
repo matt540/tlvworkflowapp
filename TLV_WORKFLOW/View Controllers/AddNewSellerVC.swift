@@ -31,6 +31,7 @@ class AddNewSellerVC: UIViewController {
 extension AddNewSellerVC{
     @IBAction func btnCloseAction(_ sender: Any) {
         self.dismissPopUp()
+        NotificationCenter.default.post(name: .productListVC, object: nil,userInfo: nil)
     }
     
     @IBAction func btnSaveAction(_ sender: Any) {
@@ -75,8 +76,10 @@ extension AddNewSellerVC{
         
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.check_seller_email_exists, params: params) { (responseDict, status) in
             if status == 0{
+                GlobalFunction.hideLoadingIndicator()
                 self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }else{
+                GlobalFunction.hideLoadingIndicator()
                 let data = responseDict["data"] as! [String : Any]
                 let flag = data["email_exists"] as! String
                 if flag == "1"{
@@ -103,9 +106,7 @@ extension AddNewSellerVC{
         params[Constant.ParameterNames.address] = txtAddress.text ?? ""
         
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.save_new_seller, params: params) { (responseDict, status) in
-            if status == 0{
-                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
-            }else{
+            if status == 200{
                 let dict = responseDict["data"] as! [String : Any]
                 let dictData = dict["data"] as! [String : Any]
                 let strWP_ID = dictData["ID"] as! String
@@ -113,11 +114,13 @@ extension AddNewSellerVC{
                     var params : [String : Any] = [:]
                     params[Constant.ParameterNames.key] = serviceKey
                     params[Constant.ParameterNames.wp_seller_id] = strWP_ID
-                    GlobalFunction.showLoadingIndicator()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.callGetSellerInfo(Params: params)
                     }
                 }
+            }else{
+                GlobalFunction.hideLoadingIndicator()
+                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }
         }
     }
@@ -125,37 +128,18 @@ extension AddNewSellerVC{
     //MARK:- Get SellerInfo from Id API Calling
     func callGetSellerInfo(Params: [String : Any]){
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.get_sellerById, params: Params) { (responseDict, status) in
-            if status == 0{
-                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
-            }else{
+            if status == 200{
+                GlobalFunction.hideLoadingIndicator()
                 let dict = responseDict["data"] as! [String : Any]
-                
-                
-                
-                let alertController = UIAlertController(title: Messages.tlv, message: Messages.sellerAddedSuccessFully, preferredStyle: .alert)
-                      alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
-                        self.dismissPopUp()
-                            self.reloadMainScreen(dict: dict)
-                      }))
-                      self.present(alertController, animated: true, completion: nil)
-                
-//                self.multiOptionAlertBox(title: Messages.tlv, message: Messages.sellerAddedSuccessFully, action1: "OK") { (_ ) in
-//
-//                    self.dismissPopUpViewController()
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-//                        self.reloadMainScreen(dict: dict)
-//                    }
-//                }
+                self.multiOptionAlertBox(title: Messages.tlv, message: Messages.sellerAddedSuccessFully, action1: "OK") { (_ ) in
+                    self.dismissPopUp()
+                    NotificationCenter.default.post(name: .addProductListVC, object: nil,userInfo: dict)
+                }
+            }else{
+                GlobalFunction.hideLoadingIndicator()
+                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }
         }
-    }
-    
-    //MARK:- Change VC
-    func reloadMainScreen(dict: [String :Any]){
-        let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.addProductVC) as! AddProductVC
-        addProductVC.isEditView = false
-        addProductVC.sellerId = dict["id"] as? Int
-        self.navigationController?.pushViewController(addProductVC, animated: true)
     }
 }
 
@@ -174,7 +158,10 @@ extension AddNewSellerVC: UITextFieldDelegate{
                 txtEmail.showErrorWithText(errorText: Constant.validationMessage.invalidEmailMSG)
                 txtEmail.showError()
             }else{
-                txtPassword.becomeFirstResponder()
+                GlobalFunction.showLoadingIndicator()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.callCheckEmail()
+                }
             }
         }else if textField == txtPassword {
             if txtPassword.text == ""{
@@ -188,27 +175,6 @@ extension AddNewSellerVC: UITextFieldDelegate{
             }
         }else{
             textField.resignFirstResponder()
-        }
-        return true
-    }
-    
-    //MARK:- Email validation Check
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-         if textField == txtEmail{
-            self.btnSave.isEnabled = true
-            self.btnSave.backgroundColor = UIColor.lightGray
-            if txtEmail.text == ""{
-                txtEmail.showErrorWithText(errorText: Constant.validationMessage.emptyEmailMSG)
-                txtEmail.showError()
-            }else if !GlobalFunction.isValidEmail(email: txtEmail.text!){
-                txtEmail.showErrorWithText(errorText: Constant.validationMessage.invalidEmailMSG)
-                txtEmail.showError()
-            }else{
-                GlobalFunction.showLoadingIndicator()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self.callCheckEmail()
-                }
-            }
         }
         return true
     }

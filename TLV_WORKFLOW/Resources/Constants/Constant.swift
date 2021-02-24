@@ -2,13 +2,17 @@
 
 import UIKit
 
-let appName = "App Name"
+let appName = "TLV"
 
-let baseUrl = "http://tlv-workflowapp.com/api/mobile/"
+let baseUrl = "https://tlv-workflowapp.com/api/mobile/"
+//let baseUrl = "https://staging.tlv-workflowapp.com/api/mobile/"
 
 let profileImageUrl = "http://tlv-workflowapp.com/Uploads/profile/"
+//let profileImageUrl = "http://staging.tlv-workflowapp.com/Uploads/profile/"
 
 let image_base_url = "http://tlv-workflowapp.com/Uploads/product/thumb/"
+//let image_base_url = "http://staging.tlv-workflowapp.com/Uploads/product/thumb/"
+
 let serviceKey = "$2y$10$aROSSAxEG7RgVYPL.f7VWOxWKIcly0ekxrNwc2h1Swktd1g0hl2/C"
 
 let deviceID = UIDevice.current.identifierForVendor?.uuidString
@@ -68,6 +72,7 @@ class Constant: NSObject {
         static let get_pickup_location = "get_pickup_location"
         static let delete_product_image = "delete_product_image"
         static let upload_product_image = "upload_product_image"
+        static let save_product_for_productions = "save_product_for_productions"
         static let getState = "state/get_pickup_state"
         static let saveNewLocation = "save_new_pickup_location"
     }
@@ -138,7 +143,7 @@ class Constant: NSObject {
         static let profileImage = "profile_image"
         static let phoneNo = "phone"
         static let folder = "folder"
-        static let production_quotation_ids = "production_quotation_ids"
+        static let product_quotation_ids = "product_quotation_ids"
         static let userEmail = "useremail"
         static let address = "address"
         static let wp_seller_id = "wp_seller_id"
@@ -154,8 +159,8 @@ class Constant: NSObject {
     }
     
     struct LableText {
-        static let lbl_title_add_product = "Edit Product"
-        static let lbl_title_edit_product = "Add Product"
+        static let lbl_title_add_product = "Add Product"
+        static let lbl_title_edit_product = "Edit Product"
         static let status = "status"
     }
     

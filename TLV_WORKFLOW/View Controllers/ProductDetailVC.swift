@@ -9,9 +9,7 @@
 import UIKit
 import SDWebImage
 
-//You are currently offline. You can add products in offline mode and sync them once a wireless connection is established.
-
-class ProductDetailVC: UIViewController {
+class ProductDetailVC: BaseViewController {
     
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var btnProfile: UIButton!
@@ -27,7 +25,6 @@ class ProductDetailVC: UIViewController {
     @IBOutlet weak var btnNext: UIButton!
     @IBOutlet weak var tblProductDetail: UITableView!
     
-    
     var pageCount: Int!
     var searchText = ""
     var sellerDetail: SellerListData?
@@ -37,17 +34,84 @@ class ProductDetailVC: UIViewController {
     var arraySubmitIds: [Int] = []
     var refreshControl = UIRefreshControl()
     var imgArray = [#imageLiteral(resourceName: "user_icon"),#imageLiteral(resourceName: "logout")]
+    var tempPageCount = 1
+    var productIds = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(productDataReload(notification:)), name: .productDataReload, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(editProductDataSave(notification:)), name: .editProductSave, object: nil)
+        notificationCenter = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         pageCount = 1
         btnPrevious.isHidden = true
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         tblProductDetail.addSubview(refreshControl)
+        DataInfo().deleteEditImageDataStatus()
         let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
-        GlobalFunction.showLoadingIndicator()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.callGetProductListService(params: params)
+        if GlobalFunction.isNetworkReachable(){
+            if DataInfo().isProductDetailsExists(sellerid: sellerDetail!.id){
+                DataInfo().deleteProductDetailsData(sellerid: sellerDetail!.id)
+            }
+            offlineDataStore()
+            GlobalFunction.showLoadingIndicator()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.callGetProductListService(params: params)
+            }
+        }else{
+            localDataLoad()
+            self.downloadCheck()
+        }
+    }
+    
+    //MARK:- Offline product list store
+    func offlineDataStore(){
+        let params = apiParameters(serviceKeyData: serviceKey, pageCountData: tempPageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
+        WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.get_sellers_products, params: params) { (responseDict, status) in
+            if status == 200{
+                let productsDetails = ProductModel(fromDictionary: responseDict as! [String : Any])
+                if productsDetails.data.data != []{
+                    for i in 0..<productsDetails.data.data.count{
+                        let JsonData = try?JSONSerialization.data(withJSONObject: productsDetails.data.data[i].toDictionary(), options: [])
+                        let jsonString = String(data: JsonData!, encoding: .utf8)!
+                        DataInfo().createProductDetailData(id: i, sellerId: self.sellerDetail!.id, pageno: self.tempPageCount, product: jsonString)
+                    }
+                    self.tempPageCount = self.tempPageCount + 1
+                    self.offlineDataStore()
+                }else{
+                    self.tempPageCount = 1
+                }
+            }
+        }
+    }
+    
+    //MARK:-product data reload
+    @objc func productDataReload(notification:Notification){
+        if let viewControllers = navigationController?.viewControllers {
+            for viewController in viewControllers {
+                // some process
+                if viewController.isKind(of: ProductDetailVC.self) {
+                    let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
+                    //GlobalFunction.showLoadingIndicator()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self.callGetProductListService(params: params)
+                        if DataInfo().isProductDetailsExists(sellerid: self.sellerDetail!.id){
+                            DataInfo().deleteProductDetailsData(sellerid: self.sellerDetail!.id)
+                        }
+                        self.offlineDataStore()
+                    }
+                }
+            }
+        }
+    }
+    //MARK:- edit product data save
+    @objc func editProductDataSave(notification:Notification){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            let dict = notification.userInfo as! [String : Any]
+            self.offlineProductData(id: dict["id"] as! Int)
         }
     }
 }
@@ -63,7 +127,7 @@ extension ProductDetailVC {
                 if status == 0 {
                     var paramDict: [String : Any] = [:]
                     paramDict[Constant.ParameterNames.key] = serviceKey
-                    paramDict[Constant.ParameterNames.production_quotation_ids] = self.arrayArchiveIds
+                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arrayArchiveIds
                     GlobalFunction.showLoadingIndicator()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.callSaveService(params: paramDict)
@@ -73,6 +137,7 @@ extension ProductDetailVC {
             }
         }
     }
+    
     @IBAction func btnDeleteAction(_ sender: UIButton) {
         if arrayDeleteIds.count == 0 || arrayDeleteIds.isEmpty {
             alertbox(title: Messages.error, message: Messages.deleteEmptyAlert)
@@ -81,7 +146,7 @@ extension ProductDetailVC {
                 if status == 0 {
                     var paramDict: [String : Any] = [:]
                     paramDict[Constant.ParameterNames.key] = serviceKey
-                    paramDict[Constant.ParameterNames.production_quotation_ids] = self.arrayDeleteIds
+                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arrayDeleteIds
                     GlobalFunction.showLoadingIndicator()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.callDeleteService(params: paramDict)
@@ -91,6 +156,7 @@ extension ProductDetailVC {
             }
         }
     }
+    
     @IBAction func btnSubmitAction(_ sender: UIButton) {
         if arraySubmitIds.count == 0 || arraySubmitIds.isEmpty {
             alertbox(title: Messages.error, message: Messages.submitEmptyAlert)
@@ -99,7 +165,7 @@ extension ProductDetailVC {
                 if status == 0 {
                     var paramDict: [String : Any] = [:]
                     paramDict[Constant.ParameterNames.key] = serviceKey
-                    paramDict[Constant.ParameterNames.production_quotation_ids] = self.arraySubmitIds
+                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arraySubmitIds
                     GlobalFunction.showLoadingIndicator()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.callSubmitMultipalProduct(params: paramDict)
@@ -109,6 +175,7 @@ extension ProductDetailVC {
             }
         }
     }
+    
     @IBAction func btnRadioButtonActions(_ sender: UIButton) {
         switch  sender {
         case btnRadioArchive:
@@ -172,23 +239,24 @@ extension ProductDetailVC {
             break
         }
     }
+    
     @IBAction func btnProfileAction(_ sender: UIButton) {
         FTPopOverMenu.showForSender(sender: sender as UIView, with: ["My Profile","Logout"], menuImageArray: imgArray, done: { (selectedIndex) -> () in
-                if selectedIndex == 0{
-                    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.profileVC) as! ProfileVC
-                    vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 80 )
-                    self.presentPopUp(vc)
-                }else{
-                    self.multiOptionAlertBox(title: Messages.tlv, message: Messages.logoutMsg, action1: "YES", action2: "NO") { (Status) in
-                        if Status == 0{
-                            UserDefaults.standard.removeObject(forKey: Constant.UserDefaultKeys.currentUserModel)
-                            let loginVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.loginVC) as! LoginVC
-                            self.navigationController?.pushViewController(loginVC, animated: true)
-                        }else{
-                            
-                        }
+            if selectedIndex == 0{
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constant.VCIdentifier.profileVC) as! ProfileVC
+                vc.view.frame = CGRect(x:0, y:0, width: self.view.frame.width - 40, height: self.view.frame.height - 80 )
+                self.presentPopUp(vc)
+            }else{
+                self.multiOptionAlertBox(title: Messages.tlv, message: Messages.logoutMsg, action1: "YES", action2: "NO") { (Status) in
+                    if Status == 0{
+                        UserDefaults.standard.removeObject(forKey: Constant.UserDefaultKeys.currentUserModel)
+                        let loginVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.loginVC) as! LoginVC
+                        self.navigationController?.pushViewController(loginVC, animated: true)
+                    }else{
+                        
                     }
                 }
+            }
         }) {
         }
     }
@@ -196,46 +264,92 @@ extension ProductDetailVC {
     @IBAction func btnBackAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
+    
     @IBAction func btnAddProductAction(_ sender: UIButton) {
         let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.addProductVC) as! AddProductVC
         addProductVC.isEditView = false
         addProductVC.sellerId = sellerDetail?.id
         self.navigationController?.pushViewController(addProductVC, animated: true)
     }
+    
     @IBAction func btnNextAction(_ sender: UIButton) {
         pageCount += 1
-        let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
-        GlobalFunction.showLoadingIndicator()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-            self.callGetProductListService(params: params)
-        })
+        if GlobalFunction.isNetworkReachable(){
+            let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
+            GlobalFunction.showLoadingIndicator()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.callGetProductListService(params: params)
+            })
+        }else{
+            let productData = DataInfo().retriveProductDetailData(seller_id: sellerDetail!.id)
+            let tempData = productArray
+            productArray = []
+            for i in productData{
+                if i.pageno == pageCount{
+                    let dict = GlobalFunction.convertToDictionary(text: i.product_detail!) ?? [:]
+                    productArray.append(ProductData(fromDictionary: dict))
+                }
+            }
+            if productArray == []{
+                pageCount -= 1
+                productArray = tempData
+                alertbox(title: Messages.tlv, message: Messages.noDataAvialable)
+            }else{
+                btnPrevious.isHidden = false
+                self.tblProductDetail.reloadData()
+            }
+        }
     }
+    
     @IBAction func btnPreviousAction(_ sender: UIButton) {
         pageCount -= 1
-        let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
-        GlobalFunction.showLoadingIndicator()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-            self.callGetProductListService(params: params)
-        })
+        if GlobalFunction.isNetworkReachable(){
+            let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
+            GlobalFunction.showLoadingIndicator()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.callGetProductListService(params: params)
+            })
+        }else{
+            let productData = DataInfo().retriveProductDetailData(seller_id: sellerDetail!.id)
+            let tempData = productArray
+            productArray = []
+            for i in productData{
+                if i.pageno == pageCount{
+                    let dict = GlobalFunction.convertToDictionary(text: i.product_detail!) ?? [:]
+                    productArray.append(ProductData(fromDictionary: dict))
+                }
+            }
+            if productArray == []{
+                pageCount += 1
+                productArray = tempData
+                alertbox(title: Messages.tlv, message: Messages.noDataAvialable)
+            }else{
+                if pageCount == 1{
+                    btnPrevious.isHidden = true
+                }
+                self.tblProductDetail.reloadData()
+            }
+        }
     }
     
 }
 
 //MARK: TextField Methods
 extension ProductDetailVC: UITextFieldDelegate{
-
-    @IBAction func txtFieldDidChange(_ sender: UITextField) {
-        GlobalFunction.hideLoadingIndicator()
-        let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: sender.text!, userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
-        GlobalFunction.showLoadingIndicator()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-            self.callGetProductListService(params: params)
-        })
-    }
-   
+        
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == txtSearch{
+            let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: txtSearch.text!, userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
+            GlobalFunction.showLoadingIndicator()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.callGetProductListService(params: params)
+            })
+        }
     }
 }
 
@@ -248,6 +362,13 @@ extension ProductDetailVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let detailCell = tableView.dequeueReusableCell(withIdentifier: Constant.CellIdentifier.productDetailCell) as! ProductDetailCell
         let data = productArray[indexPath.row]
+        if data.isDownloaded{
+            //detailCell.btnDownload.isHidden = true
+            detailCell.btnDownload.isSelected = true
+        }else{
+            //detailCell.btnDownload.isHidden = false
+            detailCell.btnDownload.isSelected = false
+        }
         if data.image != nil {
             let imageResponse = data.image!
             let imageItem = imageResponse.components(separatedBy: ",")
@@ -327,32 +448,81 @@ extension ProductDetailVC: UITableViewDelegate, UITableViewDataSource{
                 self.callSubmitForPricing(params: dictParam)
             }
         }
+        
+        detailCell.downloadDataClosure = {
+            if self.productArray[indexPath.row].isDownloaded == false{
+                if GlobalFunction.isNetworkReachable(){
+                    self.offlineProductData(id: self.productArray[indexPath.row].id)
+                    detailCell.btnDownload.isSelected = true
+                }else{
+                    UIApplication.shared.windows.first?.makeToast(Messages.noInternet)
+                }
+            }else{
+                self.deleteProductData(data: self.productArray[indexPath.row], cell: detailCell)
+            }
+        }
         detailCell.selectionStyle = UITableViewCell.SelectionStyle.none
         return detailCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let productDict = productArray[indexPath.row]
-        let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.addProductVC) as! AddProductVC
-        addProductVC.isEditView = true
-        addProductVC.sellerId = sellerDetail?.id
-        addProductVC.productId = productDict.id!
-        self.navigationController?.pushViewController(addProductVC, animated: true)
+        if GlobalFunction.isNetworkReachable(){
+            let productDict = productArray[indexPath.row]
+            let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.addProductVC) as! AddProductVC
+            addProductVC.isEditView = true
+            addProductVC.sellerId = sellerDetail?.id
+            addProductVC.productId = productDict.id!
+            self.navigationController?.pushViewController(addProductVC, animated: true)
+        }else{
+            if self.productArray[indexPath.row].isDownloaded == true{
+                let productDict = productArray[indexPath.row]
+                let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.addProductVC) as! AddProductVC
+                addProductVC.isEditView = true
+                addProductVC.sellerId = sellerDetail?.id
+                addProductVC.productId = productDict.id!
+                self.navigationController?.pushViewController(addProductVC, animated: true)
+            }else{
+                UIApplication.shared.windows.first?.makeToast(Messages.noInternet)
+            }
+        }
     }
     
+    //MARK:- Download edit product
+    func offlineProductData(id: Int){
+        var dictParam: [String : Any] = [:]
+        dictParam[ Constant.ParameterNames.key ] = serviceKey
+        dictParam[ Constant.ParameterNames.user_id ] = String(format: "%i", currentLoginUser.data.id)
+        dictParam[ Constant.ParameterNames.role_id ] = String(format: "%i", currentLoginUser.data.roles[0].id)
+        dictParam[ Constant.ParameterNames.id] = id
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            GlobalFunction.showLoadingIndicator()
+            self.getDataToEditSellerProduct(params: dictParam)
+        }
+    }
+    
+    //MARK:- delete edit product data
+    func deleteProductData(data: ProductData, cell: ProductDetailCell){
+        self.multiOptionAlertBox(title: Messages.tlv, message: Messages.confirmDeleteData, action1: "Yes",action2: "No") { (actionStatus) in
+            if actionStatus == 0{
+                data.isDownloaded = false
+                DataInfo().deleteProductDataDetail(productId: data.id)
+                DataInfo().deleteEditImageDataId(id: data.id)
+                cell.btnDownload.isSelected = false
+            }
+        }
+    }
 }
 
 //MARK: Web Service Call
 extension ProductDetailVC{
     func callGetProductListService(params: [String : Any]) {
-        
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.get_sellers_products, params: params) { (responseDict, status) in
-            
-             let productsDetails = ProductModel(fromDictionary: responseDict as! [String : Any])
+            let productsDetails = ProductModel(fromDictionary: responseDict as! [String : Any])
             if status == 0 {
-                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
+                GlobalFunction.hideLoadingIndicator()
+                self.alertbox(title: appName, message: responseDict["message"] as! String)
             }else {
-               
+                GlobalFunction.hideLoadingIndicator()
                 if productsDetails.data.data.isEmpty {
                     self.alertbox(title: Messages.error, message: Messages.noDataAvialable)
                     if self.pageCount > 1{
@@ -360,6 +530,7 @@ extension ProductDetailVC{
                     }
                 }else {
                     self.productArray = productsDetails.data.data
+                    self.downloadCheck()
                     if self.pageCount > 1{
                         self.btnPrevious.isHidden = false
                     }else {
@@ -375,14 +546,14 @@ extension ProductDetailVC{
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.submit_for_pricing, params: params) { (responseDict, status) in
             
             if responseDict.isEmpty {
-                self.alertbox(title: "TLV", message: Messages.noResponsefromServer)
+                self.alertbox(title: appName, message: Messages.noResponsefromServer)
             }else {
                 if status == 200 {
-                    self.multiOptionAlertBox(title: responseDict["status"]! as! String, message: responseDict["message"]! as! String, action1: "Ok") { (_ ) in
+                    self.multiOptionAlertBox(title: appName, message: responseDict["message"]! as! String, action1: "Ok") { (_ ) in
                         self.navigationController?.popViewController(animated: true)
                     }
                 }else{
-                    self.alertbox(title: responseDict["status"]! as! String, message: responseDict["message"]! as! String)
+                    self.alertbox(title: appName, message: responseDict["message"]! as! String)
                 }
             }
         }
@@ -390,30 +561,30 @@ extension ProductDetailVC{
     
     func callSaveService(params: [String : Any]) {
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.archive_product_qoutation, params: params) { (responseDict, status) in
-            if responseDict.isEmpty {
-                self.alertbox(title: "TLV", message: Messages.noResponsefromServer)
-            }else {
-                if status == 200 {
-                    self.multiOptionAlertBox(title: responseDict["status"]! as! String, message: responseDict["message"]! as! String, action1: "Ok") { (_ ) in
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                }else{
-                    self.alertbox(title: responseDict["status"]! as! String, message: responseDict["message"]! as! String)
+            if status == 200 {
+                GlobalFunction.hideLoadingIndicator()
+                self.multiOptionAlertBox(title: appName, message: responseDict["message"]! as! String, action1: "Ok") { (_ ) in
+                    self.navigationController?.popViewController(animated: true)
                 }
+            }else{
+                GlobalFunction.hideLoadingIndicator()
+                self.alertbox(title: appName, message: responseDict["message"]! as! String)
             }
         }
     }
     func callDeleteService(params: [String : Any]) {
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.delete_product_qoutation, params: params) { (responseDict, status) in
             if responseDict.isEmpty {
-                self.alertbox(title: "TLV", message: Messages.noResponsefromServer)
+                self.alertbox(title: appName, message: Messages.noResponsefromServer)
             }else {
                 if status == 200 {
-                    self.multiOptionAlertBox(title: responseDict["status"]! as! String, message: responseDict["message"]! as! String, action1: "Ok") { (_ ) in
+                    GlobalFunction.hideLoadingIndicator()
+                    self.multiOptionAlertBox(title: appName, message: responseDict["message"] as! String, action1: "Ok") { (_ ) in
                         self.navigationController?.popViewController(animated: true)
                     }
                 }else{
-                    self.alertbox(title: responseDict["status"]! as! String, message: responseDict["message"]! as! String)
+                    GlobalFunction.hideLoadingIndicator()
+                    self.alertbox(title: appName, message: responseDict["message"] as! String)
                 }
             }
         }
@@ -421,14 +592,81 @@ extension ProductDetailVC{
     func callSubmitMultipalProduct(params: [String : Any]) {
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.submit_multiple_product_for_pricing, params: params) { (responseDict, status) in
             if responseDict.isEmpty {
-                self.alertbox(title: "TLV", message: Messages.noResponsefromServer)
+                self.alertbox(title: appName, message: Messages.noResponsefromServer)
             }else {
                 if status == 200 {
-                    self.multiOptionAlertBox(title: responseDict["status"]! as! String, message: responseDict["message"]! as! String, action1: "Ok") { (_ ) in
+                    GlobalFunction.hideLoadingIndicator()
+                    self.multiOptionAlertBox(title: appName, message: responseDict["message"]! as! String, action1: "Ok") { (_ ) in
                         self.navigationController?.popViewController(animated: true)
                     }
                 }else{
-                    self.alertbox(title: responseDict["status"]! as! String, message: responseDict["message"]! as! String)
+                    GlobalFunction.hideLoadingIndicator()
+                    self.alertbox(title: appName, message: responseDict["message"]! as! String)
+                }
+            }
+        }
+    }
+    
+    //MARK:- edit product data get
+    func getDataToEditSellerProduct(params: [String : Any]){
+        WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.edit_seller_product_for_production_stage, params: params) { (responseDict, status) in
+            if status == 200{
+                if DataInfo().isProductDataDetailExists(productId: params[Constant.ParameterNames.id] as! Int){
+                    DataInfo().deleteProductDataDetail(productId: params[Constant.ParameterNames.id] as! Int)
+                    DataInfo().deleteEditImageDataId(id: params[Constant.ParameterNames.id] as! Int)
+                }
+                let JsonData = try?JSONSerialization.data(withJSONObject: responseDict as! [String : Any], options: [])
+                let productDataOffline = String(data: JsonData!, encoding: .utf8)!
+                let productData = AddProductModel(fromDictionary: responseDict as! [String : Any])
+                DataInfo().createProductData(productId: params[Constant.ParameterNames.id] as! Int, productData: productDataOffline)
+                let image = productData.data.product.productId.productPendingImages ?? []
+                //GlobalFunction.hideLoadingIndicator()
+                for i in 0..<image.count{
+                    let data = try? Data(contentsOf: URL(string: image_base_url + image[i].name)!)
+                    DataInfo().createEditImageData(productId: params[Constant.ParameterNames.id] as! Int, imageData: data!, status: 1)
+                    if i == image.count - 1 {
+                        GlobalFunction.hideLoadingIndicator()
+                    }
+                }
+                self.downloadCheck()
+                self.tblProductDetail.reloadData()
+            }else{
+                GlobalFunction.hideLoadingIndicator()
+                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
+            }
+        }
+    }
+    
+    //MARK:- Offline Data Load
+    func localDataLoad() {
+        productArray = []
+        let productData = DataInfo().retriveProductDetailData(seller_id:sellerDetail!.id)
+        for i in productData{
+            if i.pageno == pageCount{
+                let dict = GlobalFunction.convertToDictionary(text: i.product_detail!) ?? [:]
+                productArray.append(ProductData(fromDictionary: dict))
+            }
+        }
+        if productArray == []{
+            self.view.makeToast(Messages.noInternet)
+            btnNext.isHidden = true
+        }else{
+            self.tblProductDetail.reloadData()
+        }
+    }
+    
+    //MARK:- Download Data check
+    func downloadCheck(){
+        let productData = DataInfo().retriveProductDataDetails()
+        var ids = [Int]()
+        for i in productData{
+            ids.append(Int(i.product_id))
+        }
+        self.productIds = ids
+        for i in self.productArray{
+            for j in self.productIds{
+                if i.id == j{
+                    i.isDownloaded = true
                 }
             }
         }
@@ -438,13 +676,22 @@ extension ProductDetailVC{
 //MARK: refresh method
 extension ProductDetailVC {
     @objc func refresh(_ sender: AnyObject) {
-       
-       let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
-       GlobalFunction.showLoadingIndicator()
-       DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-           self.callGetProductListService(params: params)
-       }
-        refreshControl.endRefreshing()
+        if GlobalFunction.isNetworkReachable(){
+            let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
+            GlobalFunction.showLoadingIndicator()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.callGetProductListService(params: params)
+            }
+            if DataInfo().isProductDetailsExists(sellerid: sellerDetail!.id){
+                DataInfo().deleteProductDetailsData(sellerid: sellerDetail!.id)
+            }
+            offlineDataStore()
+            refreshControl.endRefreshing()
+        }else{
+            UIApplication.shared.windows.first?.makeToast(Messages.noInternet)
+            refreshControl.endRefreshing()
+        }
+        
     }
     
     func apiParameters(serviceKeyData: String, pageCountData: Int, searchString: String, userId: Int, roleId: Int, sellerId: Int) -> [String: Any]{
@@ -453,7 +700,7 @@ extension ProductDetailVC {
         sellerDetailsParams[Constant.ParameterNames.page] = pageCountData
         sellerDetailsParams[Constant.ParameterNames.role_id] = roleId
         sellerDetailsParams[Constant.ParameterNames.search] = searchString
-         sellerDetailsParams[Constant.ParameterNames.seller_id] = sellerId
+        sellerDetailsParams[Constant.ParameterNames.seller_id] = sellerId
         sellerDetailsParams[Constant.ParameterNames.user_id] = userId
         return sellerDetailsParams
     }

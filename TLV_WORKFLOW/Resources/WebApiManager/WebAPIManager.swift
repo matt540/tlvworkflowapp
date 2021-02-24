@@ -10,7 +10,8 @@ class WebAPIManager: NSObject {
     class func makeAPIRequest(method: HTTPMethod = .post, isFormDataRequest: Bool, isContainContentType: Bool, path: String, params: Parameters, bsaeUrl baseUrl: String = baseUrl, completion: @escaping (_ response: [AnyHashable: Any],_ status: Int) -> Void) {
         
         if !GlobalFunction.isNetworkReachable() {
-            UIApplication.shared.windows.first?.makeToast("Please connect internet.")
+            GlobalFunction.hideLoadingIndicator()
+            UIApplication.shared.windows.first?.makeToast(Messages.noInternet)
             return
         }
         
@@ -28,7 +29,7 @@ class WebAPIManager: NSObject {
         
         Alamofire.request(baseURL, method: method, parameters: params, encoding: encoding, headers: customHeader).responseJSON { (response:DataResponse<Any>) in
             
-            GlobalFunction.hideLoadingIndicator()
+            //GlobalFunction.hideLoadingIndicator()
             
             switch(response.result) {
             case .success(_):
@@ -117,7 +118,7 @@ class WebAPIManager: NSObject {
             case .success(let upload, _, _):
                 upload.responseJSON(completionHandler: { (response:DataResponse<Any>) in
                     //                    GlobalFunction.printResponce(From: "API NAME \(path) :- \(response.result.value ?? "")")
-                    GlobalFunction.hideLoadingIndicator()
+                    //GlobalFunction.hideLoadingIndicator()
                     switch(response.result) {
                     case .success(_):
                         

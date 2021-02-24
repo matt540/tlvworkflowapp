@@ -41,15 +41,19 @@
 		1F297FCD25502660007190FF /* TypeCastExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FCC25502660007190FF /* TypeCastExt.swift */; };
 		1F297FCF2550266D007190FF /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FCE2550266D007190FF /* UIView+Utils.swift */; };
 		1F297FD125502679007190FF /* WebAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F297FD025502679007190FF /* WebAPIManager.swift */; };
-		1F65267F25496DA500BB7421 /* ProductListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65267E25496DA500BB7421 /* ProductListVC.swift */; };
+		1F31FF30257531BD00FE840D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F31FF2F257531BC00FE840D /* Reachability.swift */; };
+		1F62FAB32566513700E19928 /* TLV_WORKFLOW.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F62FAB12566513700E19928 /* TLV_WORKFLOW.xcdatamodeld */; };
+		1F62FAB5256652B300E19928 /* DataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F62FAB4256652B300E19928 /* DataInfo.swift */; };
 		1FA3C243255A5BBF00D3D13F /* DeliveryOptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA3C242255A5BBF00D3D13F /* DeliveryOptionVC.swift */; };
 		1FA3C245255A90F200D3D13F /* AddPickUpLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA3C244255A90F100D3D13F /* AddPickUpLocationVC.swift */; };
-		1FC34536254C33770050A99A /* AddNewSellerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC34535254C33770050A99A /* AddNewSellerVC.swift */; };
+		1FAC57AE256538A3001140FE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAC57AD256538A2001140FE /* BaseViewController.swift */; };
 		1FE450C02549A52200920110 /* SellerListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE450BE2549A52100920110 /* SellerListModel.swift */; };
 		1FE450C12549A52200920110 /* SellerListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE450BF2549A52200920110 /* SellerListData.swift */; };
 		1FE450C52549AAC200920110 /* SellerListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE450C42549AAC200920110 /* SellerListCell.swift */; };
 		1FE450C7254B013700920110 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE450C6254B013600920110 /* ProfileVC.swift */; };
 		811FEEED2555214100E3D3FF /* AddDataPictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811FEEEC2555214100E3D3FF /* AddDataPictureCell.swift */; };
+		8145C209255E8407004BEC94 /* ProductListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145C207255E8406004BEC94 /* ProductListVC.swift */; };
+		8145C20A255E8407004BEC94 /* AddNewSellerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145C208255E8406004BEC94 /* AddNewSellerVC.swift */; };
 		8149DAB425483C2B00023212 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149DAB325483C2B00023212 /* AppDelegate.swift */; };
 		8149DAB625483C2B00023212 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149DAB525483C2B00023212 /* SceneDelegate.swift */; };
 		8149DABD25483C4A00023212 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8149DABC25483C4A00023212 /* Assets.xcassets */; };
@@ -127,11 +131,14 @@
 		1F297FCC25502660007190FF /* TypeCastExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeCastExt.swift; sourceTree = "<group>"; };
 		1F297FCE2550266D007190FF /* UIView+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
 		1F297FD025502679007190FF /* WebAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAPIManager.swift; sourceTree = "<group>"; };
-		1F65267E25496DA500BB7421 /* ProductListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListVC.swift; sourceTree = "<group>"; };
+		1F31FF2F257531BC00FE840D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		1F62FAB22566513700E19928 /* TLV_WORKFLOW.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TLV_WORKFLOW.xcdatamodel; sourceTree = "<group>"; };
+		1F62FAB4256652B300E19928 /* DataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInfo.swift; sourceTree = "<group>"; };
 		1FA3C23E255900B600D3D13F /* SubCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryVC.swift; sourceTree = "<group>"; };
 		1FA3C240255902A600D3D13F /* SubCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryCell.swift; sourceTree = "<group>"; };
 		1FA3C242255A5BBF00D3D13F /* DeliveryOptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryOptionVC.swift; sourceTree = "<group>"; };
 		1FA3C244255A90F100D3D13F /* AddPickUpLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPickUpLocationVC.swift; sourceTree = "<group>"; };
+		1FAC57AD256538A2001140FE /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1FC14E8A2553D296007B32A5 /* CollectionViewDropDownVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDropDownVC.swift; sourceTree = "<group>"; };
 		1FC14E8C2553D31E007B32A5 /* DropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownCell.swift; sourceTree = "<group>"; };
 		1FC14E9125550C7C007B32A5 /* PickUPLocationKeyText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickUPLocationKeyText.swift; sourceTree = "<group>"; };
@@ -141,12 +148,13 @@
 		1FC14E9925550CBC007B32A5 /* SizeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SizeData.swift; sourceTree = "<group>"; };
 		1FC14E9A25550CBE007B32A5 /* SizeCreatedAt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SizeCreatedAt.swift; sourceTree = "<group>"; };
 		1FC14EBC25550EFD007B32A5 /* AddProductDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductDetailCell.swift; sourceTree = "<group>"; };
-		1FC34535254C33770050A99A /* AddNewSellerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSellerVC.swift; sourceTree = "<group>"; };
 		1FE450BE2549A52100920110 /* SellerListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellerListModel.swift; sourceTree = "<group>"; };
 		1FE450BF2549A52200920110 /* SellerListData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellerListData.swift; sourceTree = "<group>"; };
 		1FE450C42549AAC200920110 /* SellerListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerListCell.swift; sourceTree = "<group>"; };
 		1FE450C6254B013600920110 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		811FEEEC2555214100E3D3FF /* AddDataPictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDataPictureCell.swift; sourceTree = "<group>"; };
+		8145C207255E8406004BEC94 /* ProductListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListVC.swift; sourceTree = "<group>"; };
+		8145C208255E8406004BEC94 /* AddNewSellerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewSellerVC.swift; sourceTree = "<group>"; };
 		8149DAB025483C2B00023212 /* TLV_WORKFLOW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TLV_WORKFLOW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8149DAB325483C2B00023212 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8149DAB525483C2B00023212 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -335,6 +343,14 @@
 			path = WebApiManager;
 			sourceTree = "<group>";
 		};
+		1F9D3119256F786D009E5BFB /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				1F31FF2F257531BC00FE840D /* Reachability.swift */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 		1FC14E57255276B9007B32A5 /* AddProduct */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,6 +474,8 @@
 				8149DAB525483C2B00023212 /* SceneDelegate.swift */,
 				8149DABC25483C4A00023212 /* Assets.xcassets */,
 				8149DAC125483C4A00023212 /* Info.plist */,
+				1F62FAB12566513700E19928 /* TLV_WORKFLOW.xcdatamodeld */,
+				1F62FAB4256652B300E19928 /* DataInfo.swift */,
 			);
 			path = TLV_WORKFLOW;
 			sourceTree = "<group>";
@@ -465,6 +483,7 @@
 		8149DACD25484ABF00023212 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1F9D3119256F786D009E5BFB /* Reachability */,
 				1F297F6225501E1C007190FF /* Constants */,
 				1F297F6B25501E1C007190FF /* Global Function */,
 				1F297F6D25501E1C007190FF /* Library */,
@@ -483,14 +502,15 @@
 				1F297F5C25501DF7007190FF /* ProductDetailVC.swift */,
 				8149DAD525484F0C00023212 /* LoginVC.swift */,
 				8149DADA2548533100023212 /* SplashVC.swift */,
-				1F65267E25496DA500BB7421 /* ProductListVC.swift */,
+				8145C208255E8406004BEC94 /* AddNewSellerVC.swift */,
+				8145C207255E8406004BEC94 /* ProductListVC.swift */,
 				1FE450C6254B013600920110 /* ProfileVC.swift */,
-				1FC34535254C33770050A99A /* AddNewSellerVC.swift */,
 				1FC14E8A2553D296007B32A5 /* CollectionViewDropDownVC.swift */,
 				81A9417525597D2900357D73 /* AddProductVC.swift */,
 				1FA3C23E255900B600D3D13F /* SubCategoryVC.swift */,
 				1FA3C242255A5BBF00D3D13F /* DeliveryOptionVC.swift */,
 				1FA3C244255A90F100D3D13F /* AddPickUpLocationVC.swift */,
+				1FAC57AD256538A2001140FE /* BaseViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -658,12 +678,10 @@
 				1F297F5F25501DF8007190FF /* PhotoVC.swift in Sources */,
 				1F297F5625501DB1007190FF /* LoginCreatedAt.swift in Sources */,
 				1F297FA625502590007190FF /* ProgressView.swift in Sources */,
-				1FC34536254C33770050A99A /* AddNewSellerVC.swift in Sources */,
 				1FE450C12549A52200920110 /* SellerListData.swift in Sources */,
 				1F297F5E25501DF8007190FF /* ProductDetailVC.swift in Sources */,
 				1F297FC225502644007190FF /* FT+Extension.swift in Sources */,
 				81A941572559746900357D73 /* AddProductCategoryId.swift in Sources */,
-				1F65267F25496DA500BB7421 /* ProductListVC.swift in Sources */,
 				1F297FCF2550266D007190FF /* UIView+Utils.swift in Sources */,
 				81A941562559746900357D73 /* AddProductParentId.swift in Sources */,
 				81A9417E25597E7300357D73 /* SubCategoryCell.swift in Sources */,
@@ -677,6 +695,7 @@
 				81A941592559746900357D73 /* AddProductPickUpLocation.swift in Sources */,
 				81A9415C2559746900357D73 /* AddProductModel.swift in Sources */,
 				81A941632559746900357D73 /* AddProductKeyText.swift in Sources */,
+				1F62FAB5256652B300E19928 /* DataInfo.swift in Sources */,
 				1F297F5B25501DE1007190FF /* PictureCell.swift in Sources */,
 				81A941622559746900357D73 /* AddProductSubcategory.swift in Sources */,
 				1FE450C02549A52200920110 /* SellerListModel.swift in Sources */,
@@ -686,6 +705,7 @@
 				1F297F9B255024F6007190FF /* Message.swift in Sources */,
 				1F297F5325501DB1007190FF /* LoginModel.swift in Sources */,
 				1FA3C245255A90F200D3D13F /* AddPickUpLocationVC.swift in Sources */,
+				8145C20A255E8407004BEC94 /* AddNewSellerVC.swift in Sources */,
 				81A9417B25597E3000357D73 /* PickUPLocationData.swift in Sources */,
 				81A941552559746900357D73 /* AddProductCreatedAt.swift in Sources */,
 				81A9415D2559746900357D73 /* AddProductAge.swift in Sources */,
@@ -702,11 +722,13 @@
 				1F297F9F25502560007190FF /* ACFloatingTextfield.swift in Sources */,
 				8149DADB2548533100023212 /* SplashVC.swift in Sources */,
 				1F297F9D2550254E007190FF /* GlobalFunction.swift in Sources */,
+				1F62FAB32566513700E19928 /* TLV_WORKFLOW.xcdatamodeld in Sources */,
 				1F297F6125501E09007190FF /* ProductDetailCell.swift in Sources */,
 				81A9417F25597E8A00357D73 /* CollectionViewDropDownVC.swift in Sources */,
 				81A9417625597D2A00357D73 /* AddProductVC.swift in Sources */,
 				1F297F5725501DB1007190FF /* ProductData.swift in Sources */,
 				8149DAB425483C2B00023212 /* AppDelegate.swift in Sources */,
+				1F31FF30257531BD00FE840D /* Reachability.swift in Sources */,
 				1F297F9A255024F6007190FF /* Constant.swift in Sources */,
 				81A9418025597E9000357D73 /* SubCategoryVC.swift in Sources */,
 				1F297F5425501DB1007190FF /* LoginRole.swift in Sources */,
@@ -717,7 +739,9 @@
 				811FEEED2555214100E3D3FF /* AddDataPictureCell.swift in Sources */,
 				1F297F5825501DB1007190FF /* ProductForProductionCreatedAt.swift in Sources */,
 				81A9417D25597E6F00357D73 /* DropDownCell.swift in Sources */,
+				8145C209255E8407004BEC94 /* ProductListVC.swift in Sources */,
 				8149DAB625483C2B00023212 /* SceneDelegate.swift in Sources */,
+				1FAC57AE256538A3001140FE /* BaseViewController.swift in Sources */,
 				1F02908C255C235500512219 /* UIViewController+ENPopUp.m in Sources */,
 				81A9417C25597E3200357D73 /* PickUPLocationKeyText.swift in Sources */,
 				81A9417925597E2700357D73 /* SizeCreatedAt.swift in Sources */,
@@ -865,8 +889,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XVE83679MR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.5;
+				DEVELOPMENT_TEAM = 48X5CTAS2Z;
 				INFOPLIST_FILE = "";
 				"INFOPLIST_FILE[sdk=*]" = TLV_WORKFLOW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
@@ -874,8 +900,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eSpark.TLV-WORKFLOW";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tlvDevelopment.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = TLV_DEVELOPMENT_PROFILE;
 				SWIFT_OBJC_BRIDGING_HEADER = "TLV_WORKFLOW/Resources/Library/UIViewController+Popup/TLV_WORKFLOW-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -889,8 +916,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XVE83679MR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.5;
+				DEVELOPMENT_TEAM = 48X5CTAS2Z;
 				INFOPLIST_FILE = "";
 				"INFOPLIST_FILE[sdk=*]" = TLV_WORKFLOW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
@@ -898,8 +927,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eSpark.TLV-WORKFLOW";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tlvDevelopment.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = TLV_DEVELOPMENT_PROFILE;
 				SWIFT_OBJC_BRIDGING_HEADER = "TLV_WORKFLOW/Resources/Library/UIViewController+Popup/TLV_WORKFLOW-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -928,6 +958,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1F62FAB12566513700E19928 /* TLV_WORKFLOW.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1F62FAB22566513700E19928 /* TLV_WORKFLOW.xcdatamodel */,
+			);
+			currentVersion = 1F62FAB22566513700E19928 /* TLV_WORKFLOW.xcdatamodel */;
+			path = TLV_WORKFLOW.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8149DAA825483C2A00023212 /* Project object */;
 }

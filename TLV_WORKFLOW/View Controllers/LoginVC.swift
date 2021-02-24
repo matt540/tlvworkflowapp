@@ -9,14 +9,13 @@
 import UIKit
 import Alamofire
 
-class LoginVC: UIViewController {
+class LoginVC: BaseViewController {
     
     @IBOutlet weak var txtEmail: ACFloatingTextfield!
     @IBOutlet weak var txtPassword: ACFloatingTextfield!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     //MARK: Login Button Action Event
@@ -26,19 +25,36 @@ class LoginVC: UIViewController {
             var params: [String : Any] = [:]
             params[Constant.ParameterNames.email] = txtEmail.text!
             params[Constant.ParameterNames.password] = txtPassword.text!
-            
+            GlobalFunction.showLoadingIndicator()
             WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.login, params: params) { (responseDict, status) in
-                let userData = LoginModel(fromDictionary: responseDict as! [String : Any])
-                do {
-                    let encodedUserData: Data = try NSKeyedArchiver.archivedData(withRootObject: userData, requiringSecureCoding: false)
-                    UserDefaults.standard.set(encodedUserData, forKey: Constant.UserDefaultKeys.currentUserModel)
-                    UserDefaults.standard.synchronize()
-                    currentLoginUser = userData
-                    let productListVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.productListVC) as! ProductListVC
-                    self.navigationController?.pushViewController(productListVC, animated: true)
-                    
-                }catch {
-                    
+                if status == 200{
+                    GlobalFunction.hideLoadingIndicator()
+                    let userData = LoginModel(fromDictionary: responseDict as! [String : Any])
+                    do {
+                        let encodedUserData: Data = try NSKeyedArchiver.archivedData(withRootObject: userData, requiringSecureCoding: false)
+                        UserDefaults.standard.set(encodedUserData, forKey: Constant.UserDefaultKeys.currentUserModel)
+                        UserDefaults.standard.synchronize()
+                        currentLoginUser = userData
+                        
+                        var dictParam: [String : Any] = [:]
+                        dictParam[ Constant.ParameterNames.key ] = serviceKey
+                        dictParam[ Constant.ParameterNames.user_id ] = String(format: "%i", currentLoginUser.data.id)
+                        dictParam[ Constant.ParameterNames.role_id ] = String(format: "%i", currentLoginUser.data.roles[0].id)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            AppDelegate().getDataToAddSellerProduct(params: dictParam)
+                        }
+                        
+                        let productListVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.productListVC) as! ProductListVC
+                        self.navigationController?.pushViewController(productListVC, animated: true)
+                        
+                    }catch {
+                        
+                    }
+                }else{
+                    GlobalFunction.hideLoadingIndicator()
+                   self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
+                    self.txtEmail.text = ""
+                    self.txtPassword.text = ""
                 }
             }
         }

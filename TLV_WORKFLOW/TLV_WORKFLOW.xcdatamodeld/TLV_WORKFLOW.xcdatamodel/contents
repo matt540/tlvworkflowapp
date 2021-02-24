@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="EditImageStore" representedClassName="EditImageStore" syncable="YES" codeGenerationType="class">
+        <attribute name="imagedata" optional="YES" attributeType="Binary"/>
+        <attribute name="product_id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="EditProduct" representedClassName="EditProduct" syncable="YES" codeGenerationType="class">
+        <attribute name="product_id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="productdata" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Images" representedClassName="Images" syncable="YES" codeGenerationType="class">
+        <attribute name="image_url" optional="YES" attributeType="String"/>
+        <attribute name="p_id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Product" representedClassName="Product" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="product_detail" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ProductDataDetail" representedClassName="ProductDataDetail" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="product_data" optional="YES" attributeType="String"/>
+        <attribute name="product_id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="ProductDetail" representedClassName="ProductDetail" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pageno" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="product_detail" optional="YES" attributeType="String"/>
+        <attribute name="seller_id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Seller" representedClassName="Seller" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pageno" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="seller" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ShipSize" representedClassName="ShipSize" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="shipsize" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ShopData" representedClassName="ShopData" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pick_location" optional="YES" attributeType="String"/>
+        <attribute name="seller_data" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="EditImageStore" positionX="-54" positionY="36" width="128" height="28"/>
+        <element name="Images" positionX="-45" positionY="36" width="128" height="73"/>
+        <element name="Product" positionX="-54" positionY="27" width="128" height="73"/>
+        <element name="ProductDataDetail" positionX="-54" positionY="36" width="128" height="88"/>
+        <element name="ProductDetail" positionX="-45" positionY="36" width="128" height="103"/>
+        <element name="Seller" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="ShipSize" positionX="-63" positionY="0" width="128" height="73"/>
+        <element name="ShopData" positionX="-54" positionY="18" width="128" height="88"/>
+        <element name="EditProduct" positionX="-54" positionY="36" width="128" height="73"/>
+    </elements>
+</model>

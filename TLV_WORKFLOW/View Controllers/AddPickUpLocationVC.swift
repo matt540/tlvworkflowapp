@@ -77,8 +77,10 @@ extension AddPickUpLocationVC {
         params[Constant.ParameterNames.key] = serviceKey
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.getState, params: params) { (responseDict, status) in
             if status == 0{
+                GlobalFunction.hideLoadingIndicator()
                 self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }else{
+                GlobalFunction.hideLoadingIndicator()
                 self.stateData = responseDict["data"] as! Array
             }
         }
@@ -93,8 +95,10 @@ extension AddPickUpLocationVC {
         
         WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.saveNewLocation, params: params) { (responseDict, status) in
             if status == 0{
+                GlobalFunction.hideLoadingIndicator()
                 self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
             }else{
+                GlobalFunction.hideLoadingIndicator()
                 let dict = responseDict["data"] as! [String : Any]
                 self.multiOptionAlertBox(title: Messages.tlv, message: Messages.locationAddedSuccessFully, action1: "OK") { (_ ) in
                     self.AddLocationCompletion?(dict["pickup_id"] as! Int)

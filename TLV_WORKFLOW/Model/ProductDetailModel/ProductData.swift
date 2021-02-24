@@ -35,7 +35,7 @@ class ProductData : NSObject, NSCoding{
     var isArchive: Bool = false
     var isDelete: Bool = false
     var isSubmit: Bool = false
-
+    var isDownloaded: Bool = false
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */

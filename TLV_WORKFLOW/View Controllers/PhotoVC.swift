@@ -16,10 +16,25 @@ class PhotoVC: UIViewController {
     @IBOutlet weak var lblPageCount: UILabel!
     
     var imgUrls: [AddProductProductPendingImage]?
+    var isEditView: Bool = false
+    var addImageData: [Any]?
+    var editImageData: [EditImageStore]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        lblPageCount.text = String(format: "%i/%li", 1 , imgUrls?.count ?? 0)
+        if isEditView{
+            if GlobalFunction.isNetworkReachable(){
+                lblPageCount.text = String(format: "%i/%li", 1 , imgUrls?.count ?? 0)
+            }else{
+                lblPageCount.text = String(format: "%i/%li", 1 , editImageData?.count ?? 0)
+            }
+        }else{
+            if GlobalFunction.isNetworkReachable(){
+                lblPageCount.text = String(format: "%i/%li", 1 , imgUrls?.count ?? 0)
+            }else{
+                lblPageCount.text = String(format: "%i/%li", 1 , addImageData?.count ?? 0)
+            }
+        }
     }
 }
 
@@ -34,13 +49,48 @@ extension PhotoVC{
 extension PhotoVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imgUrls?.count ?? 0
+        if isEditView{
+            if GlobalFunction.isNetworkReachable(){
+                return imgUrls?.count ?? 0
+            }else{
+                return editImageData?.count ?? 0
+            }
+        }else{
+            if GlobalFunction.isNetworkReachable(){
+                return imgUrls?.count ?? 0
+            }else{
+                return addImageData?.count ?? 0
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let imgCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PictureCell", for: indexPath) as! PictureCell
-        let imgUrl = image_base_url + (imgUrls?[indexPath.row].name)!
-        imgCell.imageView.sd_setImage(with: URL(string: imgUrl), completed: nil)
+        if isEditView{
+            if GlobalFunction.isNetworkReachable(){
+                let imgUrl = image_base_url + (imgUrls?[indexPath.row].name)!
+                imgCell.imageView.sd_setImage(with: URL(string: imgUrl), completed: nil)
+            }else{
+                let image = UIImage(data: (editImageData?[indexPath.row].imagedata!)!)
+                imgCell.imageView.image = image
+            }
+        }else{
+            if GlobalFunction.isNetworkReachable(){
+                let imgUrl = image_base_url + (imgUrls?[indexPath.row].name)!
+                imgCell.imageView.sd_setImage(with: URL(string: imgUrl), completed: nil)
+            }else{
+                let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                let documentsDirectory = paths[0]
+                var writableDBPath: String? = nil
+                writableDBPath = URL(fileURLWithPath: documentsDirectory.path).appendingPathComponent(addImageData![indexPath.item] as! String).path
+                let pngData = NSData(contentsOfFile: writableDBPath ?? "") as Data?
+                var image: UIImage? = nil
+                if let pngData = pngData {
+                    image = UIImage(data: pngData)
+                }
+                imgCell.imageView.image = image
+            }
+        }
         return imgCell
     }
     
@@ -70,7 +120,19 @@ extension PhotoVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollec
         let pageWidth = UIScreen.main.bounds.size.width - 64
         let fractionalPage = Float((collectionView.contentOffset.x / pageWidth))
         let page = Int(roundf(fractionalPage))
-        lblPageCount.text = String(format: "%i/%li", page + 1, imgUrls?.count ?? 0)
+        if isEditView{
+            if GlobalFunction.isNetworkReachable(){
+                lblPageCount.text = String(format: "%i/%li", page + 1 , imgUrls?.count ?? 0)
+            }else{
+                lblPageCount.text = String(format: "%i/%li", page + 1 , editImageData?.count ?? 0)
+            }
+        }else{
+            if GlobalFunction.isNetworkReachable(){
+                lblPageCount.text = String(format: "%i/%li", page + 1 , imgUrls?.count ?? 0)
+            }else{
+                lblPageCount.text = String(format: "%i/%li", page + 1 , addImageData?.count ?? 0)
+            }
+        }
     }
     
 }

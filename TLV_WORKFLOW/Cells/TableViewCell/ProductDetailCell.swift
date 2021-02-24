@@ -22,11 +22,13 @@ class ProductDetailCell: UITableViewCell {
     @IBOutlet weak var btnViewProduct: UILabel!
     @IBOutlet weak var btnSubmitForPrice: UIButton!
     @IBOutlet weak var lblDate: UILabel!
+    @IBOutlet weak var btnDownload: UIButton!
     
     var archiveClosure: (() -> ())?
     var submitClosure: (() -> ())?
     var deleteClosure: (() -> ())?
     var submitForPriceClosure: (() -> ())?
+    var downloadDataClosure: (() -> ())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -51,6 +53,8 @@ class ProductDetailCell: UITableViewCell {
     @IBAction func btnSubmitPricingAction(_ sender: Any) {
         submitForPriceClosure?()
     }
+    @IBAction func btnDownloadAction(_ sender: Any) {
+        downloadDataClosure?()
+    }
     
-
 }

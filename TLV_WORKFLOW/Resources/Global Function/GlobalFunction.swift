@@ -32,10 +32,21 @@ class GlobalFunction: NSObject {
         }
     }
     
-
-
+    static func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+    
     static func showLoadingIndicator(title: String = "",detail: String = "",textOnly : Bool = false) {
-        
+        if !hub.isHidden {
+            hub.hide(animated: true)
+        }
         hub = ProgressHUD.show(addedToView: (UIApplication.shared.windows.first)!, animated: true)
 
         if textOnly {
@@ -50,11 +61,12 @@ class GlobalFunction: NSObject {
         if detail != "" {
             hub.detailsLabel?.text = detail
         }
-
+        UIApplication.shared.windows.first?.isUserInteractionEnabled = false
     }
     
     static func hideLoadingIndicator() {
         hub.hide(animated: true)
+        UIApplication.shared.windows.first?.isUserInteractionEnabled = true
     }
 
     
