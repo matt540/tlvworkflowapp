@@ -70,7 +70,7 @@ class AddProductVC: BaseViewController {
     var shipingCategoryPicker = UIPickerView()
     var pickupLocationPicker = UIPickerView()
     var deliveryLocationPicker = UIPickerView()
-    var commissionPicker = UIPickerView()
+//    var commissionPicker = UIPickerView()
     
     var data: AddProductModel?
     var sizeData : SizeModel?
@@ -110,7 +110,7 @@ class AddProductVC: BaseViewController {
         }
         
         ageViewHeightConstraint.constant = 0.0
-        dropDownTextfieldArray = [txtProductQuantity, txtPickupLocation, txtSellerName, txtShippingCatagory, txtShippingSize, txtDelivery, txtCommision]
+        dropDownTextfieldArray = [txtProductQuantity, txtPickupLocation, txtSellerName, txtShippingCatagory, txtShippingSize, txtDelivery]
         textFieldArray = [txtSellerName, txtPickupLocation, txtProductName, txtProductQuantity, txtTlvPrice, txtRetailPrice, txtCommision, txtUnits, txtDepth, txtWidth, txtHeight, txtShippingCatagory, txtPackagingFee, txtShippingSize, txtDelivery, txtSeatHeight, txtArmHeight]
         for textField in dropDownTextfieldArray{
             dropDownDesign(textField: textField)
@@ -164,7 +164,7 @@ class AddProductVC: BaseViewController {
         setPicker(pickerView: shipingCategoryPicker, field: txtShippingCatagory)
         setPicker(pickerView: pickupLocationPicker, field: txtPickupLocation)
         setPicker(pickerView: deliveryLocationPicker, field: txtDelivery)
-        setPicker(pickerView: commissionPicker, field: txtCommision)
+//        setPicker(pickerView: commissionPicker, field: txtCommision)
     }
 }
 //MARK: Button Actions
@@ -778,15 +778,15 @@ extension AddProductVC{
             txtArmHeight.text = productData?.armHeight
             txtShippingSize.text = productData?.productId.shipSize
             
-            if productData?.commission != ""{
+            if productData?.commission != "" {
                 txtCommision.text = productData?.commission
-                for i in 0..<commissiondata.count{
-                    if commissiondata[i] == Int((productData?.commission)!){
-                        commissionIndex = i
-                    }
-                }
-                self.commissionPicker.reloadAllComponents()
-                self.commissionPicker.selectRow(commissionIndex ?? 0, inComponent: 0, animated: true)
+//                for i in 0..<commissiondata.count{
+//                    if commissiondata[i] == Int((productData?.commission)!){
+//                        commissionIndex = i
+//                    }
+//                }
+//                self.commissionPicker.reloadAllComponents()
+//                self.commissionPicker.selectRow(commissionIndex ?? 0, inComponent: 0, animated: true)
             }
             if productData?.productId.shipSize != ""{
                 for i in 0..<shipSizeDataList.count{
@@ -1275,9 +1275,11 @@ extension AddProductVC: UIPickerViewDataSource, UIPickerViewDelegate{
             return self.pickupLocationData?.data.count ?? 0
         }else if pickerView == deliveryLocationPicker {
             return 0
-        }else if pickerView == commissionPicker{
-            return commissiondata.count
-        }else{
+        }
+//        else if pickerView == commissionPicker{
+//            return commissiondata.count
+//        }
+        else{
             return 0
         }
     }
@@ -1301,9 +1303,11 @@ extension AddProductVC: UIPickerViewDataSource, UIPickerViewDelegate{
                     return "\(self.pickupLocationData?.data[row].keyText[0].city ?? ""), \(self.pickupLocationData?.data[row].keyText[0].state ?? "")"
                 }
             }
-        }else if pickerView == commissionPicker{
-            return "\(commissiondata[row])"
-        }else{
+        }
+//        else if pickerView == commissionPicker{
+//            return "\(commissiondata[row])"
+//        }
+        else{
             return ""
         }
     }
@@ -1332,9 +1336,11 @@ extension AddProductVC: UIPickerViewDataSource, UIPickerViewDelegate{
                     //self.pickupLocationPicker.selectRow(row, inComponent: 0, animated: true)
                 }
             }
-        }else if pickerView == commissionPicker{
-            self.txtCommision.text = "\(commissiondata[row])"
-        }else {
+        }
+//        else if pickerView == commissionPicker{
+//            self.txtCommision.text = "\(commissiondata[row])"
+//        }
+        else {
             
         }
     }

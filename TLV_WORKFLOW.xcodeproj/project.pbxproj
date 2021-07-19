@@ -44,6 +44,7 @@
 		1F31FF30257531BD00FE840D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F31FF2F257531BC00FE840D /* Reachability.swift */; };
 		1F62FAB32566513700E19928 /* TLV_WORKFLOW.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F62FAB12566513700E19928 /* TLV_WORKFLOW.xcdatamodeld */; };
 		1F62FAB5256652B300E19928 /* DataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F62FAB4256652B300E19928 /* DataInfo.swift */; };
+		1F90BF9026A55D4F004221CD /* ProductListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90BF8F26A55D4F004221CD /* ProductListCell.swift */; };
 		1FA3C243255A5BBF00D3D13F /* DeliveryOptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA3C242255A5BBF00D3D13F /* DeliveryOptionVC.swift */; };
 		1FA3C245255A90F200D3D13F /* AddPickUpLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA3C244255A90F100D3D13F /* AddPickUpLocationVC.swift */; };
 		1FAC57AE256538A3001140FE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAC57AD256538A2001140FE /* BaseViewController.swift */; };
@@ -51,6 +52,7 @@
 		1FE450C12549A52200920110 /* SellerListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE450BF2549A52200920110 /* SellerListData.swift */; };
 		1FE450C52549AAC200920110 /* SellerListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE450C42549AAC200920110 /* SellerListCell.swift */; };
 		1FE450C7254B013700920110 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE450C6254B013600920110 /* ProfileVC.swift */; };
+		1FF3702726A59CBC00BA7F36 /* ProductInnerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3702626A59CBC00BA7F36 /* ProductInnerVC.swift */; };
 		811FEEED2555214100E3D3FF /* AddDataPictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811FEEEC2555214100E3D3FF /* AddDataPictureCell.swift */; };
 		8145C209255E8407004BEC94 /* ProductListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145C207255E8406004BEC94 /* ProductListVC.swift */; };
 		8145C20A255E8407004BEC94 /* AddNewSellerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145C208255E8406004BEC94 /* AddNewSellerVC.swift */; };
@@ -134,6 +136,7 @@
 		1F31FF2F257531BC00FE840D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		1F62FAB22566513700E19928 /* TLV_WORKFLOW.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TLV_WORKFLOW.xcdatamodel; sourceTree = "<group>"; };
 		1F62FAB4256652B300E19928 /* DataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInfo.swift; sourceTree = "<group>"; };
+		1F90BF8F26A55D4F004221CD /* ProductListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListCell.swift; sourceTree = "<group>"; };
 		1FA3C23E255900B600D3D13F /* SubCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryVC.swift; sourceTree = "<group>"; };
 		1FA3C240255902A600D3D13F /* SubCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryCell.swift; sourceTree = "<group>"; };
 		1FA3C242255A5BBF00D3D13F /* DeliveryOptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryOptionVC.swift; sourceTree = "<group>"; };
@@ -152,6 +155,7 @@
 		1FE450BF2549A52200920110 /* SellerListData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellerListData.swift; sourceTree = "<group>"; };
 		1FE450C42549AAC200920110 /* SellerListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerListCell.swift; sourceTree = "<group>"; };
 		1FE450C6254B013600920110 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		1FF3702626A59CBC00BA7F36 /* ProductInnerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInnerVC.swift; sourceTree = "<group>"; };
 		811FEEEC2555214100E3D3FF /* AddDataPictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDataPictureCell.swift; sourceTree = "<group>"; };
 		8145C207255E8406004BEC94 /* ProductListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListVC.swift; sourceTree = "<group>"; };
 		8145C208255E8406004BEC94 /* AddNewSellerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewSellerVC.swift; sourceTree = "<group>"; };
@@ -422,6 +426,7 @@
 				1F297F5A25501DE0007190FF /* PictureCell.swift */,
 				8183403B2552B808000F2A18 /* AddProductDetailCell.swift */,
 				811FEEEC2555214100E3D3FF /* AddDataPictureCell.swift */,
+				1F90BF8F26A55D4F004221CD /* ProductListCell.swift */,
 			);
 			path = CollectionViewCell;
 			sourceTree = "<group>";
@@ -511,6 +516,7 @@
 				1FA3C242255A5BBF00D3D13F /* DeliveryOptionVC.swift */,
 				1FA3C244255A90F100D3D13F /* AddPickUpLocationVC.swift */,
 				1FAC57AD256538A2001140FE /* BaseViewController.swift */,
+				1FF3702626A59CBC00BA7F36 /* ProductInnerVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -719,6 +725,7 @@
 				1FE450C7254B013700920110 /* ProfileVC.swift in Sources */,
 				1F297FCD25502660007190FF /* TypeCastExt.swift in Sources */,
 				81A9415F2559746900357D73 /* AddProductSelectId.swift in Sources */,
+				1FF3702726A59CBC00BA7F36 /* ProductInnerVC.swift in Sources */,
 				1F297F9F25502560007190FF /* ACFloatingTextfield.swift in Sources */,
 				8149DADB2548533100023212 /* SplashVC.swift in Sources */,
 				1F297F9D2550254E007190FF /* GlobalFunction.swift in Sources */,
@@ -729,6 +736,7 @@
 				1F297F5725501DB1007190FF /* ProductData.swift in Sources */,
 				8149DAB425483C2B00023212 /* AppDelegate.swift in Sources */,
 				1F31FF30257531BD00FE840D /* Reachability.swift in Sources */,
+				1F90BF9026A55D4F004221CD /* ProductListCell.swift in Sources */,
 				1F297F9A255024F6007190FF /* Constant.swift in Sources */,
 				81A9418025597E9000357D73 /* SubCategoryVC.swift in Sources */,
 				1F297F5425501DB1007190FF /* LoginRole.swift in Sources */,
@@ -889,9 +897,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Matthew Stellwagen (48X5CTAS2Z)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = 48X5CTAS2Z;
 				INFOPLIST_FILE = "";
 				"INFOPLIST_FILE[sdk=*]" = TLV_WORKFLOW/Info.plist;
@@ -902,7 +910,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tlvDevelopment.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = TLV_DEVELOPMENT_PROFILE;
+				PROVISIONING_PROFILE_SPECIFIER = TLV_DISTRIBUTION_PROFILE;
 				SWIFT_OBJC_BRIDGING_HEADER = "TLV_WORKFLOW/Resources/Library/UIViewController+Popup/TLV_WORKFLOW-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -916,9 +924,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Matthew Stellwagen (48X5CTAS2Z)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = 48X5CTAS2Z;
 				INFOPLIST_FILE = "";
 				"INFOPLIST_FILE[sdk=*]" = TLV_WORKFLOW/Info.plist;
@@ -929,7 +937,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tlvDevelopment.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = TLV_DEVELOPMENT_PROFILE;
+				PROVISIONING_PROFILE_SPECIFIER = TLV_DISTRIBUTION_PROFILE;
 				SWIFT_OBJC_BRIDGING_HEADER = "TLV_WORKFLOW/Resources/Library/UIViewController+Popup/TLV_WORKFLOW-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
