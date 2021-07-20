@@ -3634,32 +3634,32 @@
                                 <rect key="frame" x="0.0" y="214" width="375" height="413"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LWJ-Yi-WHo">
-                                    <size key="itemSize" width="178" height="120"/>
+                                    <size key="itemSize" width="178" height="160"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ProductListCell" reuseIdentifier="ProductListCell" id="7NP-3S-Lhl" customClass="ProductListCell" customModule="TLV_WORKFLOW" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="178" height="120"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="178" height="160"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Ikg-Jg-FfJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="178" height="120"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="178" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PLw-cM-QMY">
-                                                    <rect key="frame" x="61.5" y="10" width="55" height="55"/>
+                                                    <rect key="frame" x="41.5" y="10" width="95" height="95"/>
                                                     <color key="backgroundColor" red="0.66666666666666663" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="55" id="4KA-n5-fEg"/>
-                                                        <constraint firstAttribute="width" constant="55" id="6KX-9n-kV6"/>
+                                                        <constraint firstAttribute="height" constant="95" id="4KA-n5-fEg"/>
+                                                        <constraint firstAttribute="width" constant="95" id="6KX-9n-kV6"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="roundCorner" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="roundCorner" value="NO"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sadasd asdsad asda asdsd asdsad" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CX4-35-smE">
-                                                    <rect key="frame" x="10" y="75" width="158" height="34.5"/>
+                                                    <rect key="frame" x="10" y="115" width="158" height="34.5"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -3693,16 +3693,16 @@
                                                 <constraint firstItem="CX4-35-smE" firstAttribute="top" secondItem="PLw-cM-QMY" secondAttribute="bottom" constant="10" id="DI7-ne-ROq"/>
                                                 <constraint firstItem="CX4-35-smE" firstAttribute="leading" secondItem="Ikg-Jg-FfJ" secondAttribute="leading" constant="10" id="JgU-h1-8vh"/>
                                                 <constraint firstItem="4RS-bC-neK" firstAttribute="trailing" secondItem="CX4-35-smE" secondAttribute="trailing" id="RoW-tY-Man"/>
+                                                <constraint firstAttribute="bottom" secondItem="CX4-35-smE" secondAttribute="bottom" constant="10.5" id="SrK-kx-t4e"/>
                                                 <constraint firstItem="pZ7-H6-cbD" firstAttribute="leading" secondItem="Ikg-Jg-FfJ" secondAttribute="leading" constant="10" id="T6x-Hk-Mkb"/>
                                                 <constraint firstItem="pZ7-H6-cbD" firstAttribute="top" secondItem="PLw-cM-QMY" secondAttribute="top" id="azQ-sP-2QX"/>
                                                 <constraint firstAttribute="trailing" secondItem="CX4-35-smE" secondAttribute="trailing" constant="10" id="ewp-Uy-Mn6"/>
                                                 <constraint firstItem="PLw-cM-QMY" firstAttribute="top" secondItem="Ikg-Jg-FfJ" secondAttribute="top" constant="10" id="iSn-yt-9Da"/>
                                                 <constraint firstItem="4RS-bC-neK" firstAttribute="top" secondItem="PLw-cM-QMY" secondAttribute="top" id="mFf-UW-X6Y"/>
                                                 <constraint firstItem="PLw-cM-QMY" firstAttribute="centerX" secondItem="Ikg-Jg-FfJ" secondAttribute="centerX" id="stt-cE-gfv"/>
-                                                <constraint firstAttribute="bottom" secondItem="CX4-35-smE" secondAttribute="bottom" constant="10.5" id="xsN-UH-gaF"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="178" height="120"/>
+                                        <size key="customSize" width="178" height="160"/>
                                         <connections>
                                             <outlet property="btnDownload" destination="4RS-bC-neK" id="DeE-bZ-W1w"/>
                                             <outlet property="btnTick" destination="pZ7-H6-cbD" id="5hj-Kh-JJH"/>

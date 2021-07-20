@@ -634,7 +634,7 @@ extension ProductDetailVC: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (self.productDetailCollectionView.bounds.width - 10) / 2, height: CGFloat(120.0))
+        return CGSize(width: (self.productDetailCollectionView.bounds.width - 10) / 2, height: CGFloat(160.0))
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
