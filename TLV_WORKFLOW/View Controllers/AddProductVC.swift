@@ -60,6 +60,7 @@ class AddProductVC: BaseViewController {
     //MARK: collection view outlets
     @IBOutlet weak var photoCollectionView: UICollectionView!
     @IBOutlet weak var productDetailCollectionView: UICollectionView!
+    @IBOutlet weak var txtInsideSeatDepth: UITextField!
     
     var textFieldArray: [UITextField] = []
     var dropDownTextfieldArray: [UITextField] = []
@@ -111,7 +112,7 @@ class AddProductVC: BaseViewController {
         
         ageViewHeightConstraint.constant = 0.0
         dropDownTextfieldArray = [txtProductQuantity, txtPickupLocation, txtSellerName, txtShippingCatagory, txtShippingSize, txtDelivery]
-        textFieldArray = [txtSellerName, txtPickupLocation, txtProductName, txtProductQuantity, txtTlvPrice, txtRetailPrice, txtCommision, txtUnits, txtDepth, txtWidth, txtHeight, txtShippingCatagory, txtPackagingFee, txtShippingSize, txtDelivery, txtSeatHeight, txtArmHeight]
+        textFieldArray = [txtSellerName, txtPickupLocation, txtProductName, txtProductQuantity, txtTlvPrice, txtRetailPrice, txtCommision, txtUnits, txtDepth, txtWidth, txtHeight, txtShippingCatagory, txtPackagingFee, txtShippingSize, txtDelivery, txtSeatHeight, txtArmHeight, txtInsideSeatDepth]
         for textField in dropDownTextfieldArray{
             dropDownDesign(textField: textField)
         }
@@ -350,6 +351,7 @@ extension AddProductVC{
             dictProductId["height"] = txtHeight.text
             dictProductId["arm_height"] = txtArmHeight.text
             dictProductId["seat_height"] = txtSeatHeight.text
+            dictProductId["inside_seat_depth"] = txtInsideSeatDepth.text
             
             var imageArray:[Int] = []
             if self.isEditView{
@@ -619,7 +621,7 @@ extension AddProductVC{
                     }
                 }else{
                     GlobalFunction.hideLoadingIndicator()
-                    self.alertbox(title: "\(status)", message: responseDict[Constant.ParameterNames.status] as! String)
+                    self.alertbox(title: appName, message: "Something went wrong")
                 }
             }
         }else {
@@ -777,6 +779,7 @@ extension AddProductVC{
             txtSeatHeight.text = productData?.seatHeight
             txtArmHeight.text = productData?.armHeight
             txtShippingSize.text = productData?.productId.shipSize
+            txtInsideSeatDepth.text = productData?.insideSeatDepth
             
             if productData?.commission != "" {
                 txtCommision.text = productData?.commission
@@ -1012,6 +1015,7 @@ extension AddProductVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             let category = data?.data.categories[indexPath.row]
             cell.txtFieldName.placeholder = category?.categoryName
             if indexPath.row == 2{
+                cell.txtFieldName.placeholder = "Sub Category"
                 if selectedDataSubCategory.count > 1{
                     var tempArr: [String] = []
                     for i in 0..<selectedDataSubCategory.count{

@@ -48,6 +48,7 @@ class AddProductProduct : NSObject, NSCoding{
 	var quantity : String!
 	var rejectToAuction : Int!
 	var seatHeight : String!
+    var insideSeatDepth : String!
 	var shippingClass : String!
 	var sortDescription : String!
 	var stockStatus : String!
@@ -116,6 +117,7 @@ class AddProductProduct : NSObject, NSCoding{
 		quantity = dictionary["quantity"] as? String
 		rejectToAuction = dictionary["reject_to_auction"] as? Int
 		seatHeight = dictionary["seat_height"] as? String
+        insideSeatDepth = dictionary["inside_seat_depth"] as? String
 		shippingClass = dictionary["shipping_class"] as? String
 		sortDescription = dictionary["sort_description"] as? String
 		stockStatus = dictionary["stock_status"] as? String
@@ -266,6 +268,9 @@ class AddProductProduct : NSObject, NSCoding{
 		if seatHeight != nil{
 			dictionary["seat_height"] = seatHeight
 		}
+        if insideSeatDepth != nil{
+            dictionary["inside_seat_depth"] = insideSeatDepth
+        }
 		if shippingClass != nil{
 			dictionary["shipping_class"] = shippingClass
 		}
@@ -367,6 +372,7 @@ class AddProductProduct : NSObject, NSCoding{
          quantity = aDecoder.decodeObject(forKey: "quantity") as? String
          rejectToAuction = aDecoder.decodeObject(forKey: "reject_to_auction") as? Int
          seatHeight = aDecoder.decodeObject(forKey: "seat_height") as? String
+         insideSeatDepth = aDecoder.decodeObject(forKey: "inside_seat_depth") as? String
          shippingClass = aDecoder.decodeObject(forKey: "shipping_class") as? String
          sortDescription = aDecoder.decodeObject(forKey: "sort_description") as? String
          stockStatus = aDecoder.decodeObject(forKey: "stock_status") as? String
@@ -516,6 +522,9 @@ class AddProductProduct : NSObject, NSCoding{
 		if seatHeight != nil{
 			aCoder.encode(seatHeight, forKey: "seat_height")
 		}
+        if insideSeatDepth != nil{
+            aCoder.encode(insideSeatDepth, forKey: "inside_seat_depth")
+        }
 		if shippingClass != nil{
 			aCoder.encode(shippingClass, forKey: "shipping_class")
 		}
