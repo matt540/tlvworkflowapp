@@ -339,7 +339,13 @@ extension ProductListVC{
                     let sellerListDataModel = SellerListData(fromDictionary: sellerDic)
                     self.sellerList.append(sellerListDataModel)
                 }
-                btnPrevious.isHidden = true
+                if self.pageCount == 1{
+                    self.btnPrevious.isHidden = true
+                }else if self.pageCount == 0{
+                    self.btnPrevious.isHidden = true
+                }else{
+                    self.btnPrevious.isHidden = false
+                }
                 sellerTableView.reloadData()
             }else{
                 pageCount += 1
