@@ -516,7 +516,8 @@ extension AddProductVC{
                     self.pickupLocationPicker.selectRow(self.pickupLocationIndex! + 1, inComponent: 0, animated: true)
                 }
             }else{
-                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
+//                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
+                self.alertbox(title: Messages.error, message: Messages.oopsMsg)
             }
         }
     }

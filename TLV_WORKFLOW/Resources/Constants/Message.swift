@@ -48,5 +48,8 @@ class Messages : NSObject {
     static let pickuplocationNotAvailable = "Seller's Home Address is not available, Please sellect other or ADD LOCATION."
     static let noInternet = "Please connect internet."
     static let confirmDeleteData = "Are you sure wants to delete this product from offline?"
+    
+    static let noSellerMsg = "No Seller available."
+    static let oopsMsg = "Oops! Something went wrong. Please try again."
 }
 

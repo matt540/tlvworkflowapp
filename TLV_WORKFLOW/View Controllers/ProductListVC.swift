@@ -23,6 +23,8 @@ class ProductListVC: BaseViewController {
     var sellerData:[Seller] = []
     var pageCount = 1
     var tempPageCount = 1
+    var searchPageCount = 1
+    var sellerListOfflineSearch = [SellerListData]()
     var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -36,6 +38,8 @@ class ProductListVC: BaseViewController {
         super.viewWillAppear(true)
         if !GlobalFunction.isNetworkReachable(){
             offlineData()
+            self.sellerListOfflineSearch = []
+            self.offlineSellerDataGetForSearch()
         }else{
             offlineSellerDataStore()
             callsellerData()
@@ -227,6 +231,40 @@ extension ProductListVC{
                }
            }
        }
+    
+    //MARK: Offline All Seller Data Get
+    func offlineSellerDataGetForSearch(){
+        let sellerData = DataInfo().retriveData(pageno: searchPageCount)
+        if sellerData.count > 0{
+            for i in sellerData{
+                let sellerDic = GlobalFunction.convertToDictionary(text: i.seller ?? "") ?? [:]
+                let sellerListDataModel = SellerListData(fromDictionary: sellerDic)
+                self.sellerListOfflineSearch.append(sellerListDataModel)
+            }
+            self.searchPageCount = self.searchPageCount + 1
+            self.offlineSellerDataGetForSearch()
+        } else {
+            self.searchPageCount = 1
+        }
+    }
+    
+    //MARK: Offline Search Data Get
+    func offlineSearchData(searchText: String) {
+        if self.sellerListOfflineSearch.count > 0 {
+            self.sellerList = self.sellerListOfflineSearch.filter({ $0.firstname.range(of: searchText, options: .caseInsensitive) != nil || $0.lastname.range(of: searchText, options: .caseInsensitive) != nil})
+            if sellerList.count > 0 {
+                btnPrevious.isHidden = true
+                searchBar.delegate = self
+                refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+                sellerTableView.addSubview(refreshControl)
+                sellerTableView.reloadData()
+            } else {
+                self.multiOptionAlertBox(title: Messages.tlv, message: Messages.noSellerMsg, action1: "OK") { status in
+                    self.offlineData()
+                }
+            }
+        }
+    }
 }
 
 //MARK:- IBOutlet
@@ -356,18 +394,26 @@ extension ProductListVC: UISearchBarDelegate{
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         GlobalFunction.hideLoadingIndicator()
-        if searchBar.text == ""{
-            let params = apiParameter(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id)
-            GlobalFunction.showLoadingIndicator()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.callGetSellerListService(params: params)
+        if !GlobalFunction.isNetworkReachable(){
+            if searchBar.text == ""{
+                self.offlineData()
+            } else {
+                self.offlineSearchData(searchText: searchBar.text ?? "")
             }
-            sellerTableView.reloadData()
-        }else{
-            let params = apiParameter(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: searchBar.text ?? "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id)
-            GlobalFunction.showLoadingIndicator()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.callGetSellerListService(params: params)
+        } else {
+            if searchBar.text == ""{
+                let params = apiParameter(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id)
+                GlobalFunction.showLoadingIndicator()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.callGetSellerListService(params: params)
+                }
+                sellerTableView.reloadData()
+            }else{
+                let params = apiParameter(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: searchBar.text ?? "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id)
+                GlobalFunction.showLoadingIndicator()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.callGetSellerListService(params: params)
+                }
             }
         }
     }
@@ -377,13 +423,17 @@ extension ProductListVC: UISearchBarDelegate{
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
-            let params = apiParameter(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id)
-            GlobalFunction.showLoadingIndicator()
-           
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.callGetSellerListService(params: params)
+            if !GlobalFunction.isNetworkReachable(){
+                self.offlineData()
+            } else {
+                let params = apiParameter(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id)
+                GlobalFunction.showLoadingIndicator()
+               
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.callGetSellerListService(params: params)
+                }
+                sellerTableView.reloadData()
             }
-            sellerTableView.reloadData()
         }
     }
 }

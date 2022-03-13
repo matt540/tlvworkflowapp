@@ -400,11 +400,40 @@ extension ProductDetailVC: UITextFieldDelegate{
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == txtSearch{
-            let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: txtSearch.text!, userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
-            GlobalFunction.showLoadingIndicator()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.callGetProductListService(params: params)
-            })
+            if GlobalFunction.isNetworkReachable(){
+                let params = apiParameters(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: txtSearch.text!, userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id, sellerId: sellerDetail!.id)
+                GlobalFunction.showLoadingIndicator()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    self.callGetProductListService(params: params)
+                })
+            } else {
+                if txtSearch.text == "" {
+                    self.localDataLoad()
+                } else {
+                    var offlineProductArray: [ProductData] = []
+                    let productData = DataInfo().retriveProductDetailData(seller_id:sellerDetail!.id)
+                    for i in productData{
+                        let dict = GlobalFunction.convertToDictionary(text: i.product_detail!) ?? [:]
+                        offlineProductArray.append(ProductData(fromDictionary: dict))
+                    }
+                    if offlineProductArray.count > 0 {
+                        self.productArray = offlineProductArray.filter({ $0.name.range(of: (txtSearch.text ?? ""), options: .caseInsensitive) != nil})
+                        if self.productArray.count > 0 {
+                            self.productDetailCollectionView.reloadData()
+                        } else {
+                            self.multiOptionAlertBox(title: Messages.error, message: Messages.noDataAvialable, action1: "OK") { status in
+                                self.txtSearch.text = ""
+                                self.localDataLoad()
+                            }
+                        }
+                    } else {
+                        self.multiOptionAlertBox(title: Messages.error, message: Messages.noDataAvialable, action1: "OK") { status in
+                            self.txtSearch.text = ""
+                            self.localDataLoad()
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -656,9 +685,12 @@ extension ProductDetailVC{
             }else {
                 GlobalFunction.hideLoadingIndicator()
                 if productsDetails.data.data.isEmpty {
+                    self.txtSearch.text = ""
                     self.alertbox(title: Messages.error, message: Messages.noDataAvialable)
                     if self.pageCount > 1{
-                        self.pageCount -= 1
+                        if ((Int(productsDetails.data!.recordsTotal!) ?? 0) / 10) + 1 < self.pageCount {
+                            self.pageCount -= 1
+                        }
                     }
                 }else {
                     self.productArray = productsDetails.data.data
