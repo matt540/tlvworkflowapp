@@ -280,14 +280,17 @@ class DataInfo{
         fetchRequest.predicate = NSPredicate(format: "id = %@", "\(id)")
         do {
             let data = try managedContext.fetch(fetchRequest)
-            let deleteData = data[0] as NSManagedObject
-            managedContext.delete(deleteData)
-            do {
-                try managedContext.save()
-            } catch  {
-                print("error while saving data")
+            if data.count > 0 {
+                let deleteData = data[0] as NSManagedObject
+                managedContext.delete(deleteData)
+                do {
+                    try managedContext.save()
+                } catch  {
+                    print("error while saving data")
+                }
+            } else {
+                print("failed while deleting")
             }
-            
         } catch  {
             print("failed while deleting")
         }
@@ -569,14 +572,17 @@ class DataInfo{
         fetchRequest.predicate = NSPredicate(format: "product_id = %@", "\(id)")
         do {
             let data = try managedContext.fetch(fetchRequest)
-            let deleteData = data[0] as NSManagedObject
-            managedContext.delete(deleteData)
-            do {
-                try managedContext.save()
-            } catch  {
-                print("error while saving data")
+            if data.count > 0 {
+                let deleteData = data[0] as NSManagedObject
+                managedContext.delete(deleteData)
+                do {
+                    try managedContext.save()
+                } catch  {
+                    print("error while saving data")
+                }
+            } else {
+                print("failed while deleting")
             }
-            
         } catch  {
             print("failed while deleting")
         }
