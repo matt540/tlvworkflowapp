@@ -25,18 +25,22 @@ class ProductDetailVC: BaseViewController {
     @IBOutlet weak var btnNext: UIButton!
     @IBOutlet weak var tblProductDetail: UITableView!
     @IBOutlet var productDetailCollectionView: UICollectionView!
+    @IBOutlet weak var btnRadioDownload: UIButton!
     
     var pageCount: Int!
     var searchText = ""
     var sellerDetail: SellerListData?
     var productArray: [ProductData] = []
-    var arrayDeleteIds: [Int] = []
-    var arrayArchiveIds: [Int] = []
-    var arraySubmitIds: [Int] = []
+//    var arrayDeleteIds: [Int] = []
+    var arrayProductsIds: [Int] = []
+//    var arraySubmitIds: [Int] = []
+//    var arrayDownloadIds: [Int] = []
     var refreshControl = UIRefreshControl()
     var imgArray = [#imageLiteral(resourceName: "user_icon"),#imageLiteral(resourceName: "logout")]
     var tempPageCount = 1
     var productIds = [Int]()
+    
+    var group = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,14 +125,14 @@ class ProductDetailVC: BaseViewController {
 extension ProductDetailVC {
     
     @IBAction func btnSaveAction(_ sender: UIButton) {
-        if arrayArchiveIds.count == 0 || arrayArchiveIds.isEmpty {
+        if arrayProductsIds.count == 0 || arrayProductsIds.isEmpty {
             alertbox(title: Messages.error, message: Messages.archiveEmptyAlert)
         }else {
             multiOptionAlertBox(title: Messages.confirm, message: Messages.confirmArchiveProduct, action1: "Yes", action2: "No") { (status) in
                 if status == 0 {
                     var paramDict: [String : Any] = [:]
                     paramDict[Constant.ParameterNames.key] = serviceKey
-                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arrayArchiveIds
+                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arrayProductsIds
                     GlobalFunction.showLoadingIndicator()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.callSaveService(params: paramDict)
@@ -140,30 +144,14 @@ extension ProductDetailVC {
     }
     
     @IBAction func btnDeleteAction(_ sender: UIButton) {
-//        if arrayDeleteIds.count == 0 || arrayDeleteIds.isEmpty {
-//            alertbox(title: Messages.error, message: Messages.deleteEmptyAlert)
-//        }else {
-//            multiOptionAlertBox(title: Messages.confirm, message: Messages.confirmDeleteProdut, action1: "Yes", action2: "No") { (status) in
-//                if status == 0 {
-//                    var paramDict: [String : Any] = [:]
-//                    paramDict[Constant.ParameterNames.key] = serviceKey
-//                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arrayDeleteIds
-//                    GlobalFunction.showLoadingIndicator()
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                        self.callDeleteService(params: paramDict)
-//                    }
-//
-//                }
-//            }
-//        }
-        if arrayArchiveIds.count == 0 || arrayArchiveIds.isEmpty {
+        if arrayProductsIds.count == 0 || arrayProductsIds.isEmpty {
             alertbox(title: Messages.error, message: Messages.deleteEmptyAlert)
         }else {
             multiOptionAlertBox(title: Messages.confirm, message: Messages.confirmDeleteProdut, action1: "Yes", action2: "No") { (status) in
                 if status == 0 {
                     var paramDict: [String : Any] = [:]
                     paramDict[Constant.ParameterNames.key] = serviceKey
-                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arrayArchiveIds
+                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arrayProductsIds
                     GlobalFunction.showLoadingIndicator()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.callDeleteService(params: paramDict)
@@ -175,30 +163,14 @@ extension ProductDetailVC {
     }
     
     @IBAction func btnSubmitAction(_ sender: UIButton) {
-//        if arraySubmitIds.count == 0 || arraySubmitIds.isEmpty {
-//            alertbox(title: Messages.error, message: Messages.submitEmptyAlert)
-//        }else {
-//            multiOptionAlertBox(title: Messages.confirm, message: Messages.confirmSubmitProduct, action1: "Yes", action2: "No") { (status) in
-//                if status == 0 {
-//                    var paramDict: [String : Any] = [:]
-//                    paramDict[Constant.ParameterNames.key] = serviceKey
-//                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arraySubmitIds
-//                    GlobalFunction.showLoadingIndicator()
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                        self.callSubmitMultipalProduct(params: paramDict)
-//                    }
-//
-//                }
-//            }
-//        }
-        if arrayArchiveIds.count == 0 || arrayArchiveIds.isEmpty {
+        if arrayProductsIds.count == 0 || arrayProductsIds.isEmpty {
             alertbox(title: Messages.error, message: Messages.submitEmptyAlert)
         }else {
             multiOptionAlertBox(title: Messages.confirm, message: Messages.confirmSubmitProduct, action1: "Yes", action2: "No") { (status) in
                 if status == 0 {
                     var paramDict: [String : Any] = [:]
                     paramDict[Constant.ParameterNames.key] = serviceKey
-                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arrayArchiveIds
+                    paramDict[Constant.ParameterNames.product_quotation_ids] = self.arrayProductsIds
                     GlobalFunction.showLoadingIndicator()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.callSubmitMultipalProduct(params: paramDict)
@@ -214,12 +186,10 @@ extension ProductDetailVC {
         case btnRadioArchive:
             btnRadioDelete.isSelected = false
             btnRadioSubmit.isSelected = false
+            btnRadioDownload.isSelected = false
             if sender.isSelected{
                 sender.isSelected = false
-                arraySubmitIds = []
-                arrayArchiveIds = []
-                arrayDeleteIds = []
-//                tblProductDetail.reloadData()
+                arrayProductsIds = []
                 self.productArray = self.productArray.filter {
                     $0.isSelected = false
                     return true
@@ -227,10 +197,9 @@ extension ProductDetailVC {
                 self.productDetailCollectionView.reloadData()
             }else {
                 sender.isSelected = true
-                arraySubmitIds = []
-                arrayDeleteIds = []
+                arrayProductsIds = []
                 for product in productArray{
-                    arrayArchiveIds.append(product.id)
+                    arrayProductsIds.append(product.id)
                     product.isSelected = true
                 }
 //                tblProductDetail.reloadData()
@@ -240,12 +209,10 @@ extension ProductDetailVC {
         case btnRadioDelete:
             btnRadioSubmit.isSelected = false
             btnRadioArchive.isSelected = false
+            btnRadioDownload.isSelected = false
             if sender.isSelected{
                 sender.isSelected = false
-                arraySubmitIds = []
-                arrayArchiveIds = []
-                arrayDeleteIds = []
-//                tblProductDetail.reloadData()
+                arrayProductsIds = []
                 self.productArray = self.productArray.filter {
                     $0.isSelected = false
                     return true
@@ -253,10 +220,9 @@ extension ProductDetailVC {
                 self.productDetailCollectionView.reloadData()
             }else {
                 sender.isSelected = true
-                arraySubmitIds = []
-                arrayArchiveIds = []
+                arrayProductsIds = []
                 for product in productArray{
-                    arrayDeleteIds.append(product.id)
+                    arrayProductsIds.append(product.id)
                     product.isSelected = true
                 }
 //                tblProductDetail.reloadData()
@@ -266,12 +232,10 @@ extension ProductDetailVC {
         case btnRadioSubmit:
             btnRadioDelete.isSelected = false
             btnRadioArchive.isSelected = false
+            btnRadioDownload.isSelected = false
             if sender.isSelected{
                 sender.isSelected = false
-                arraySubmitIds = []
-                arrayArchiveIds = []
-                arrayDeleteIds = []
-//                tblProductDetail.reloadData()
+                arrayProductsIds = []
                 self.productArray = self.productArray.filter {
                     $0.isSelected = false
                     return true
@@ -279,13 +243,33 @@ extension ProductDetailVC {
                 self.productDetailCollectionView.reloadData()
             }else{
                 sender.isSelected = true
-                arrayDeleteIds = []
-                arrayArchiveIds = []
+                arrayProductsIds = []
                 for product in productArray{
-                    arraySubmitIds.append(product.id)
+                    arrayProductsIds.append(product.id)
                     product.isSelected = true
                 }
-//                tblProductDetail.reloadData()
+                self.productDetailCollectionView.reloadData()
+            }
+            break
+        case btnRadioDownload:
+            btnRadioDelete.isSelected = false
+            btnRadioArchive.isSelected = false
+            btnRadioSubmit.isSelected = false
+            if sender.isSelected{
+                sender.isSelected = false
+                arrayProductsIds = []
+                self.productArray = self.productArray.filter {
+                    $0.isSelected = false
+                    return true
+                }
+                self.productDetailCollectionView.reloadData()
+            }else{
+                sender.isSelected = true
+                arrayProductsIds = []
+                for product in productArray{
+                    arrayProductsIds.append(product.id)
+                    product.isSelected = true
+                }
                 self.productDetailCollectionView.reloadData()
             }
             break
@@ -388,6 +372,48 @@ extension ProductDetailVC {
         }
     }
     
+    @IBAction func btnDownloadAction(_ sender: Any) {
+        if arrayProductsIds.count == 0 || arrayProductsIds.isEmpty {
+            alertbox(title: Messages.error, message: Messages.downloadEmptyAlert)
+        } else {
+            multiOptionAlertBox(title: Messages.confirm, message: Messages.confirmDownloadProduct, action1: "Yes", action2: "No") { (status) in
+                if status == 0 {
+                    GlobalFunction.showLoadingIndicator()
+                    for i in self.arrayProductsIds {
+                        for j in self.productArray {
+                            if j.isDownloaded == false {
+                                j.isSelected = false
+                                if i == j.id {
+                                    self.group.enter()
+                                    if GlobalFunction.isNetworkReachable(){
+                                        self.offlineProductDataNew(id: i) { status in
+                                            self.group.leave()
+                                        }
+                                    } else {
+                                        self.group.leave()
+                                        GlobalFunction.hideLoadingIndicator()
+                                        self.productArray = self.productArray.filter {
+                                            $0.isSelected = false
+                                            return true
+                                        }
+                                        self.productDetailCollectionView.reloadData()
+                                        UIApplication.shared.windows.first?.makeToast(Messages.noInternet)
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    self.group.notify(queue: .main) {
+                        self.productDetailCollectionView.reloadData()
+                        GlobalFunction.hideLoadingIndicator()
+                    }
+                    self.btnRadioDownload.isSelected = false
+                }
+            }
+        }
+    }
+    
 }
 
 //MARK: TextField Methods
@@ -433,169 +459,6 @@ extension ProductDetailVC: UITextFieldDelegate{
                         }
                     }
                 }
-            }
-        }
-    }
-}
-
-//MARK: TableView Methods
-extension ProductDetailVC: UITableViewDelegate, UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return productArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let detailCell = tableView.dequeueReusableCell(withIdentifier: Constant.CellIdentifier.productDetailCell) as! ProductDetailCell
-        let data = productArray[indexPath.row]
-        if data.isDownloaded{
-            //detailCell.btnDownload.isHidden = true
-            detailCell.btnDownload.isSelected = true
-        }else{
-            //detailCell.btnDownload.isHidden = false
-            detailCell.btnDownload.isSelected = false
-        }
-        if data.image != nil {
-            let imageResponse = data.image!
-            let imageItem = imageResponse.components(separatedBy: ",")
-            let imgUrl = image_base_url+imageItem[0]
-            detailCell.imgProductImage!.sd_setImage(with: URL(string: imgUrl), completed: nil)
-        }else {
-            detailCell.imgProductImage.image = UIImage()
-        }
-        detailCell.lblSKU.text = data.sku
-        detailCell.lblProductName.text = data.name
-        detailCell.lblProductHeight.text = data.height
-        detailCell.lblProductWidth.text = data.width
-        detailCell.lblProductDepth.text = data.depth
-        detailCell.lblDate.text = GlobalFunction.formattedDateFromString(dateString: data.forProductionCreatedAt.date!, withFormat: "MM-dd-yyyy")
-        
-        if arrayDeleteIds.contains(data.id){
-            checkboxAction(cell: detailCell, toSelect: detailCell.btnRadioDelete)
-        }else if arraySubmitIds.contains(data.id){
-            checkboxAction(cell: detailCell, toSelect: detailCell.btnRadioSubmit)
-        }else if arrayArchiveIds.contains(data.id){
-            checkboxAction(cell: detailCell, toSelect: detailCell.btnRadioArchive)
-        } else {
-            checkboxAction(cell: detailCell, toSelect: UIButton())
-        }
-        
-        detailCell.archiveClosure = {
-            data.isArchive = data.isArchive ? false : true
-            if data.isArchive {
-                if !self.arrayArchiveIds.contains(data.id){
-                    self.arrayArchiveIds.append(data.id)
-                }
-            }else {
-                if self.arrayArchiveIds.contains(data.id){
-                    self.arrayArchiveIds = self.arrayArchiveIds.filter{ $0 != data.id }
-                }
-            }
-            data.isDelete = false
-            data.isSubmit = false
-//            self.tblProductDetail.reloadData()
-            self.productDetailCollectionView.reloadData()
-        }
-        detailCell.deleteClosure = {
-            data.isDelete = data.isDelete ? false : true
-            if data.isDelete {
-                if !self.arrayDeleteIds.contains(data.id){
-                    self.arrayDeleteIds.append(data.id)
-                }
-            }else {
-                if self.arrayDeleteIds.contains(data.id){
-                    self.arrayDeleteIds = self.arrayDeleteIds.filter{ $0 != data.id }
-                }
-            }
-            data.isArchive = false
-            data.isSubmit = false
-//            self.tblProductDetail.reloadData()
-            self.productDetailCollectionView.reloadData()
-        }
-        detailCell.submitClosure = {
-            data.isSubmit = data.isSubmit ? false : true
-            if data.isSubmit {
-                if !self.arraySubmitIds.contains(data.id){
-                    self.arraySubmitIds.append(data.id)
-                }
-            }else {
-                if self.arraySubmitIds.contains(data.id){
-                    self.arraySubmitIds = self.arraySubmitIds.filter{ $0 != data.id }
-                }
-            }
-            data.isArchive = false
-            data.isDelete = false
-//            self.tblProductDetail.reloadData()
-            self.productDetailCollectionView.reloadData()
-        }
-        detailCell.submitForPriceClosure = {
-            var dictParam: [String : Any] = [:]
-            dictParam[Constant.ParameterNames.key] = serviceKey
-            dictParam[Constant.ParameterNames.id] = data.id!
-            GlobalFunction.showLoadingIndicator()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.callSubmitForPricing(params: dictParam)
-            }
-        }
-        
-        detailCell.downloadDataClosure = {
-            if self.productArray[indexPath.row].isDownloaded == false{
-                if GlobalFunction.isNetworkReachable(){
-                    self.offlineProductData(id: self.productArray[indexPath.row].id)
-                    detailCell.btnDownload.isSelected = true
-                }else{
-                    UIApplication.shared.windows.first?.makeToast(Messages.noInternet)
-                }
-            }else{
-//                self.deleteProductData(data: self.productArray[indexPath.row], cell: detailCell)
-            }
-        }
-        detailCell.selectionStyle = UITableViewCell.SelectionStyle.none
-        return detailCell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if GlobalFunction.isNetworkReachable(){
-            let productDict = productArray[indexPath.row]
-            let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.addProductVC) as! AddProductVC
-            addProductVC.isEditView = true
-            addProductVC.sellerId = sellerDetail?.id
-            addProductVC.productId = productDict.id!
-            self.navigationController?.pushViewController(addProductVC, animated: true)
-        }else{
-            if self.productArray[indexPath.row].isDownloaded == true{
-                let productDict = productArray[indexPath.row]
-                let addProductVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.addProductVC) as! AddProductVC
-                addProductVC.isEditView = true
-                addProductVC.sellerId = sellerDetail?.id
-                addProductVC.productId = productDict.id!
-                self.navigationController?.pushViewController(addProductVC, animated: true)
-            }else{
-                UIApplication.shared.windows.first?.makeToast(Messages.noInternet)
-            }
-        }
-    }
-    
-    //MARK:- Download edit product
-    func offlineProductData(id: Int){
-        var dictParam: [String : Any] = [:]
-        dictParam[ Constant.ParameterNames.key ] = serviceKey
-        dictParam[ Constant.ParameterNames.user_id ] = String(format: "%i", currentLoginUser.data.id)
-        dictParam[ Constant.ParameterNames.role_id ] = String(format: "%i", currentLoginUser.data.roles[0].id)
-        dictParam[ Constant.ParameterNames.id] = id
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            GlobalFunction.showLoadingIndicator()
-            self.getDataToEditSellerProduct(params: dictParam)
-        }
-    }
-    
-    //MARK:- delete edit product data
-    func deleteProductData(data: ProductData, cell: ProductListCell){
-        self.multiOptionAlertBox(title: Messages.tlv, message: Messages.confirmDeleteData, action1: "Yes",action2: "No") { (actionStatus) in
-            if actionStatus == 0{
-                data.isDownloaded = false
-                DataInfo().deleteProductDataDetail(productId: data.id)
-                DataInfo().deleteEditImageDataId(id: data.id)
-                cell.btnDownload.isSelected = false
             }
         }
     }
@@ -648,12 +511,12 @@ extension ProductDetailVC: UICollectionViewDelegate, UICollectionViewDataSource,
         }
         
         detailCell.tickComp = {
-            if self.arrayArchiveIds.contains(data.id) {
-                let key = self.arrayArchiveIds.firstIndex(of: data.id)
-                self.arrayArchiveIds.remove(at: key ?? 0)
+            if self.arrayProductsIds.contains(data.id) {
+                let key = self.arrayProductsIds.firstIndex(of: data.id)
+                self.arrayProductsIds.remove(at: key ?? 0)
                 data.isSelected = false
             } else {
-                self.arrayArchiveIds.append(data.id)
+                self.arrayProductsIds.append(data.id)
                 data.isSelected = true
             }
             self.productDetailCollectionView.reloadItems(at: [indexPath])
@@ -794,8 +657,33 @@ extension ProductDetailVC{
                     }
                 }
                 self.downloadCheck()
-//                self.tblProductDetail.reloadData()
                 self.productDetailCollectionView.reloadData()
+            }else{
+                GlobalFunction.hideLoadingIndicator()
+                self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
+            }
+        }
+    }
+    
+    //MARK:- edit product data get
+    func getDataToEditSellerProductNew(params: [String : Any], completion: @escaping (_ status: String) -> Void){
+        WebAPIManager.makeAPIRequest(isFormDataRequest: true, isContainContentType: true, path: Constant.Api.edit_seller_product_for_production_stage, params: params) { (responseDict, status) in
+            if status == 200{
+                if DataInfo().isProductDataDetailExists(productId: params[Constant.ParameterNames.id] as! Int){
+                    DataInfo().deleteProductDataDetail(productId: params[Constant.ParameterNames.id] as! Int)
+                    DataInfo().deleteEditImageDataId(id: params[Constant.ParameterNames.id] as! Int)
+                }
+                let JsonData = try?JSONSerialization.data(withJSONObject: responseDict as! [String : Any], options: [])
+                let productDataOffline = String(data: JsonData!, encoding: .utf8)!
+                let productData = AddProductModel(fromDictionary: responseDict as! [String : Any])
+                DataInfo().createProductData(productId: params[Constant.ParameterNames.id] as! Int, productData: productDataOffline)
+                let image = productData.data.product.productId.productPendingImages ?? []
+                for i in 0..<image.count{
+                    let data = try? Data(contentsOf: URL(string: image_base_url + image[i].name)!)
+                    DataInfo().createEditImageData(productId: params[Constant.ParameterNames.id] as! Int, imageData: data!, status: 1)
+                }
+                self.downloadCheck()
+                completion("done")
             }else{
                 GlobalFunction.hideLoadingIndicator()
                 self.alertbox(title: Messages.error, message: responseDict["message"] as! String)
@@ -835,6 +723,43 @@ extension ProductDetailVC{
                 if i.id == j{
                     i.isDownloaded = true
                 }
+            }
+        }
+    }
+    
+    //MARK:- Download edit product
+    func offlineProductData(id: Int){
+        var dictParam: [String : Any] = [:]
+        dictParam[ Constant.ParameterNames.key ] = serviceKey
+        dictParam[ Constant.ParameterNames.user_id ] = String(format: "%i", currentLoginUser.data.id)
+        dictParam[ Constant.ParameterNames.role_id ] = String(format: "%i", currentLoginUser.data.roles[0].id)
+        dictParam[ Constant.ParameterNames.id] = id
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            GlobalFunction.showLoadingIndicator()
+            self.getDataToEditSellerProduct(params: dictParam)
+        }
+    }
+    
+    func offlineProductDataNew(id: Int, completion: @escaping (_ status: String) -> Void){
+        var dictParam: [String : Any] = [:]
+        dictParam[ Constant.ParameterNames.key ] = serviceKey
+        dictParam[ Constant.ParameterNames.user_id ] = String(format: "%i", currentLoginUser.data.id)
+        dictParam[ Constant.ParameterNames.role_id ] = String(format: "%i", currentLoginUser.data.roles[0].id)
+        dictParam[ Constant.ParameterNames.id] = id
+        self.getDataToEditSellerProductNew(params: dictParam) { status in
+            completion(status)
+        }
+    }
+    
+    
+    //MARK:- delete edit product data
+    func deleteProductData(data: ProductData, cell: ProductListCell){
+        self.multiOptionAlertBox(title: Messages.tlv, message: Messages.confirmDeleteData, action1: "Yes",action2: "No") { (actionStatus) in
+            if actionStatus == 0{
+                data.isDownloaded = false
+                DataInfo().deleteProductDataDetail(productId: data.id)
+                DataInfo().deleteEditImageDataId(id: data.id)
+                cell.btnDownload.isSelected = false
             }
         }
     }

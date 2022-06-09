@@ -31,7 +31,9 @@ class Messages : NSObject {
     static let deleteEmptyAlert = "Please select at least one product to delete."
     static let confirmDeleteProdut = "Are you sure you want to delete product?"
     static let submitEmptyAlert = "Please select at least one product to submit."
+    static let downloadEmptyAlert = "Please select at least one product to download."
     static let confirmSubmitProduct = "Are you sure you want to submit product?"
+    static let confirmDownloadProduct = "Are you sure you want to download product?"
     
     static let noResponsefromServer = "No response server"
     static let sellerAddedSuccessFully = "Seller successfully added."

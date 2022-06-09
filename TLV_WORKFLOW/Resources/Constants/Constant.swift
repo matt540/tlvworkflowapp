@@ -5,13 +5,13 @@ import UIKit
 let appName = "TLV"
 
 let baseUrl = "https://tlv-workflowapp.com/api/mobile/"
-//let baseUrl = "https://staging.tlv-workflowapp.com/api/mobile/"
+//let baseUrl = "https://latest-tlv.tlv-workflowapp.com/api/mobile/"
 
 let profileImageUrl = "http://tlv-workflowapp.com/Uploads/profile/"
-//let profileImageUrl = "http://staging.tlv-workflowapp.com/Uploads/profile/"
+//let profileImageUrl = "http://latest-tlv.tlv-workflowapp.com/Uploads/profile/"
 
 let image_base_url = "http://tlv-workflowapp.com/Uploads/product/thumb/"
-//let image_base_url = "http://staging.tlv-workflowapp.com/Uploads/product/thumb/"
+//let image_base_url = "http://latest-tlv.tlv-workflowapp.com/Uploads/product/thumb/"
 
 let serviceKey = "$2y$10$aROSSAxEG7RgVYPL.f7VWOxWKIcly0ekxrNwc2h1Swktd1g0hl2/C"
 
