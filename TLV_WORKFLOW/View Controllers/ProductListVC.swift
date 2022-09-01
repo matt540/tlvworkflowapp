@@ -36,6 +36,7 @@ class ProductListVC: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+//        searchBar.text = ""
         if !GlobalFunction.isNetworkReachable(){
             offlineData()
             self.sellerListOfflineSearch = []
@@ -250,6 +251,8 @@ extension ProductListVC{
     
     //MARK: Offline Search Data Get
     func offlineSearchData(searchText: String) {
+//        self.sellerListOfflineSearch = []
+//        self.offlineSellerDataGetForSearch()
         if self.sellerListOfflineSearch.count > 0 {
             self.sellerList = self.sellerListOfflineSearch.filter({ $0.firstname.range(of: searchText, options: .caseInsensitive) != nil || $0.lastname.range(of: searchText, options: .caseInsensitive) != nil})
             if sellerList.count > 0 {
@@ -305,9 +308,9 @@ extension ProductListVC{
                 self.callGetSellerListService(params: params)
             }
         }else{
-            sellerList = []
             let sellerData = DataInfo().retriveData(pageno: pageCount)
             if sellerData.count > 0{
+                sellerList = []
                 for i in sellerData{
                     let sellerDic = GlobalFunction.convertToDictionary(text: i.seller ?? "") ?? [:]
                     let sellerListDataModel = SellerListData(fromDictionary: sellerDic)
@@ -324,7 +327,6 @@ extension ProductListVC{
     
     @IBAction func btnPreviousAction(_ sender: Any) {
         pageCount -= 1
-        sellerList = []
         if GlobalFunction.isNetworkReachable(){
             let params = apiParameter(serviceKeyData: serviceKey, pageCountData: pageCount, searchString: "", userId: currentLoginUser.data.id, roleId: currentLoginUser.data.roles[0].id)
                    GlobalFunction.showLoadingIndicator()
@@ -334,6 +336,7 @@ extension ProductListVC{
         }else{
             let sellerData = DataInfo().retriveData(pageno: pageCount)
             if sellerData.count > 0{
+                sellerList = []
                 for i in sellerData{
                     let sellerDic = GlobalFunction.convertToDictionary(text: i.seller ?? "") ?? [:]
                     let sellerListDataModel = SellerListData(fromDictionary: sellerDic)
@@ -386,10 +389,10 @@ extension ProductListVC: UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            let sellerDetail = sellerList[indexPath.row]
-            let productDetailVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.productDetailVC) as! ProductDetailVC
-            productDetailVC.sellerDetail = sellerDetail
-            self.navigationController?.pushViewController(productDetailVC, animated: true)
+        let sellerDetail = sellerList[indexPath.row]
+        let productDetailVC = self.storyboard?.instantiateViewController(withIdentifier: Constant.VCIdentifier.productDetailVC) as! ProductDetailVC
+        productDetailVC.sellerDetail = sellerDetail
+        self.navigationController?.pushViewController(productDetailVC, animated: true)
     }
 }
 
@@ -402,6 +405,7 @@ extension ProductListVC: UISearchBarDelegate{
         GlobalFunction.hideLoadingIndicator()
         if !GlobalFunction.isNetworkReachable(){
             if searchBar.text == ""{
+                pageCount = 1
                 self.offlineData()
             } else {
                 self.offlineSearchData(searchText: searchBar.text ?? "")
